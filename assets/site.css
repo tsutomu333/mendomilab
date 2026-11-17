@@ -1,0 +1,62 @@
+:root{
+  --ink:#1d2433; --muted:#5b6475; --line:#e4dfd6; --paper:#faf7f2; --card:#ffffff;
+  --accent:#b8402c; --accent-soft:#f6e6e1; --navy:#24365c;
+  --serif: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65}
+a{color:var(--navy)}
+a:hover{color:var(--accent)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+header.site{border-bottom:1px solid var(--line);background:var(--paper)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo .mark{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:15px}
+.logo .name{font-family:var(--serif);font-size:22px;letter-spacing:.02em}
+.logo .name small{font-family:var(--sans);font-size:12px;color:var(--muted);margin-left:6px;letter-spacing:.08em;text-transform:uppercase}
+nav a{margin-left:22px;text-decoration:none;color:var(--muted);font-size:15px}
+nav a:hover{color:var(--ink)}
+.hero{padding-top:88px;padding-bottom:72px}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.2;margin:0}
+.hero h1{font-size:clamp(38px,6vw,62px);margin:14px 0 22px;max-width:14ch}
+.hero p.lead{font-size:20px;color:var(--muted);max-width:40ch;margin:0 0 32px}
+.btn{display:inline-block;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:16px}
+.btn.primary{background:var(--ink);color:#fff}
+.btn.primary:hover{background:var(--accent);color:#fff}
+.btn.ghost{border:1px solid var(--ink);color:var(--ink);margin-left:10px}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:72px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(28px,4vw,38px);margin-bottom:14px}
+section .sub{color:var(--muted);max-width:60ch;margin:0 0 36px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;display:flex;flex-direction:column}
+.card .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.card h3{font-size:24px;margin:8px 0 10px}
+.card p{margin:0 0 16px;color:var(--ink)}
+.card ul{margin:0 0 18px;padding-left:18px;color:var(--muted);font-size:15px}
+.card .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.price{font-family:var(--serif);font-size:20px}
+.price small{font-family:var(--sans);font-size:13px;color:var(--muted)}
+.pill{font-size:13px;padding:5px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.step{padding-top:8px}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-family:var(--serif);margin-bottom:12px}
+.step h3{font-size:20px;margin-bottom:6px}
+.step p{margin:0;color:var(--muted);font-size:16px}
+.quote{font-family:var(--serif);font-size:clamp(22px,3vw,28px);line-height:1.45;max-width:30ch;margin:0 0 20px}
+.two{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+@media (max-width:800px){.two{grid-template-columns:1fr}nav a{margin-left:12px;font-size:14px;white-space:nowrap}.logo .name small{display:none}.btn.ghost{margin:10px 0 0}}
+.def{background:var(--card);border-left:3px solid var(--accent);padding:20px 24px;border-radius:0 12px 12px 0}
+.def b{font-family:var(--serif);font-weight:500;font-size:20px}
+.def p{margin:8px 0 0;color:var(--muted)}
+.prose{max-width:680px}
+.prose h1{font-size:clamp(34px,5vw,48px);margin:56px 0 12px}
+.prose h2{font-size:26px;margin:40px 0 10px}
+.prose p,.prose li{color:var(--ink)}
+.note{font-size:14px;color:var(--muted)}
+footer.site{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--muted);font-size:14px}
+footer.site .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer.site a{color:var(--muted);margin-right:16px}
