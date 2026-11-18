@@ -60,3 +60,4 @@ section .sub{color:var(--muted);max-width:60ch;margin:0 0 36px}
 footer.site{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--muted);font-size:14px}
 footer.site .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 footer.site a{color:var(--muted);margin-right:16px}
+.card .btns{display:flex;gap:8px;flex-wrap:wrap}.card .btns .btn{padding:10px 16px;font-size:15px}
