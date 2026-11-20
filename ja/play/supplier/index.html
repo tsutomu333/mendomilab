@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script>/* ?notrack=1 once = this browser is not counted (owner's own visits). ?notrack=0 undoes it */window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SGX5EJT1CN');(function(){var off=false;try{if(/[?&]notrack=1/.test(location.search))localStorage.setItem('notrack','1');if(/[?&]notrack=0/.test(location.search))localStorage.removeItem('notrack');off=localStorage.getItem('notrack')==='1';}catch(e){}if(!off){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-SGX5EJT1CN';document.head.appendChild(s);}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>サプライヤーのパズル（平準化）｜Mendomi Lab</title>
+<meta name="description" content="トヨタは1か月に8,000台。2つのサプライヤーをいちばん安く動かす方法を探す 平準化の体験ゲーム（無料）。">
+<link rel="canonical" href="https://mendomilab.com/ja/play/supplier/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{--rav:#2a9d8f;--cam:#e76f51;--cor:#457b9d;--ink:#1d2433;--sub:#5b6475;--line:#dfe3ea;--bg:#eceae4;--card:#f8f7f4;--bad:#c0392b;--good:#1e8449;--warn:#e0b040}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Hiragino Sans",sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+.wrap{max-width:1060px;margin:0 auto;padding:18px 14px 60px}
+h1{font-size:1.6rem;margin:.2em 0}
+h2{font-size:1.1rem;margin:0 0 .4em}
+h3{font-size:.95rem;margin:10px 0 4px;color:var(--sub);font-weight:600}
+.lead{color:var(--sub);margin:.2em 0 1em}
+.card{background:var(--card);border:1px solid #d6d3cb;border-radius:12px;padding:14px 16px;margin:12px 0}
+details summary{cursor:pointer;font-weight:700}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 18px;margin-top:10px;font-size:.92rem}
+.rules b{display:block}
+.chip{display:inline-block;padding:1px 8px;border-radius:99px;color:#fff;font-size:.8rem;font-weight:700}
+.c-R{background:var(--rav)}.c-C{background:var(--cam)}.c-L{background:var(--cor)}
+/* top bar */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid #cfccc4}
+.barrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.clock{font-size:1.7rem;font-weight:800;font-variant-numeric:tabular-nums;min-width:6.5em}
+.prog{flex:1;min-width:140px;height:12px;background:#d3d1ca;border-radius:6px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--warn)}
+.live{font-size:1.5rem;font-weight:800;color:var(--bad);font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.btns button{border:0;background:var(--ink);color:#fff;border-radius:10px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer}
+.btns button.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btns button.sec.on{background:var(--ink);color:#fff}
+.month{font-size:.95rem;color:var(--sub)}
+.month b{color:var(--ink);font-size:1.1rem}
+.stop{color:var(--bad);font-weight:800}
+/* sequence */
+.seq{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.seq button{flex:1;min-width:150px;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px;cursor:pointer;font:inherit;text-align:left}
+.seq button.on{border-color:var(--ink);background:#e9ecf2}
+.seq button small{display:block;color:var(--sub)}
+.days{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;margin-top:8px}
+.day{height:48px;display:flex;flex-direction:column-reverse;border-radius:3px;overflow:hidden;background:#ddd;outline:2px solid transparent;outline-offset:1px}
+.day.past{opacity:.35}
+.day.now{outline-color:var(--ink)}
+.dlab{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;font-size:.65rem;color:var(--sub);text-align:center}
+/* suppliers */
+.sup{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:780px){.sup{grid-template-columns:1fr}}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.cost{font-size:1.35rem;font-weight:800;font-variant-numeric:tabular-nums}
+.brk{font-size:.8rem;color:var(--sub);font-variant-numeric:tabular-nums}
+.station{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.step{display:flex;align-items:center;gap:6px}
+.step button{width:32px;height:32px;border-radius:50%;border:1px solid #c9c6be;background:#fff;font-size:1.1rem;cursor:pointer;color:var(--sub)}
+.step b{min-width:3ch;text-align:center;font-size:1.15rem}
+.icons{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;min-height:28px}
+.ic{font-size:1.25rem;display:inline-block;transition:opacity .3s,filter .3s}
+.ic.off{opacity:.2;filter:grayscale(1)}
+.gear.on{animation:spin 1.2s linear infinite}
+.man.on{animation:bob .6s ease-in-out infinite alternate}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{to{transform:translateY(-4px)}}
+.util{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--sub);margin-top:4px}
+.util .ub{width:90px;height:6px;background:#ddd;border-radius:3px;overflow:hidden}
+.util .ub i{display:block;height:100%;background:var(--good);transition:width .3s}
+.wh{border:2px dashed var(--warn);border-top:6px solid;border-image:repeating-linear-gradient(45deg,#222 0 8px,var(--warn) 8px 16px) 6;border-radius:4px;padding:8px 10px;margin-top:10px;background:#fffdf6}
+.whrow{display:flex;align-items:center;gap:8px;margin:4px 0;min-height:30px}
+.whrow .lbl{width:64px;font-size:.8rem;font-weight:700}
+.blocks{flex:1;display:flex;flex-wrap:wrap;gap:3px;align-items:flex-end}
+.bk{width:26px;height:26px;border-radius:3px;color:#fff;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.sm{width:11px;height:11px;border-radius:2px}
+.whrow .num{width:56px;text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.road{position:relative;height:34px;margin-top:6px;border-bottom:3px dotted #bbb}
+.truck{position:absolute;bottom:2px;left:-60px;font-size:1.5rem;white-space:nowrap}
+.truck em{font-style:normal;font-size:.75rem;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:6px;padding:0 4px;margin-left:2px;vertical-align:middle}
+#reveal{display:none;border:2px solid var(--good)}
+#reveal h2{color:var(--good)}
+.note{font-size:.85rem;color:var(--sub)}
+.view{background:#eef3fa;border-left:4px solid var(--cor);padding:8px 12px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 id="t_h1"></h1>
+  <p class="lead" id="t_lead"></p>
+  <div class="card"><details><summary id="t_rules"></summary><div class="rules" id="rules"></div></details></div>
+
+  <div class="bar">
+    <div class="barrow">
+      <span class="clock" id="clock"></span>
+      <div class="prog"><i id="progbar"></i></div>
+      <span class="live" id="live"></span>
+    </div>
+    <div class="btns">
+      <button id="go"></button>
+      <button class="sec" id="sp1">1x</button><button class="sec" id="sp2">2x</button><button class="sec" id="sp4">4x</button>
+      <button class="sec" id="rst"></button>
+      <span class="month" id="month"></span>
+    </div>
+    <div class="note" id="msg"></div>
+  </div>
+
+  <div class="card">
+    <h2 id="t_seq"></h2>
+    <div class="seq" id="seq"></div>
+    <div class="days" id="days"></div>
+    <div class="dlab" id="dlab"></div>
+  </div>
+
+  <h2 style="margin-top:16px" id="t_sup"></h2>
+  <div class="sup"><div class="card" id="supA"></div><div class="card" id="supB"></div></div>
+
+  <div class="card" id="reveal"></div>
+  <div class="card" id="nextsteps" style="margin-top:18px;display:none"><b>研修や授業で使う方へ</b><br>車種 台数 設備 コストを自分のサプライチェーンに合わせて変えられるPro版は 日本語版を準備中です。ほかのゲームは <a href="/ja/#games">Mendomi Lab</a> にあります。<br>自分の職場や授業に合わせたいときや 少し話してみたいときは <a href="/ja/consult/" target="_blank" rel="noopener">気軽に聞いてください（最初の1往復は無料）→</a></div>
+</div>
+
+<script>
+const LANG='ja';
+const TX={
+en:{h1:"The Supplier's Puzzle",
+lead:"Toyota builds 8,000 cars a month. Two parts suppliers feed its line. <b>What is the cheapest way for the suppliers to make their parts?</b> You control Toyota's build order and each supplier's people and machines. Find the lowest total cost.",
+rules:"The rules (fixed numbers)",
+rl:[["Toyota's month","20 working days. 400 cars a day. RAV4 4,000 · Camry 2,400 · Corolla 1,600."],["Two suppliers","Supplier A makes RAV4 parts. Supplier B makes Camry and Corolla parts. One part per car."],["Delivery","A truck picks up the parts at the end of each day for the cars Toyota builds that day. Running out stops Toyota's line."],["Machines","Automatic. 10 min per part = 50 parts a day. Each machine fits one model only. $100 per machine per day, running or idle."],["People","Assembly and inspection after the machine. 12 min per part = 40 parts a day. Cross-trained: can work on any model. $200 per person per day, busy or idle."],["Inventory","$1 per part per day, counted at the end of each day. Suppliers build as late as possible to keep stock low. Every month repeats, so the month starts with last month's leftover stock."]],
+seqT:"1. Toyota's build order",sup:"2. The suppliers",
+seqs:{batch:["Large batches","RAV4 10 days → Camry 6 → Corolla 4"],cycle:["Shorter cycles","RAV4 5 days → Camry 3 → Corolla 2, twice"],mix:["Daily mix","RAV4, Camry and Corolla every day"]},
+M:{R:'RAV4',C:'Camry',L:'Corolla'},S:{A:'Supplier A',B:'Supplier B'},
+day:(d)=>`Day ${d} / 20`,run:"▶ Run the month",pause:"❚❚ Pause",again:"▶ Run again",reset:"Reset to start",
+monthCost:"Cost per month:",best:"Your best:",lineStop:"Line stop!",
+stopMsg:(w)=>`Parts run out. Toyota's line stops: ${w}.`,notEnough:(s,x)=>`${s} (not enough ${x})`,
+people:"People",peopleU:"",machinesOf:(m)=>`${m} machines`,unitP:" people",unitM:" machines",
+working:(a,b)=>`working ${a} / ${b}`,wh:"Warehouse",parts:"parts",noOrder:"no order",
+brk:(p,m,i)=>`People ${p} · Machines ${m} · Inventory ${i}`,
+liveL:"Spent so far ",hint:"Run the month to see the result.",stopAt:(d,w)=>`Day ${d}: parts ran out and Toyota's line stopped. ${w}`,
+reveal:`<h2>You found it: Heijunka</h2>
+<p>The cheapest month comes from Toyota, not from the suppliers. When Toyota builds the same <b>mix</b> and the same <b>volume</b> every day, each supplier gets the same order every day. They need no stock and no extra people or machines for peaks.</p>
+<p>This is <b>heijunka</b> (production leveling): leveling both the <b>volume</b> and the <b>mix</b> of products over a period. Here it is leveled by the daily product mix. Real plants often level even finer, down to the sequence of individual vehicles.</p>
+<ul><li><b>People respond to volume.</b> Workers are cross-trained and can handle any model, so Supplier B's people cost the same as Supplier A's in every case.</li>
+<li><b>Machines respond to mix.</b> Machines fit one model. Long runs leave Camry machines idle while Corolla runs, and the other way round. That is why Supplier B suffers more.</li>
+<li><b>In this simulation, without leveling the supplier pays either way.</b> Pay for people and machines sized for the peak, or pay for stock. Neither reaches the leveled cost. (Real plants also use overtime, outsourcing or extra help.)</li></ul>
+<div class="view"><b>Our take (interpretation):</b> Toyota is famous for "wringing a dry towel," often read as squeezing suppliers hard. Look at this puzzle again. What cut the suppliers' cost was not a price demand. It was Toyota changing its own build order. Mixing every day is more work for Toyota, yet Toyota takes it on. Suppliers can then build cheaply, and both sides lower costs together. Not "make it cheaper," but "we will change too, so you can make it cheaper. Let's bring the cost down together." We believe this is Toyota's real stance.<br><br><b>Why we think so:</b> The author, Tsutomu Takagi, worked at OJT Solutions, a Toyota subsidiary that develops people who can lead Toyota-style kaizen. There he worked side by side with hundreds of former Toyota shop-floor supervisors and managers. He heard this view from them again and again, on client shop floors and over dinner.</div>
+<p class="note">Even when leveled, Supplier B keeps a little spare machine capacity: Camry needs 120 parts a day (3 machines = 150) and Corolla 80 (2 machines = 100). Machines come in whole units, so some slack remains. This happens in real plants too.</p>
+<p class="note"><b>About this simulation.</b> It is a simplified model: changeover time is left out; people and machines cost the same whether busy or idle; workers are cross-trained; machines are dedicated to one model; inventory cost is simplified to $1 per part per day; leveling is by daily mix, not by the sequence of single vehicles. Mixing models every day means more changeovers in real life. That is why Toyota worked so hard to make changeovers short. Real leveling also depends on reliable processes, standardized work and close work with suppliers.</p>`},
+ja:{h1:"サプライヤーのパズル",
+lead:"トヨタは1か月に8,000台の車を作ります。部品は2つのサプライヤーが納めます。<b>サプライヤーがいちばん安く部品を作れる方法は？</b> あなたが決められるのは、トヨタの作る順番と、各サプライヤーの人数と設備の台数です。合計の費用がいちばん安くなる形をさがしてください。",
+rules:"ルール（決まっている数字）",
+rl:[["トヨタの1か月","稼働日は20日。1日400台。RAV4 4,000台・カムリ 2,400台・カローラ 1,600台。"],["2つのサプライヤー","A社はRAV4の部品を作ります。B社はカムリとカローラの部品を作ります。車1台に部品1個です。"],["納入","毎日の終わりにトラックが来て、トヨタがその日に作る車の分の部品を運びます。足りないとトヨタのラインが止まります。"],["設備","自動で動きます。1個10分で1日50個。1台は1つの車種専用です。動いても止まっていても1台1日¥10,000。"],["人","設備のあとの組み付けと検査。1個12分で1日40個。どの車種の部品もできます。忙しくてもひまでも1人1日¥20,000。"],["在庫","1個1日¥100。毎日の終わりの数で数えます。サプライヤーは在庫を少なくするため、納入に間に合うぎりぎりまで作るのを待ちます。毎月同じ形がくり返すので、月の初めの在庫は前の月の残りです。"]],
+seqT:"1. トヨタの作る順番",sup:"2. サプライヤー",
+seqs:{batch:["長くまとめる","RAV4 10日 → カムリ 6日 → カローラ 4日"],cycle:["短く回す","RAV4 5日 → カムリ 3日 → カローラ 2日を2回"],mix:["毎日まぜる","RAV4・カムリ・カローラを毎日"]},
+M:{R:'RAV4',C:'カムリ',L:'カローラ'},S:{A:'A社',B:'B社'},
+day:(d)=>`${d}日目 / 20日`,run:"▶ 1か月を動かす",pause:"❚❚ 一時停止",again:"▶ もう一度動かす",reset:"最初にもどす",
+monthCost:"1か月の費用：",best:"あなたの最安：",lineStop:"ラインが止まる！",
+stopMsg:(w)=>`部品が足りません。トヨタのラインが止まります：${w}`,notEnough:(s,x)=>`${s}（${x}が足りない）`,
+people:"人",machinesOf:(m)=>`${m}の設備`,unitP:"人",unitM:"台",
+working:(a,b)=>`動いている ${a} / ${b}`,wh:"倉庫",parts:"個",noOrder:"注文なし",
+brk:(p,m,i)=>`人 ${p} ・設備 ${m} ・在庫 ${i}`,
+liveL:"ここまでの費用 ",hint:"1か月を動かすと結果が出ます。",stopAt:(d,w)=>`${d}日目に部品が足りなくなり、トヨタのラインが止まりました。${w}`,
+reveal:`<h2>見つけました：平準化</h2>
+<p>いちばん安くする鍵はサプライヤーではなくトヨタにありました。トヨタが毎日同じ<b>種類</b>と同じ<b>数</b>で作ると、どのサプライヤーにも毎日同じ注文が来ます。在庫も、ピークに合わせた人や設備もいりません。</p>
+<p>これが<b>平準化</b>です。一定の期間で、作るものの<b>数</b>と<b>種類</b>の両方をならすことです。ここでは1日単位で種類の割合をならしています。実際の工場では、1台ずつの順番までもっと細かくならすこともあります。</p>
+<ul><li><b>人には数が効く。</b>人はどの車種の部品もできます。なのでB社の人件費は、どの場合もA社と同じです。</li>
+<li><b>設備には種類が効く。</b>設備は車種ごとの専用です。長くまとめると、カローラを作っている間はカムリの設備が止まり、その逆も起きます。だからB社のほうが損が大きくなります。</li>
+<li><b>このシミュレーションでは、平準化しないとサプライヤーはどちらにしても払う。</b>ピークに合わせた人と設備で払うか、在庫で払うかです。どちらも平準化したときの費用には届きません。（実際の工場では残業・外注・応援などの手もあります）</li></ul>
+<div class="view"><b>私たちの見方（推理）：</b>トヨタといえば「乾いた雑巾を絞る」という言葉が有名です。サプライヤーをとことん締めつける意味に受け取られがちです。でもこのパズルを見てください。サプライヤーの費用を下げたのは値引きの要求ではありません。トヨタが自分の作る順番を変えたことでした。毎日まぜるのはトヨタにとって手間が増えるやり方です。それでもトヨタはその手間を引き受けます。そうするとサプライヤーが安く作れるようになり、その分をまた一緒に下げていけます。「安くしろ」ではなく「安くできるようにこちらも変わる。一緒に下げていこう」。私たちはこれがトヨタのスタンスだと考えています。<br><br><b>そう考える理由：</b>作者の高木務は、トヨタの子会社でトヨタ式の改善ができる人材を育成するOJTソリューションズで働いていました。そこでトヨタの現場で管理監督者を務めてきた何百人もの人たちと一緒に仕事をしました。この考え方は、お客さんの工場の現場や夜の席で、その人たちから何度も聞いて教えてもらったものです。</div>
+<p class="note">平準化しても、B社の設備は少し余ります。カムリは1日120個で設備3台（150個分）、カローラは1日80個で2台（100個分）が要るからです。設備は1台ずつしか増やせないので、能力の刻みで余りが出ます。これは実際の工場でも起きます。</p>
+<p class="note"><b>このシミュレーションについて。</b>単純にしたモデルです。段取り替えの時間は入れていません。人と設備の費用は忙しくてもひまでも同じです。人はどの車種もできる多能工、設備は車種ごとの専用です。在庫の費用は1個1日¥100にまとめています。平準化は1日単位の種類の割合で、1台ずつの順番ではありません。実際は毎日まぜると段取り替えが増えます。だからトヨタは段取り替えを短くすることに力を入れてきました。実際の平準化には、安定した工程・標準作業・サプライヤーとの密な連携も欠かせません。</p>`}
+}[LANG];
+
+const D=20,PR=40,PC=20000,MR=50,MC=10000,IC=100;
+const COL={R:'var(--rav)',C:'var(--cam)',L:'var(--cor)'};
+const SEQ={batch:i=>i<10?{R:400,C:0,L:0}:i<16?{R:0,C:400,L:0}:{R:0,C:0,L:400},
+cycle:i=>{const j=i%10;return j<5?{R:400,C:0,L:0}:j<8?{R:0,C:400,L:0}:{R:0,C:0,L:400};},
+mix:()=>({R:200,C:120,L:80})};
+const SUP={A:['R'],B:['C','L']};
+const START={seq:'batch',A:{p:10,m:{R:8}},B:{p:10,m:{C:8,L:8}}};
+let st=JSON.parse(JSON.stringify(START)),best=null,res={},dem=[];
+let t=0,running=false,speed=1,last=0,runId=0,done=null,stopAt=null;
+
+function demand(seq){return Array.from({length:D},(_,i)=>SEQ[seq](i));}
+function plan(models,dem,s){
+  const mcap={},carry={},prod={};
+  for(const k of models){mcap[k]=s.m[k]*MR;carry[k]=0;prod[k]=Array(D).fill(0);}
+  const pcap=s.p*PR;let tot=0;
+  for(const k of models){const need=dem.reduce((a,d)=>a+d[k],0);tot+=need;if(mcap[k]*D<need)return fwd(models,dem,s,TX.machinesOf(TX.M[k]));}
+  if(pcap*D<tot)return fwd(models,dem,s,TX.people);
+  for(let pass=0;pass<40;pass++)for(let d=D-1;d>=0;d--){
+    const need={};for(const k of models)need[k]=dem[d][k]+carry[k];
+    const order=[...models].sort((a,b)=>need[b]/(mcap[b]||1)-need[a]/(mcap[a]||1));
+    let left=pcap;for(const k of order){const p=Math.min(need[k],mcap[k],left);prod[k][d]=p;left-=p;carry[k]=need[k]-p;}
+  }
+  const start={},invDay=Array.from({length:D},()=>({}));let invSum=0;
+  for(const k of models){start[k]=carry[k];let I=carry[k];for(let d=0;d<D;d++){I+=prod[k][d]-dem[d][k];invDay[d][k]=I;invSum+=I;}}
+  const nm=models.reduce((a,k)=>a+s.m[k],0),cp=s.p*PC*D,cm=nm*MC*D;
+  return{stop:false,prod,invDay,start,cp,cm,ci:invSum*IC,cost:cp+cm+invSum*IC};
+}
+// not enough capacity: build at full capacity, months repeat, find the day parts run out
+function fwd(models,dem,s,why){
+  const mcap={},I={},prod={},invDay=Array.from({length:D},()=>({})),start={};const pcap=s.p*PR;
+  for(const k of models){mcap[k]=s.m[k]*MR;I[k]=0;prod[k]=Array(D).fill(0);}
+  let stopDay=null;
+  for(let mo=0;mo<3;mo++){
+    if(mo===2)for(const k of models)start[k]=I[k];
+    for(let d=0;d<D;d++){
+      const ahead={};for(const k of models){let a=0;for(let j=0;j<D;j++)a+=dem[(d+j)%D][k];ahead[k]=a-I[k];}
+      const order=[...models].sort((a,b)=>ahead[b]-ahead[a]);let left=pcap;
+      for(const k of order){const p=Math.max(0,Math.min(mcap[k],left,ahead[k]));left-=p;I[k]+=p;if(mo===2)prod[k][d]=p;}
+      for(const k of models){I[k]-=dem[d][k];if(I[k]<0){if(mo===2&&stopDay===null)stopDay=d;I[k]=0;}if(mo===2)invDay[d][k]=I[k];}
+    }
+  }
+  if(stopDay===null)stopDay=0;
+  const nm=models.reduce((a,k)=>a+s.m[k],0);
+  return{stop:true,why,stopDay,prod,invDay,start,cp:s.p*PC*D,cm:nm*MC*D};
+}
+const $=id=>document.getElementById(id);
+const money=x=>'¥'+Math.round(x).toLocaleString('ja-JP');
+
+// static text
+$('t_h1').textContent=TX.h1;$('t_lead').innerHTML=TX.lead;$('t_rules').textContent=TX.rules;
+$('rules').innerHTML=TX.rl.map(([a,b])=>`<div><b>${a}</b>${b}</div>`).join('');
+$('t_seq').textContent=TX.seqT;$('t_sup').textContent=TX.sup;$('rst').textContent=TX.reset;
+$('seq').innerHTML=Object.entries(TX.seqs).map(([k,[a,b]])=>`<button data-s="${k}">${a}<small>${b}</small></button>`).join('');
+$('reveal').innerHTML=TX.reveal;
+$('dlab').innerHTML=Array.from({length:D},(_,i)=>`<div>${i+1}</div>`).join('');
+
+function stepper(id,key,label,val,unit){return `<div class="srow"><b>${label}</b><span class="step"><button data-id="${id}" data-k="${key}" data-v="-1">−</button><b>${val}${unit}</b><button data-id="${id}" data-k="${key}" data-v="1">+</button></span></div>`;}
+
+function build(){
+  dem=demand(st.seq);
+  for(const id in SUP)res[id]=plan(SUP[id],dem,st[id]);
+  const sd=Object.values(res).filter(r=>r.stop).map(r=>r.stopDay);
+  stopAt=sd.length?Math.min(...sd):null;
+  result();
+  document.querySelectorAll('#seq button').forEach(b=>b.classList.toggle('on',b.dataset.s===st.seq));
+  $('days').innerHTML=dem.map(d=>`<div class="day">${['R','C','L'].filter(k=>d[k]).map(k=>`<span style="height:${d[k]/4}%;background:${COL[k]}"></span>`).join('')}</div>`).join('');
+  for(const id in SUP){
+    const s=st[id],r=res[id];
+    let h=`<div class="head"><h2>${TX.S[id]} ${SUP[id].map(k=>`<span class="chip c-${k}">${TX.M[k]}</span>`).join(' ')}</h2><span class="cost" id="cost${id}"></span></div><div class="brk" id="brk${id}"></div>`;
+    for(const k of SUP[id])h+=`<div class="station">${stepper(id,k,TX.machinesOf(TX.M[k]),s.m[k],TX.unitM)}<div class="icons" id="mi${id}${k}">${Array.from({length:s.m[k]},()=>`<span class="ic gear" style="color:${COL[k]}">⚙️</span>`).join('')}</div><div class="util" id="mu${id}${k}"></div></div>`;
+    h+=`<div class="station">${stepper(id,'p',TX.people,s.p,TX.unitP)}<div class="icons" id="pi${id}">${Array.from({length:s.p},()=>`<span class="ic man">🧑‍🔧</span>`).join('')}</div><div class="util" id="pu${id}"></div></div>`;
+    h+=`<div class="wh"><div class="note"><b>${TX.wh}</b></div>${SUP[id].map(k=>`<div class="whrow"><span class="lbl" style="color:${COL[k]}">${TX.M[k]}</span><span class="blocks" id="bk${id}${k}"></span><span class="num" id="n${id}${k}"></span></div>`).join('')}</div>`;
+    h+=`<div class="road"><span class="truck" id="tr${id}">🚚<em id="te${id}"></em></span></div>`;
+    $('sup'+id).innerHTML=h;
+  }
+  frame();
+}
+
+function result(){
+  const tot=res.A.cost+res.B.cost;
+  if(done==='ok'){if(best===null||tot<best)best=tot;$('month').innerHTML=`${TX.monthCost} <b>${money(tot)}</b>　${TX.best} ${money(best)}`;}
+  else if(done==='stop'){const w=Object.entries(res).filter(([,r])=>r.stop&&r.stopDay===stopAt).map(([id,r])=>TX.notEnough(TX.S[id],r.why)).join(', ');
+    $('month').innerHTML=`<span class="stop">${TX.stopAt(stopAt+1,w)}</span>`+(best!==null?`　${TX.best} ${money(best)}`:'');}
+  else $('month').innerHTML=TX.hint+(best!==null?`　${TX.best} ${money(best)}`:'');
+  $('msg').textContent='';
+  if(done){const ns=$('nextsteps');if(ns)ns.style.display='block';}
+  $('reveal').style.display=(done==='ok'&&tot<=58000)?'block':'none';
+}
+function blocks(v,col){v=Math.max(0,Math.round(v));const big=Math.floor(v/100),sm=Math.round((v%100)/20);
+  return Array.from({length:Math.min(big,40)},()=>`<span class="bk" style="background:${col}">100</span>`).join('')+Array.from({length:sm},()=>`<span class="sm" style="background:${col}"></span>`).join('');}
+
+function frame(){
+  const d=Math.min(D-1,Math.floor(t)),f=t>=D?1:t-Math.floor(t);
+  const started=t>0;
+  $('clock').textContent=TX.day(started?d+1:1);
+  $('progbar').style.width=(t/D*100)+'%';
+  [...$('days').children].forEach((c,i)=>{c.classList.toggle('now',started&&i===d&&t<D);c.classList.toggle('past',started&&(i<d||t>=D));});
+  let liveTot=0;
+  for(const id in SUP){
+    const r=res[id],s=st[id];
+    // costs so far
+    const days=Math.min(t,D);
+    const fixedP=s.p*PC*days, fixedM=SUP[id].reduce((a,k)=>a+s.m[k],0)*MC*days;
+    let inv=0;const nd=t>=D?D:Math.floor(t)+(f>=0.8?1:0);
+    for(let i=0;i<nd;i++)for(const k of SUP[id])inv+=r.invDay[i][k]*IC;
+    const c=fixedP+fixedM+inv;liveTot+=c;
+    $('cost'+id).innerHTML=done==='stop'&&r.stop?`<span class="stop">${TX.lineStop}</span>`:started?money(c):'¥ ?';
+    $('brk'+id).textContent=started?TX.brk(money(fixedP),money(fixedM),money(inv)):'';
+    // production today, warehouse
+    const pf=Math.min(1,f/0.6);let ptot=0;
+    for(const k of SUP[id]){
+      const pr=started?r.prod[k][d]:0;ptot+=pr;
+      const busy=Math.ceil(pr/MR-1e-9);
+      const icons=$('mi'+id+k).children;for(let i=0;i<icons.length;i++){const on=started&&t<D&&i<busy&&f<0.6;icons[i].classList.toggle('on',on);icons[i].classList.toggle('off',started&&!on);}
+      $('mu'+id+k).innerHTML=started?`<span class="ub"><i style="width:${s.m[k]?pr/(s.m[k]*MR)*100:0}%"></i></span>${TX.working(busy,s.m[k])}`:'';
+      const prev=d===0?r.start[k]:r.invDay[d-1][k];
+      let v=!started?r.start[k]:t>=D?r.invDay[D-1][k]:(f>=0.8?r.invDay[d][k]:prev+pr*pf);
+      $('bk'+id+k).innerHTML=blocks(v,COL[k]);$('n'+id+k).textContent=Math.round(v).toLocaleString('en-US');
+    }
+    const pb=Math.ceil(ptot/PR-1e-9);
+    const pi=$('pi'+id).children;for(let i=0;i<pi.length;i++){const on=started&&t<D&&i<pb&&f<0.6;pi[i].classList.toggle('on',on);pi[i].classList.toggle('off',started&&!on);}
+    $('pu'+id).innerHTML=started?`<span class="ub"><i style="width:${s.p?ptot/(s.p*PR)*100:0}%"></i></span>${TX.working(pb,s.p)}`:'';
+    // truck
+    const del=SUP[id].reduce((a,k)=>a+dem[d][k],0),tr=$('tr'+id);
+    if(started&&t<D&&f>=0.6){const x=f<0.75?(f-0.6)/0.15*50:f<0.85?50:50+(f-0.85)/0.15*50;tr.style.left=`calc(${x}% - 60px)`;$('te'+id).textContent=del?del.toLocaleString('en-US')+' '+TX.parts:TX.noOrder;}
+    else{tr.style.left='-60px';$('te'+id).textContent='';}
+  }
+  $('live').innerHTML=done==='stop'?`<span>${TX.lineStop}</span>`:(started?TX.liveL+money(liveTot):'');
+  $('go').textContent=running?TX.pause:(done?TX.again:TX.run);
+}
+
+function loop(id,ts){
+  if(!running||id!==runId)return;
+  const dt=Math.max(0,(ts-last)/1000);last=ts;
+  t=Math.min(D,t+dt*speed/2.6);
+  if(stopAt!==null&&t>=stopAt+0.8){t=stopAt+0.8;running=false;done='stop';result();frame();return;}
+  frame();
+  if(t>=D){running=false;done='ok';result();frame();return;}
+  requestAnimationFrame(ts=>loop(id,ts));
+}
+$('go').onclick=()=>{
+  if(running){running=false;frame();return;}
+  if(done){t=0;done=null;result();}
+  running=true;runId++;const id=runId;last=performance.now();requestAnimationFrame(ts=>loop(id,ts));frame();
+};
+function setSpeed(v){speed=v;['sp1','sp2','sp4'].forEach(id=>$(id).classList.toggle('on',id==='sp'+v));}
+$('sp1').onclick=()=>setSpeed(1);$('sp2').onclick=()=>setSpeed(2);$('sp4').onclick=()=>setSpeed(4);setSpeed(1);
+function reset(){running=false;runId++;t=0;done=null;}
+$('seq').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.seq=b.dataset.s;reset();build();};
+document.querySelector('.sup').onclick=e=>{const b=e.target.closest('button[data-id]');if(!b)return;const s=st[b.dataset.id],k=b.dataset.k,v=+b.dataset.v;
+  if(k==='p')s.p=Math.max(0,Math.min(20,s.p+v));else s.m[k]=Math.max(0,Math.min(20,s.m[k]+v));reset();build();};
+$('rst').onclick=()=>{st=JSON.parse(JSON.stringify(START));reset();build();};
+build();
+</script>
+</body>
+</html>
