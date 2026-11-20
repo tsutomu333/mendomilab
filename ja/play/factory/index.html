@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script>/* ?notrack=1 once = this browser is not counted (owner's own visits). ?notrack=0 undoes it */window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SGX5EJT1CN');(function(){var off=false;try{if(/[?&]notrack=1/.test(location.search))localStorage.setItem('notrack','1');if(/[?&]notrack=0/.test(location.search))localStorage.removeItem('notrack');off=localStorage.getItem('notrack')==='1';}catch(e){}if(!off){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-SGX5EJT1CN';document.head.appendChild(s);}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>造りすぎ工場｜Mendomi Lab</title>
+<meta name="description" content="4つの工程と毎日の注文。全員を忙しくするとお金を失います。ブラウザで遊べるトヨタ生産方式の体験ゲーム（無料）。">
+<link rel="canonical" href="https://mendomilab.com/ja/play/factory/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=IBM+Plex+Mono:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+</head>
+<body>
+<style>
+/* Layout: 1本の縦ライン。上から材料→4工程→完成品→お客さん。工程の間は床テープで囲った「置き場」 */
+:root{
+  --bg:#E8ECE6; --surface:#F8F9F6; --fg:#1B221E; --muted:#58645D; --line:#C7CEC6;
+  --tape:#E6AE0B; --tape-ink:#1B221E; --pile:#9C7845; --pile-hot:#C2412D;
+  --good:#2C8253; --bad:#C2412D; --btn:#1B221E; --btn-fg:#F8F9F6; --stamp:#C8322A;
+  --display:"Dela Gothic One","Hiragino Sans","Yu Gothic",sans-serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111613; --surface:#1A201C; --fg:#E6ECE7; --muted:#97A39C; --line:#2D3731;
+  --tape:#E6AE0B; --tape-ink:#151515; --pile:#B98E52; --pile-hot:#E3634C;
+  --good:#52B381; --bad:#E3634C; --btn:#E6AE0B; --btn-fg:#151515; --stamp:#E8604F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#1A201C; --fg:#E6ECE7; --muted:#97A39C; --line:#2D3731;
+  --tape:#E6AE0B; --tape-ink:#151515; --pile:#B98E52; --pile-hot:#E3634C;
+  --good:#52B381; --bad:#E3634C; --btn:#E6AE0B; --btn-fg:#151515; --stamp:#E8604F; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;padding:0 16px}
+.wrap{max-width:560px;margin:0 auto;padding-block:24px 48px;display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--display);font-weight:400;font-size:2rem;line-height:1.2;margin:0;text-wrap:balance}
+.stage{font-family:var(--num);font-size:.75rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.mission{margin:0;color:var(--fg)}
+.mission.small{font-size:.88rem;color:var(--muted)}
+.mission b{background:linear-gradient(transparent 60%, color-mix(in srgb,var(--tape) 55%, transparent) 60%)}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums}
+
+.clock{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line)}
+.clock .time{font-family:var(--num);font-size:1.25rem;font-weight:600;font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--tape)}
+.clock .profit{font-family:var(--num);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.profit.neg{color:var(--bad)}
+
+.line{display:flex;flex-direction:column}
+.endpoint{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 12px;color:var(--muted);font-size:.85rem}
+.endpoint strong{color:var(--fg);font-weight:700}
+.proc{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.proc h3{margin:0;font-size:1.05rem;font-weight:700}
+.proc .sub{font-size:.78rem;color:var(--muted)}
+.proc .sub .idle{color:var(--bad)}
+.proc .sub b{white-space:nowrap}
+.work{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:.72rem;color:var(--muted)}
+.work .wbar{width:64px;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.work .wbar i{display:block;height:100%;width:0;background:var(--good)}
+.work.wait .state{color:var(--bad)}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button,.mini button{border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--fg);line-height:1;cursor:pointer;font-family:var(--body)}
+.stepper button{width:40px;height:40px;font-size:1.3rem}
+.stepper button:disabled,.mini button:disabled{opacity:.35;cursor:default}
+.stepper output{min-width:64px;text-align:center;font-family:var(--num);font-weight:600;font-size:1.3rem;line-height:1.1}
+.stepper output small{display:block;font-family:var(--body);font-size:.68rem;font-weight:400;color:var(--muted)}
+button:focus-visible{outline:3px solid var(--tape);outline-offset:2px}
+
+.zone{position:relative;margin:6px 18px;padding:12px 12px 10px;border:2px dashed var(--tape);border-radius:2px;display:flex;flex-direction:column;gap:6px}
+.zone::before{content:"";position:absolute;left:-2px;right:-2px;top:-2px;height:6px;background:repeating-linear-gradient(-45deg,var(--tape) 0 7px,var(--tape-ink) 7px 14px)}
+.zhead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.75rem;color:var(--muted)}
+.mini{display:flex;align-items:center;gap:6px}
+.mini button{width:30px;height:30px;font-size:1rem}
+.mini output{font-family:var(--num);font-weight:600;color:var(--fg);min-width:3.2em;text-align:center}
+.zbody{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;min-height:30px}
+.pile{display:flex;flex-wrap:wrap;gap:3px;min-width:0;align-items:flex-end}
+.pile span{width:12px;height:12px;background:var(--pile);border-radius:1px}
+.pile span.ten{width:27px;height:27px;border-radius:2px;display:grid;place-items:center;font-family:var(--num);font-size:.62rem;font-weight:600;color:var(--surface);line-height:1}
+.pile.hot span{background:var(--pile-hot)}
+.pile span.in{animation:pin .22s ease-out}
+.pile span.out{animation:pout .34s ease-in forwards}
+@keyframes pin{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes pout{0%{opacity:1;transform:scale(1.25)}100%{opacity:0;transform:scale(.4)}}
+.pile em{font-style:normal;font-family:var(--num);font-size:.75rem;color:var(--muted);margin-left:4px}
+.count{text-align:right;font-family:var(--num);font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.count small{display:block;font-family:var(--body);font-weight:400;font-size:.68rem;color:var(--muted)}
+.count.hot{color:var(--pile-hot)}
+.zone.fg{border-color:var(--muted)}
+.zone.fg::before{background:var(--muted)}
+
+.customer{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.customer h3{margin:0;font-size:1.05rem}
+.customer .sub{font-size:.78rem;color:var(--muted)}
+.stat{text-align:right;font-family:var(--num);font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat small{display:block;font-family:var(--body);font-weight:400;font-size:.68rem;color:var(--muted)}
+.stat.bad{color:var(--bad)}
+
+.ledger{width:100%;border-collapse:collapse;font-size:.9rem}
+.ledger td{padding:6px 0;border-bottom:1px solid var(--line)}
+.ledger td:last-child{text-align:right;font-family:var(--num);font-variant-numeric:tabular-nums}
+.ledger tr.total td{border-bottom:none;font-weight:700;font-size:1.05rem;padding-top:10px}
+.ledger .minus{color:var(--muted)}
+.ledger small{font-size:.72rem;line-height:1.4}
+.split{border-top:1px solid var(--line)}
+.split tr.total td{font-size:.95rem}
+.split td[colspan]{text-align:left!important;font-family:var(--body)!important;border-bottom:none;color:var(--fg)}
+.split td[colspan] small{color:var(--muted)}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.primary{flex:1 1 200px;padding:14px 18px;border:none;border-radius:6px;background:var(--btn);color:var(--btn-fg);font-family:var(--body);font-weight:700;font-size:1rem;cursor:pointer}
+.primary:disabled{opacity:.4;cursor:default}
+.ghost{flex:0 1 auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);font-family:var(--body);font-size:.9rem;cursor:pointer}
+.ghost:disabled{opacity:.4;cursor:default}
+.ghost[aria-pressed="true"]{background:var(--tape);color:var(--tape-ink);border-color:var(--tape)}
+
+.result{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.grade{display:flex;align-items:center;gap:16px}
+.grade .letter{font-family:var(--display);font-size:3.4rem;line-height:1;width:72px;height:72px;flex:none;display:grid;place-items:center;border:3px solid currentColor;border-radius:50%}
+.grade .letter.S,.grade .letter.A{color:var(--good)}
+.grade .letter.C{color:var(--bad)}
+.grade p{margin:0}
+.grade .big{font-family:var(--num);font-size:1.5rem;font-weight:600}
+.grade .note{color:var(--muted);font-size:.8rem}
+.lesson{border-top:1px solid var(--line);padding-top:12px}
+.lesson h4{margin:0 0 4px;font-size:1rem}
+.lesson p{margin:0;font-size:.9rem;max-width:62ch}
+.lesson a{color:var(--fg);font-weight:700}
+
+details.box{font-size:.88rem;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+details.box summary{cursor:pointer;color:var(--fg);font-weight:700}
+details.box ul{padding-left:1.2em;margin:8px 0 2px;display:flex;flex-direction:column;gap:4px}
+details.box li{color:var(--fg)}
+details.box b{font-weight:700}
+@media (prefers-reduced-motion: reduce){.pile span.in,.pile span.out{animation:none}}
+
+.cwrap{overflow-x:auto;margin:6px 0 4px}
+table.cd{border-collapse:collapse;font-size:.8rem;min-width:100%}
+table.cd th,table.cd td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.cd th{color:var(--muted);font-weight:700;white-space:nowrap}
+table.cd th small,table.cd td small{display:block;font-weight:400;color:var(--muted);font-size:.72rem;line-height:1.4}
+table.cd td{color:var(--fg);font-variant-numeric:tabular-nums}
+table.cd td.r{text-align:right;white-space:nowrap;font-family:var(--num)}
+table.cd td.na{color:var(--muted)}
+table.cd tr.sum td{font-weight:700;border-bottom:none}
+.ch{margin:12px 0 0;font-size:.9rem}
+.cwait{margin:8px 0 2px;color:var(--muted);font-size:.85rem}
+
+/* 図面の表題欄＋検印：線は gap 1px の下地で引く */
+.titleblock{display:grid;gap:1px;background:var(--fg);border:2px solid var(--fg);margin-top:8px;
+  grid-template-columns:repeat(3,minmax(0,1fr)) 96px;
+  grid-template-areas:"name name name seal" "no rev date seal" "des stg tt seal"}
+.titleblock .cell{padding:6px 8px;background:var(--surface);min-width:0}
+.titleblock .cell > span{display:block;font-size:.62rem;letter-spacing:.12em;color:var(--muted)}
+.titleblock .cell b{display:block;font-family:var(--num);font-weight:600;font-size:.82rem;white-space:nowrap}
+.titleblock .cell.name b{font-family:var(--display);font-weight:400;font-size:1.05rem}
+.tb-name{grid-area:name}.tb-no{grid-area:no}.tb-rev{grid-area:rev}.tb-date{grid-area:date}.tb-des{grid-area:des}.tb-stg{grid-area:stg}.tb-tt{grid-area:tt}
+.titleblock .seal{grid-area:seal;display:flex;flex-direction:column;padding:0}
+.titleblock .seal > span{padding:6px 8px;text-align:center;border-bottom:1px solid var(--fg)}
+.titleblock .seal .stampbox{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 0}
+.hanko{width:66px;height:66px;border:3px solid var(--stamp);border-radius:50%;color:var(--stamp);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-12deg);line-height:1;opacity:.9;position:relative}
+.hanko::after{content:"";position:absolute;inset:3px;border:1px solid var(--stamp);border-radius:50%}
+.hanko .k{font-family:var(--display);font-size:1.5rem}
+.hanko .v{font-family:var(--num);font-weight:600;font-size:.7rem;margin-top:3px}
+@media (max-width:420px){.titleblock{grid-template-columns:repeat(2,minmax(0,1fr)) 88px;
+  grid-template-areas:"name name seal" "no rev seal" "date des seal" "stg tt seal"}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="stage">Stage 1 · 造りすぎのムダ</div>
+    <h1>造りすぎ工場</h1>
+  </header>
+  <p class="mission">あなたは今日からこのラインの工場長。これまで現場では「工程は止めるな、造れるだけ造れ」と言われてきた。お客様からの注文は<b>1日480台</b>。稼働は8:00〜17:00（昼休み：12:00〜13:00）の8時間。<br>1日の利益を最大にしよう。</p>
+
+  <details class="box" open>
+    <summary>ルール</summary>
+    <ul>
+      <li>工場長が決めるのは、各工程の人数と、各置き場に置く仕掛品の数の2つ。</li>
+      <li>各工程には工数（作業者1人で1個を加工する時間）がある。人数を増やすと、その分だけ速く流れる（例：工数180秒の工程に2人なら90秒ごとに1個）。各工程は1個ずつ流す。</li>
+      <li>各工程は、前の置き場に仕掛品があるときだけ次の1個を始められる。なければ手待ちになる。</li>
+      <li>12:00〜13:00は昼休み。加工は止まる。</li>
+      <li>完成品は17:00にまとめて出荷する。480台を超えた分は売れ残る。</li>
+      <li>販売価格は1台 ¥1,000。材料費は切断した個数 × ¥600。</li>
+      <li>作業者の時給は ¥1,200。人件費は手待ちの間もかかり、昼休みはかからない。</li>
+      <li>保管・運搬費は、必要ではない在庫に1個 ¥10/時かかる。当日出荷する完成品（出荷前の480台まで）は必要な在庫なので、かからない。昼休みもかからない。</li>
+      <li>17:00に480台に足りなければ欠品。お客様の信用を失う（1台 ¥200）。</li>
+      <li>売れ残った在庫（完成品・仕掛品）は価値ゼロとして利益を計算する。</li>
+    </ul>
+  </details>
+
+  <div class="clock">
+    <span class="time" id="time">8:00</span>
+    <div class="bar"><i id="bar"></i></div>
+    <span class="profit" id="liveProfit">利益 ¥0</span>
+  </div>
+
+  <div class="line" id="line"></div>
+
+  <div class="actions">
+    <button class="primary" id="start">1日を始める</button>
+    <button class="ghost" id="fast" aria-pressed="false" hidden>早送り</button>
+    <button class="ghost" id="reset">最初の現場に戻す</button>
+  </div>
+
+  <section class="result" id="result" hidden></section>
+
+  <table class="ledger" aria-label="今日の損益">
+    <tbody id="ledger"></tbody>
+  </table>
+
+  <details class="box">
+    <summary>解説（答えのヒントを含みます）</summary>
+    <ul>
+      <li><b>タクトタイム</b>：稼働時間 ÷ 注文数。28,800秒（8時間）÷ 480台 ＝ 60秒に1台。どの工程もこの間隔より速く流す必要はない。</li>
+      <li><b>必要人数</b>：工数 ÷ タクトタイム。工数180秒の工程なら 180 ÷ 60 ＝ 3人で、ちょうど60秒ごとに1個流れる。実際の現場でも、工数やタクトは秒単位で管理する。</li>
+      <li><b>標準手持ち</b>：工程を止めずに流すための最低限の仕掛品の数。このラインでは各置き場1個。標準手持ちを厳密に決めていない現場では「念のため」の在庫が少しずつ増えていく。</li>
+      <li><b>前日の仕掛品</b>：置き場に前日の残りがあるから、後工程も朝からすぐ動き出せる。空の置き場が1つあるごとに、その後ろの工程の出だしが1タクト遅れ、欠品が1台増える。標準手持ちを決めずに置き場を空けて始めると、その問題は朝の手待ちと欠品として出る。</li>
+      <li><b>当日出荷分の完成品</b>：17:00の出荷を待つ480台までの完成品は、出荷のために必要な在庫（必要悪）として保管・運搬費から除いている。</li>
+      <li><b>在庫の価値をゼロとする理由</b>：トヨタ生産方式では、売れると決まっていない在庫は売れ残るものとみなす。帳簿上は資産でも、お金が在庫に姿を変えて眠り、問題も在庫の山に隠れてしまう。</li>
+      <li><b>終業時の扱い</b>：17:00までに仕上がらない1個は始めないとした（その時間は手待ちとして数える）。このゲームは1日分だけを計算するので、終業時の置き場の数は利益に関係しない。置き場が空のまま終わると、翌朝は「仕掛品0個で始めた日」と同じ状態になり、出だしに手待ちと欠品が出る。</li>
+    </ul>
+  </details>
+
+  <details class="box">
+    <summary>計算式</summary>
+    <ul class="calc">
+      <li><b>売上</b> ＝ 出荷台数 × ¥1,000</li>
+      <li><b>材料費</b> ＝ 切断した個数 × ¥600</li>
+      <li><b>人件費</b> ＝ 4工程の人数の合計 × 時給¥1,200 × 8時間</li>
+      <li><b>保管・運搬費</b> ＝ 必要ではない在庫 × ¥10/時 × 置かれていた時間。1秒ごとに積み上げ、昼休みは除く</li>
+      <li><b>必要ではない在庫</b> ＝ 標準手持ちを超える仕掛品 ＋ 480台を超えた完成品。標準手持ちとは、工程を止めずに流すための最低限の仕掛品の数</li>
+      <li><b>欠品の信用損失</b> ＝（480台 − 出荷台数）× ¥200</li>
+      <li><b>利益</b> ＝ 売上 − 材料費 − 人件費 − 保管・運搬費 − 欠品の信用損失</li>
+      <li><b>在庫に変わったお金</b> ＝ 増えた仕掛品（朝の数と標準手持ちの多い方を超えた分）×（¥600 ＋ 通った工程の工数の合計 × ¥1,200 ÷ 3,600秒）＋ 売れ残った完成品 × ¥880。完成品1台に入っている人件費は ¥280（工数の合計840秒分）</li>
+      <li><b>帳簿上の利益</b> ＝ 利益 ＋ 在庫に変わったお金</li>
+      <li><b>流れる間隔</b> ＝ 工数 ÷ 人数（秒ごとに1個）</li>
+      <li><b>手待ち</b> ＝ 前の置き場が空で手が止まっていた時間 × その工程の人数（延べ時間）</li>
+      <li><b>ランク</b> S：理論上の最大 − ¥600 以上／A：最大の85%以上／B：黒字／C：赤字</li>
+    </ul>
+  </details>
+
+  <details class="box" id="calcData" open>
+    <summary>計算式（データ入り）</summary>
+    <div id="calcBody"><p class="cwait">1日を最後まで動かすと、その日の数字を入れた計算式がここに出ます。</p></div>
+  </details>
+  <footer class="titleblock" aria-label="表題欄">
+    <div class="cell name tb-name"><span>名称</span><b>造りすぎ工場</b></div>
+    <div class="cell tb-no"><span>図番</span><b>TSK-001</b></div>
+    <div class="cell tb-rev"><span>改訂</span><b>Rev.1.02</b></div>
+    <div class="cell tb-date"><span>日付</span><b>2026.11.20</b></div>
+    <div class="cell tb-des"><span>設計</span><b>T.Takagi</b></div>
+    <div class="cell tb-stg"><span>工程</span><b>Stage 1</b></div>
+    <div class="cell tb-tt"><span>尺度</span><b>T.T. 60s</b></div>
+    <div class="cell seal"><span>検印</span><div class="stampbox"><div class="hanko" aria-label="検印 1.02"><span class="k">検</span><span class="v">1.02</span></div></div></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+// 時間はすべて秒。min ＝ 終業（8:00から32,400秒後＝17:00）。12:00〜13:00（14,400〜18,000秒）は昼休み
+// 工数＝作業者1人で1個を加工する秒数。工程の流れる間隔＝工数÷人数。時給¥1,200
+const P={price:1000,mat:600,wage:1200,hold:10,lost:200,order:480,min:32400,lunchS:14400,lunchE:18000,otRate:1.25};
+const STD=1; // 標準手持ち（各置き場）
+const isWork=t=>t<P.min&&(t<P.lunchS||t>=P.lunchE);
+const WORK=[120,180,300,240]; // 切断・プレス・溶接・組立の工数（秒）
+const DEF_CREW=[3,4,6,4], DEF_STOCK=[3,3,3];
+const NAMES=[["切断","材料をカット"],["プレス","板を曲げる"],["溶接","部品をつなぐ"],["組立","製品に仕上げる"]];
+const MINC=1, MAXC=8, MAXS=9, EPS=1e-9;
+let crew=DEF_CREW.slice(), stock=DEF_STOCK.slice();
+const toPace=c=>c.map((x,i)=>x/WORK[i]); // 1秒あたりの進み
+const cyc=(c,i)=>{const v=WORK[i]/c; return (Math.round(v*10)/10).toString();};
+const hm=m=>{m=Math.round(m); return m>=60?`${Math.floor(m/60)}時間${m%60?(m%60)+"分":""}`:`${m}分`;};
+let S=null, timer=null, running=false, fast=false, half=0;
+const yen=v=>(v<0?"−¥":"¥")+Math.round(Math.abs(v)).toLocaleString("ja-JP");
+const fl=v=>Math.floor(v+1e-6);
+const $=id=>document.getElementById(id);
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---- シミュレーション（1分刻み・1個ずつ） ---- */
+function newSim(cr,st){
+  return {t:0,crew:cr.slice(),pace:toPace(cr),std:st.slice(),zone:st.slice(),fg:0,shipped:0,
+    busy:[false,false,false,false],prog:[0,0,0,0],idle:[0,0,0,0],ex:[0,0,0,0],lostUnits:0,otSec:[0,0,0,0],nextDay:0,
+    m:{sales:0,mat:0,labor:0,hold:0,lost:0,ot:0}};
+}
+// 手が空いている工程が、前の置き場から次の1個を取る
+function pullPhase(s){
+  if(!isWork(s.t)) return;
+  for(let i=0;i<4;i++){
+    if(s.busy[i]||s.pace[i]<=0) continue;
+    // 午後は、17:00までに仕上がらない1個は始めない（その時間は手待ち）
+    if(s.t>=P.lunchE&&P.min-s.t<Math.ceil(WORK[i]/s.crew[i]-EPS)){s.prog[i]=0; continue;}
+    if(i===0){s.busy[0]=true;}
+    else if(s.zone[i-1]>=1){s.zone[i-1]-=1; s.busy[i]=true;}
+    else s.prog[i]=0;
+  }
+}
+// 1秒進める：加工が終わった1個を次の置き場へ置く
+function advancePhase(s){
+  const work=isWork(s.t);
+  s.t+=1;
+  // 昼休みは加工も人件費も保管費も止まる
+  if(!work) return;
+  // 余分な在庫：置き場ごとに1個を超える分＋480台を超えた完成品（当日出荷分は除く）
+  const ex=[Math.max(0,s.zone[0]-1),Math.max(0,s.zone[1]-1),Math.max(0,s.zone[2]-1),Math.max(0,s.fg-P.order)];
+  for(let i=0;i<4;i++) s.ex[i]+=ex[i]; // 延べ個・秒
+  s.m.hold+=(ex[0]+ex[1]+ex[2]+ex[3])*P.hold/3600;
+  for(let i=0;i<4;i++){
+    if(s.busy[i]) s.prog[i]+=s.pace[i];
+    else if(s.pace[i]>0) s.idle[i]+=s.crew[i]; // 手待ちの延べ人・秒
+  }
+  for(let i=0;i<4;i++){
+    if(s.busy[i]&&s.prog[i]>=1-EPS){
+      s.prog[i]=Math.max(0,s.prog[i]-1); s.busy[i]=false;
+      if(i===0) s.m.mat+=P.mat; // 材料費は切断し終えた個数で数える
+      if(i<3) s.zone[i]+=1; else s.fg+=1;
+    }
+  }
+  s.m.labor+=(s.crew[0]+s.crew[1]+s.crew[2]+s.crew[3])*P.wage/3600;
+}
+function closeDay(s){
+  // 17:00 にまとめて出荷
+  const k=Math.min(s.fg,P.order); s.fg-=k; s.shipped=k; s.m.sales+=k*P.price;
+  const short=P.order-s.shipped; if(short>0){s.lostUnits=short; s.m.lost+=short*P.lost;}
+}
+function profit(m){return m.sales-m.mat-m.labor-m.hold-m.lost}
+function runFull(pc,st){const s=newSim(pc,st); pullPhase(s); while(s.t<P.min){advancePhase(s); pullPhase(s);} closeDay(s); return s;}
+const MAX=Math.round(profit(runFull([2,3,5,4],[1,1,1]).m));
+
+/* ---- 画面 ---- */
+function buildLine(){
+  let h=`<div class="endpoint"><span>材料置き場</span><strong>1個 ¥600</strong></div>`;
+  for(let i=0;i<4;i++){
+    h+=`<div class="proc"><div><h3>${NAMES[i][0]}</h3><div class="sub">${NAMES[i][1]}・<b>工数 1個${WORK[i]}秒</b></div><div class="sub" id="sub${i}"></div>
+        <div class="work" id="work${i}"><span class="wbar"><i id="wb${i}"></i></span><span class="state" id="ws${i}">待機</span></div></div>
+      <div class="stepper"><button id="dn${i}" aria-label="${NAMES[i][0]}の人数を減らす">−</button>
+      <output id="pv${i}"></output>
+      <button id="up${i}" aria-label="${NAMES[i][0]}の人数を増やす">＋</button></div></div>`;
+    if(i<3) h+=`<div class="zone"><div class="zhead"><span>仕掛品</span><div class="mini">
+        <button id="sdn${i}" aria-label="置き場${i+1}の数を減らす">−</button><output id="sv${i}">${stock[i]}個</output>
+        <button id="sup${i}" aria-label="置き場${i+1}の数を増やす">＋</button></div></div>
+        <div class="zbody"><div class="pile" id="pile${i}"></div><div class="count" id="cnt${i}">0<small>いまの数</small></div></div></div>`;
+  }
+  h+=`<div class="zone fg"><div class="zhead"><span>完成品置き場（480台を超えた分だけ表示）</span></div><div class="zbody"><div class="pile" id="pileFg"></div><div class="count" id="cntFg">0<small>売れ残り</small></div></div></div>`;
+  h+=`<div class="customer"><div><h3>お客様</h3><div class="sub">1日の注文 480台・17:00に出荷</div></div>
+    <div class="stat" id="shipped">0<small>完成</small></div><div class="stat" id="lost">480<small>残り</small></div></div>`;
+  $("line").innerHTML=h;
+  for(let i=0;i<4;i++){
+    $("dn"+i).onclick=()=>{crew[i]=Math.max(MINC,crew[i]-1);syncInputs()};
+    $("up"+i).onclick=()=>{crew[i]=Math.min(MAXC,crew[i]+1);syncInputs()};
+  }
+  for(let i=0;i<3;i++){
+    $("sdn"+i).onclick=()=>{stock[i]=Math.max(0,stock[i]-1);syncInputs();idleView()};
+    $("sup"+i).onclick=()=>{stock[i]=Math.min(MAXS,stock[i]+1);syncInputs();idleView()};
+  }
+}
+function syncInputs(){
+  for(let i=0;i<4;i++){
+    $("pv"+i).innerHTML=`${crew[i]}人<small>${crew[i]>0?cyc(crew[i],i)+"秒ごと":"停止"}</small>`;
+    $("dn"+i).disabled=running||crew[i]<=MINC;
+    $("up"+i).disabled=running||crew[i]>=MAXC;
+  }
+  for(let i=0;i<3;i++){
+    $("sv"+i).textContent=stock[i]+"個";
+    $("sdn"+i).disabled=running||stock[i]<=0;
+    $("sup"+i).disabled=running||stock[i]>=MAXS;
+  }
+}
+// 個数の増減を見せる。10個は「10個入りの箱」1つ（小さい箱4つ分の大きさ）にまとめ、端数は1個ずつ
+function setPile(el,n,hot){
+  const MAXT=50, tens=Math.min(Math.floor(n/10),MAXT), ones=n>=MAXT*10+10?0:n-tens*10;
+  el.classList.toggle("hot",hot);
+  const anim=!fast&&!reduce;
+  const sync=(cls,want,label)=>{
+    const live=[...el.querySelectorAll("span."+cls+":not(.out)")];
+    if(want>live.length){
+      const anchor=cls==="ten"?el.querySelector("span.one, em"):el.querySelector("em");
+      for(let k=live.length;k<want;k++){const sp=document.createElement("span"); sp.className=cls+(anim?" in":""); if(label) sp.textContent=label; el.insertBefore(sp,anchor);}
+    }else{
+      for(let k=live.length-1;k>=want;k--){const sp=live[k]; if(anim){sp.classList.add("out"); setTimeout(()=>sp.remove(),340);} else sp.remove();}
+    }
+  };
+  sync("ten",tens,"10"); sync("one",Math.min(ones,9),"");
+  let em=el.querySelector("em");
+  const rest=n-tens*10-Math.min(ones,9);
+  if(rest>0){ if(!em){em=document.createElement("em");el.appendChild(em);} em.textContent="+"+rest;} else if(em) em.remove();
+}
+function render(s){
+  for(let i=0;i<3;i++){
+    const n=s.zone[i], hot=n>s.std[i]+3;
+    setPile($("pile"+i),n,hot);
+    const c=$("cnt"+i); c.className="count"+(hot?" hot":""); c.innerHTML=`${n}<small>いまの数</small>`;
+  }
+  const done=s.t>=P.min&&!running;
+  // 完成品は480台までは出荷待ちの必要な在庫なので積まない。480台を超えた売れ残りだけ見せる
+  const extra=done?s.fg:Math.max(0,s.fg-P.order);
+  setPile($("pileFg"),extra,extra>0);
+  const cf=$("cntFg"); cf.className="count"+(extra>0?" hot":""); cf.innerHTML=`${extra}<small>売れ残り</small>`;
+  $("shipped").innerHTML=done?`${s.shipped}<small>出荷</small>`:`${s.fg}<small>完成</small>`;
+  $("lost").innerHTML=done?`${s.lostUnits}<small>欠品</small>`:`${Math.max(0,P.order-s.fg)}<small>残り</small>`;
+  $("lost").className="stat"+(done&&s.lostUnits>0?" bad":"");
+  for(let i=0;i<4;i++){
+    const w=$("work"+i), on=s.busy[i];
+    $("wb"+i).style.width=(on?Math.min(1,s.prog[i])*100:0)+"%";
+    const lunch=running&&!isWork(s.t)&&s.t<P.min;
+    const waiting=!on&&!lunch&&s.pace[i]>0&&s.t<P.min&&running;
+    w.className="work"+(waiting?" wait":"");
+    $("ws"+i).textContent=s.pace[i]<=0?"停止":lunch?"昼休み":on?"作業中":waiting?"手待ち":"待機";
+    const id=s.idle[i];
+    $("sub"+i).innerHTML=(i>0&&id>=60?`<span class="idle">手待ち 延べ${hm(id/60)}</span>`:"");
+  }
+  const h=8+Math.floor(s.t/3600), mm=Math.floor(s.t%3600/60);
+  $("time").textContent=`${h}:${String(mm).padStart(2,"0")}`+(s.t>=P.lunchS&&s.t<P.lunchE?" 昼休み":"");
+  $("bar").style.width=(s.t/P.min*100)+"%";
+  // 稼働中は「出荷予定の完成品（480台まで）」を売上見込みに入れて、見込み利益として見せる
+  const m=s.m, plan=done?m.sales:Math.min(s.fg,P.order)*P.price;
+  const p=profit(m)-m.sales+plan;
+  $("liveProfit").textContent=(done?"利益 ":"見込み利益 ")+yen(p);
+  $("liveProfit").className="profit"+(p<0?" neg":"");
+  $("ledger").innerHTML=
+    `<tr><td>${done?"売上":"売上（出荷予定の完成品）"}</td><td>${yen(plan)}</td></tr>`+
+    `<tr><td class="minus">材料費</td><td class="minus">−${yen(m.mat)}</td></tr>`+
+    `<tr><td class="minus">人件費</td><td class="minus">−${yen(m.labor)}</td></tr>`+
+    `<tr><td class="minus">必要ではない在庫の保管・運搬費<br><small>※標準手持ちを超える仕掛品と、480台を超えた完成品。昼休みは除く</small></td><td class="minus">−${yen(m.hold)}</td></tr>`+
+    `<tr><td class="minus">欠品の信用損失</td><td class="minus">−${yen(m.lost)}</td></tr>`+
+    `<tr class="total"><td>${done?"利益":"見込み利益"}</td><td>${yen(p)}</td></tr>`;
+}
+function idleView(){ if(!running){ S=newSim(crew,stock); render(S);} }
+
+// 1コマで数十秒進める。コマの最後の1秒は「置く」だけで止めて描画し、次のコマの頭で「取る」。
+// こうすると、置かれてすぐ取られる仕掛品もポンと現れてフッと消えるのが見える
+function frame(){
+  const n=fast?300:30;
+  if(half===1){pullPhase(S); half=0;}
+  for(let k=1;k<=n;k++){
+    advancePhase(S);
+    if(S.t>=P.min){closeDay(S); render(S); finish(); return;}
+    if(k<n) pullPhase(S);
+  }
+  half=1; render(S);
+}
+function start(){
+  if(running) return;
+  S=newSim(crew,stock); running=true; half=0; fast=false;
+  $("fast").setAttribute("aria-pressed","false");
+  $("result").hidden=true; $("calcBody").innerHTML=`<p class="cwait">稼働中です。17:00に終わると、この日の数字を入れた計算式がここに出ます。</p>`;
+  pullPhase(S);
+  $("start").disabled=true; $("start").textContent="稼働中…"; $("reset").hidden=true; $("fast").hidden=false;
+  syncInputs(); render(S);
+  timer=setInterval(frame,45);
+}
+function finish(){
+  clearInterval(timer); timer=null; running=false; fast=false;
+  $("start").disabled=false; $("start").textContent="設定を変えてもう一度"; $("reset").hidden=false; $("fast").hidden=true;
+  syncInputs(); render(S);
+  const p=profit(S.m);
+  const g=p>=MAX-600?"S":p>=MAX*0.85?"A":p>=0?"B":"C";
+  let best=null;
+  try{const b=localStorage.getItem("tsukurisugi-best3"); best=b===null?null:Number(b); if(best===null||p>best) localStorage.setItem("tsukurisugi-best3",String(Math.round(p)));}catch(e){}
+  const over=[0,1,2].reduce((a,i)=>a+Math.max(0,S.zone[i]-S.std[i]),0)+S.fg;
+  // 今日増えた在庫に入っている材料費と人件費（通った工程の工数×¥20）
+  const lab=k=>WORK.slice(0,k).reduce((a,b)=>a+b,0)*P.wage/3600;
+  const invVal=[0,1,2].reduce((a,i)=>a+Math.max(0,S.zone[i]-Math.max(S.std[i],STD))*(P.mat+lab(i+1)),0)+S.fg*(P.mat+lab(4));
+  const overCost=invVal+S.m.hold;
+  const idle=S.idle[1]+S.idle[2]+S.idle[3];
+  const stdSum=S.std[0]+S.std[1]+S.std[2];
+  const L=[];
+  if(over>=4) L.push(["造りすぎのムダ",`前工程を速くしても、売れるのは1日480台だけ。増えたのは在庫 ${over}個。帳簿の上では在庫は資産なので、利益は ${yen(p+invVal)} に見える。でもトヨタ生産方式では、売れると決まっていない在庫は売れ残るものとみなし、価値をゼロで考える。だから造りすぎを「最悪のムダ」と呼ぶ。お金を在庫に変えてしまい、問題も在庫の山に隠してしまうから。`]);
+  if(S.lostUnits>0) L.push(["欠品",`注文に ${S.lostUnits}台 間に合わなかった。どこか1つでも工程が遅かったり、朝に置き場が空で後工程が待たされたりすると、ライン全体の出来高が減る。各工程の必要人数は「工数 ÷ タクトタイム」で逆算できる。`]);
+  if(idle>=600) L.push(["手待ちのムダ",`前の置き場が空で、手が止まっていた時間が延べ${hm(idle/60)}ある。約${yen(idle*P.wage/3600)}の人件費を待ち時間に払った計算。`]);
+  if(!L.length&&stdSum>3) L.push(["置き場の持ちすぎ",`流れはそろっているが、置き場に朝から計${stdSum}個。このラインを止めずに流すのに最低限必要なのは各置き場1個で、これを標準手持ちと呼ぶ。標準手持ちを厳密に決めていない現場では「念のため」の在庫が少しずつ増え、保管費がかかり続ける。`]);
+  if(!L.length) L.push(["1個流し",`8時間で480台、つまり60秒に1台（タクトタイム）。全工程の人数を「工数 ÷ タクトタイム」で決めてこの速さにそろえ、置き場は標準手持ちの1個ずつ。部品は置かれたそばから次の工程が使い、在庫がほとんど積まれない。これがトヨタ生産方式の目指す流れ。`]);
+  // 人を減らして注文どおり出荷できたとき：空いた人の使い道
+  const startSum=DEF_CREW.reduce((a,b)=>a+b,0), nowSum=S.crew.reduce((a,b)=>a+b,0);
+  const freed=(S.lostUnits===0&&nowSum<startSum)?`<div class="lesson"><h4>空いた人はどうする？</h4><p>最初より${startSum-nowSum}人少ない${nowSum}人で 注文どおり出荷できた。トヨタの考え方では 空いた人は削るコストではなく 次の改善や新しい仕事 人を育てることに回せる力。改善が人減らしで終わると 次からはみんながムダを隠すようになる。</p></div>`:"";
+  const r=$("result"); r.hidden=false;
+  r.innerHTML=`<div class="grade"><div class="letter ${g}">${g}</div><div><p>今日の利益</p><p class="big">${yen(p)}</p><p class="note">理論上の最大 ${yen(MAX)}${best!==null?` · これまでの最高 ${yen(Math.max(best,p))}`:""}</p></div></div>`+
+    (overCost>=1?`<table class="ledger split"><tbody>
+      <tr><td colspan="2"><strong>造りすぎで消えたお金</strong></td></tr>
+      <tr><td class="minus">在庫に変わったお金<br><small>今日増えた完成品・仕掛在庫 ${over}個に入っている材料費と人件費</small></td><td class="minus">${yen(invVal)}</td></tr>
+      <tr><td class="minus">必要ではない在庫の保管・運搬費</td><td class="minus">${yen(S.m.hold)}</td></tr>
+      <tr class="total"><td>合計</td><td>${yen(overCost)}</td></tr>
+      <tr><td colspan="2"><small>帳簿上の利益（在庫を資産として数えた場合）は ${yen(p+invVal)}。このゲームはトヨタ生産方式の考え方で、売れると決まっていない在庫の価値をゼロとして利益を出している。</small></td></tr>
+    </tbody></table>`:"")+
+    L.slice(0,2).map(([h,t])=>`<div class="lesson"><h4>${h}</h4><p>${t}</p></div>`).join("")+freed+
+    `<div class="lesson trainers"><h4>研修や授業で使う方へ</h4><p>注文 工数 価格 賃金を自分の職場に合わせて変えられるPro版は 日本語版を準備中です。ほかのゲームは <a href="/ja/#games">Mendomi Lab</a> にあります。</p><p style="margin-top:6px">自分のラインや授業に合わせたいときや 少し話してみたいときは <a href="/ja/consult/" target="_blank" rel="noopener">気軽に聞いてください（最初の1往復は無料）→</a></p></div>`;
+  renderCalc(S,p,invVal,g);
+  r.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
+}
+// 1日の結果を、計算式にこの日の数字を入れて見せる
+function renderCalc(s,p,invVal,g){
+  const n=v=>Math.round(v).toLocaleString("ja-JP");
+  const h1=v=>(Math.round(v*10)/10).toLocaleString("ja-JP");
+  const PL=["置き場1（切断→プレス）","置き場2（プレス→溶接）","置き場3（溶接→組立）"];
+  const crewSum=s.crew.reduce((a,b)=>a+b,0);
+  const cut=Math.round(s.m.mat/P.mat);
+  const lab=k=>WORK.slice(0,k).reduce((a,b)=>a+b,0)*P.wage/3600;
+  const exH=s.ex.map(v=>v/3600), exSum=exH.reduce((a,b)=>a+b,0);
+  const idleSum=s.idle[1]+s.idle[2]+s.idle[3];
+  // 工程ごと
+  let t1=`<div class="cwrap"><table class="cd"><thead><tr><th>工程</th><th>流れる間隔<br><small>工数 ÷ 人数</small></th><th>待った時間</th><th>延べ手待ち<br><small>待った時間 × 人数</small></th><th>手待ちの金額<br><small>延べ秒 × ¥1,200 ÷ 3,600</small></th></tr></thead><tbody>`;
+  for(let i=0;i<4;i++){
+    const c=s.crew[i], w=c>0?s.idle[i]/c:0;
+    t1+=`<tr><td>${NAMES[i][0]}</td><td>${WORK[i]}秒 ÷ ${c}人 ＝ <b>${h1(WORK[i]/c)}秒</b></td>`+
+      (i===0?`<td colspan="3" class="na">材料はいつもあるので手待ちなし</td>`:
+      `<td>${n(w)}秒</td><td>${n(w)}秒 × ${c}人 ＝ ${n(s.idle[i])}人秒</td><td>${yen(s.idle[i]*P.wage/3600)}</td>`)+`</tr>`;
+  }
+  t1+=`<tr class="sum"><td colspan="3">合計</td><td>${n(idleSum)}人秒（${hm(idleSum/60)}）</td><td>${yen(idleSum*P.wage/3600)}</td></tr></tbody></table></div>`;
+  // お金
+  const rows=[
+    ["売上",`${n(s.shipped)}台 × ¥1,000`,s.m.sales],
+    ["材料費",`切断した ${n(cut)}個 × ¥600`,-s.m.mat],
+    ["人件費",`${crewSum}人 × ¥1,200 × 8時間`,-s.m.labor],
+    ["必要ではない在庫の保管・運搬費",`延べ ${h1(exSum)}個・時間 × ¥10<br><small>${PL.map((l,i)=>`${l} ${h1(exH[i])}`).join("／")}／480台を超えた完成品 ${h1(exH[3])}（個・時間）</small>`,-s.m.hold],
+    ["欠品の信用損失",`（480台 − ${n(s.shipped)}台）× ¥200`,-s.m.lost],
+  ];
+  let t2=`<div class="cwrap"><table class="cd"><thead><tr><th>項目</th><th>計算式（この日の数字）</th><th>金額</th></tr></thead><tbody>`+
+    rows.map(([a,b,v])=>`<tr><td>${a}</td><td>${b}</td><td class="r">${v<0?"−":""}${yen(Math.abs(v))}</td></tr>`).join("")+
+    `<tr class="sum"><td>利益</td><td>売上 − 各費用</td><td class="r">${yen(p)}</td></tr></tbody></table></div>`;
+  // 造りすぎ
+  const vals=[0,1,2].map(i=>P.mat+lab(i+1)), fgVal=P.mat+lab(4);
+  const base=[0,1,2].map(i=>Math.max(s.std[i],STD));
+  const inc=[0,1,2].map(i=>Math.max(0,s.zone[i]-base[i]));
+  let t3=`<div class="cwrap"><table class="cd"><thead><tr><th>項目</th><th>計算式（この日の数字）</th><th>金額</th></tr></thead><tbody>`+
+    [0,1,2].map(i=>`<tr><td>${PL[i]}で増えた仕掛品</td><td>（${s.zone[i]} − ${base[i]}）＝ ${inc[i]}個 × ¥${n(vals[i])}<br><small>${base[i]}は朝の数と標準手持ちの多い方。材料¥600 ＋ ここまでの工数${WORK.slice(0,i+1).reduce((a,b)=>a+b,0)}秒 × ¥1,200 ÷ 3,600</small></td><td class="r">${yen(inc[i]*vals[i])}</td></tr>`).join("")+
+    `<tr><td>売れ残った完成品</td><td>${n(s.fg)}台 × ¥${n(fgVal)}<br><small>材料¥600 ＋ 工数840秒分の人件費¥280</small></td><td class="r">${yen(s.fg*fgVal)}</td></tr>`+
+    `<tr class="sum"><td>在庫に変わったお金</td><td>上の合計</td><td class="r">${yen(invVal)}</td></tr>`+
+    `<tr><td>帳簿上の利益</td><td>利益 ${yen(p)} ＋ 在庫に変わったお金 ${yen(invVal)}</td><td class="r">${yen(p+invVal)}</td></tr>`+
+    `<tr><td>ランク</td><td>利益 ${yen(p)}／理論上の最大 ${yen(MAX)}（${Math.round(p/MAX*100)}%）</td><td class="r"><b>${g}</b></td></tr></tbody></table></div>`;
+  $("calcBody").innerHTML=`<h4 class="ch">工程ごと</h4>${t1}<h4 class="ch">お金</h4>${t2}<h4 class="ch">造りすぎ</h4>${t3}`;
+  $("calcData").hidden=false;
+}
+$("start").onclick=start;
+$("fast").onclick=()=>{fast=!fast; $("fast").setAttribute("aria-pressed",String(fast));};
+$("reset").onclick=()=>{crew=DEF_CREW.slice(); stock=DEF_STOCK.slice(); syncInputs(); idleView();};
+buildLine(); syncInputs(); idleView();
+})();
+</script>
+
+</body>
+</html>
