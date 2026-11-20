@@ -61,3 +61,25 @@ footer.site{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--mut
 footer.site .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 footer.site a{color:var(--muted);margin-right:16px}
 .card .btns{display:flex;gap:8px;flex-wrap:wrap}.card .btns .btn{padding:10px 16px;font-size:15px}
+/* lang + consult additions */
+html[lang="ja"] body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;line-height:1.85}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3,html[lang="ja"] .quote,html[lang="ja"] .price,html[lang="ja"] .def b{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
+html[lang="ja"] .hero h1{max-width:18ch}
+nav a.lang{border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.notice{background:var(--accent-soft);color:var(--accent);border-radius:10px;padding:10px 14px;font-size:15px;font-weight:600;margin:0 0 24px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin:18px 0 8px}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.plan h3{font-size:21px;margin-bottom:6px}
+.plan .price{display:block;margin:6px 0 10px}
+.plan p{margin:0;color:var(--muted);font-size:15px}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:18px 0}
+.menu .plan b.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;margin-right:8px}
+.facts{margin:0;padding-left:20px}
+.facts li{margin:6px 0}
+.cta{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;margin:28px 0}
+.cta p{margin:0 0 14px}
+.small{font-size:14px;color:var(--muted)}
+table.law{width:100%;border-collapse:collapse;font-size:15px}
+table.law th,table.law td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}
+table.law th{width:32%;color:var(--muted);font-weight:600}
+@media (max-width:800px){header.site .wrap{height:auto;flex-wrap:wrap;padding-top:14px;padding-bottom:12px;row-gap:8px}header.site nav{width:100%;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}header.site nav a{margin-left:0}}
