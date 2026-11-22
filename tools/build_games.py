@@ -2,6 +2,7 @@ import json, os, html
 ROOT='/home/claude/mendomilab'
 GTAG=open(f'{ROOT}/about/index.html').read().split('\n')[2]  # the analytics <script> line
 
+OG={'games/overproduction-factory/':'og_of.png','games/suppliers-puzzle/':'og_sp.png','ja/games/factory/':'og_ja_of.png','ja/games/supplier/':'og_ja_sp.png','ja/games/pasta/':'og_ja_pasta.png'}
 def page(lang, path, title, desc, h1, lead, sections, faqs, buttons, alt_en, alt_ja, crumb_name):
     depth=path.strip('/').count('/')+1
     up='../'*depth
@@ -46,6 +47,8 @@ def page(lang, path, title, desc, h1, lead, sections, faqs, buttons, alt_en, alt
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canon}">
 <meta property="og:type" content="article">
+<meta property="og:image" content="https://mendomilab.com/assets/social/{OG[path]}">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="{up}assets/site.css">
 <script type="application/ld+json">{json.dumps(ld,ensure_ascii=False)}</script>
 </head>
