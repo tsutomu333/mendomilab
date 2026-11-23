@@ -261,6 +261,7 @@ JA2_BODY = '''  <p class="lead"><b>造りすぎのムダとは お客様が必�
 <p><a href="../../games/factory/">造りすぎ工場</a>は 4つの工程と1日480台の注文がある架空の工場で「工程は止めるな 造れるだけ造れ」のルールのまま動かすと 注文は全部出せるのに利益がマイナスになるのを体験する無料のブラウザゲームです。人数と仕掛品の数を変えて 本当に利益が出る形を自分で見つけます。研修では「注文は全部出せた。ではお金はどこに消えた？」という問いから話が深まります。</p>
 <p><a class="btn primary" href="../../play/factory/">無料で遊ぶ</a><a class="btn ghost" href="../../games/factory/">ゲームの説明を見る</a></p>
 <p>平準化については <a href="../heijunka/">平準化とは？ わかりやすく解説</a> にまとめています。</p>
+<p>研修での使い方は <a href="../kenshu-game/">製造業の研修に使えるゲーム</a> にまとめています。</p>
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
@@ -291,7 +292,7 @@ EN2_BODY = '''  <p class="lead"><b>These are free, browser-based lean simulation
 
 <h2>How to choose</h2>
 <ul>
-<li><b>New to lean, or one session only:</b> start with Overproduction Factory. It opens the most basic question — are we building what the customer needs?</li>
+<li><b>New to lean, or one session only:</b> start with Overproduction Factory. It opens the most basic question — are we building what the customer needs? See <a href="../overproduction-waste/">overproduction waste examples</a>.</li>
 <li><b>Teaching heijunka or working with suppliers:</b> use The Supplier's Puzzle. Read <a href="../heijunka-examples/">heijunka examples with numbers</a> first if you need a refresher.</li>
 <li><b>A half-day workshop:</b> run both. Overproduction first, then the supplier view of the same problem.</li>
 </ul>
@@ -328,10 +329,148 @@ if __name__ == '__main__':
          '造りすぎのムダとは 必要より多く早く造ること。7つのムダの中でなぜ一番悪いのか 数字の例 職場で見つけるチェック なくす方法を トヨタの子会社のコンサル会社で20年以上改善をしてきた人が説明します。',
          '造りすぎのムダとは？ 7つのムダで一番悪いと言われる理由', JA2_BODY, JA2_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("造りすぎのムダとは", "https://mendomilab.com/ja/learn/tsukurisugi-no-muda/")],
-         None, og='og_ja_of')
+         'learn/overproduction-waste/', og='og_ja_of')
     page('en', 'learn/lean-simulation-games/', '../../',
          'Lean Simulation Games Online: Free Browser Games for Lean Training | Mendomi Lab',
          'Free browser-based lean simulation games for training and classes: overproduction, takt time and heijunka. No install, 30–90 minute workshops, Pro versions for trainers. Built by a 20+ year consultant at a Toyota subsidiary.',
          'Lean simulation games online: free browser games for lean training', EN2_BODY, EN2_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Lean simulation games", "https://mendomilab.com/learn/lean-simulation-games/")],
          None, og='og')
+
+
+# ---------- 日本語：製造業の研修ゲーム ----------
+JA3_BODY = '''  <p class="lead"><b>製造業の研修で使える トヨタ生産方式（TPS）を体験するゲームです。</b>どれもブラウザで無料で遊べて 登録もいりません。研修なら30〜90分で使えます（時間は下の一覧）。新人研修 監督者研修 改善チームの勉強会 大学の授業に向いています。トヨタの子会社のコンサル会社で20年以上 工場の改善をしてきた人が 現場での教え方をもとに作りました。</p>
+
+<h2>ゲームの一覧</h2>
+<table><thead><tr><th>ゲーム</th><th>学べること</th><th>向いている研修</th><th>研修の時間</th></tr></thead><tbody>
+<tr><td><a href="../../games/factory/">造りすぎ工場</a></td><td>造りすぎのムダ タクトタイム 必要人数 標準手持ち</td><td>新人研修 監督者研修 リーンの入り口</td><td>30〜90分</td></tr>
+<tr><td><a href="../../games/supplier/">サプライヤーのパズル</a></td><td>平準化 サプライヤーの人 設備 在庫のコスト</td><td>購買 生産計画 調達 管理職研修</td><td>30〜90分</td></tr>
+<tr><td><a href="../../games/pasta/">回らないパスタ屋</a></td><td>ネック（いちばん先にいっぱいになる場所） 人数の配置</td><td>研修の入り口 製造業以外のチーム</td><td>30〜60分</td></tr>
+</tbody></table>
+
+<h2>研修の目的からえらぶ</h2>
+<ul>
+<li><b>新人研修で「ムダ」と「お客様が必要な量」を体で覚えてほしい</b>：<a href="../../games/factory/">造りすぎ工場</a>。「工程は止めるな 造れるだけ造れ」のまま動かすと 注文は全部出せても1日の利益がマイナスになるのを体験します。</li>
+<li><b>監督者や改善チームに 人数と仕掛品の決め方を学んでほしい</b>：造りすぎ工場で タクトタイムと標準手持ちを自分で出します。</li>
+<li><b>購買や生産計画の担当に サプライヤーとの関係を考えてほしい</b>：<a href="../../games/supplier/">サプライヤーのパズル</a>。組み立ての順番が サプライヤーの人 設備 在庫のコストにどう影響するかを見ます。</li>
+<li><b>まず楽しく入りたい 事務やサービスの人もいる</b>：<a href="../../games/pasta/">回らないパスタ屋</a>。飲食店が題材なので だれでも入りやすいです。</li>
+<li><b>半日の研修</b>：パスタ屋 → 造りすぎ工場 → サプライヤーのパズル の順に 身近な題材からつなげます。</li>
+</ul>
+
+<h2>製造業の新入社員研修での使い方（60分の例）</h2>
+<table><thead><tr><th>時間</th><th>やること</th></tr></thead><tbody>
+<tr><td>5分</td><td>工場の説明と「工程は止めるな 造れるだけ造れ」というルールを伝える</td></tr>
+<tr><td>10分</td><td>造りすぎ工場を そのまま1日動かす（2〜3人で1画面）</td></tr>
+<tr><td>10分</td><td>ふり返り「注文は全部出せた。ではお金はどこに消えた？」</td></tr>
+<tr><td>20分</td><td>人数と工程のあいだの数を変えて もう一度動かし グループの結果をくらべる</td></tr>
+<tr><td>10分</td><td>タクトタイムと造りすぎのムダを 体験とつなげて説明する</td></tr>
+<tr><td>5分</td><td>明日から職場で見るところを 1人1つ書く</td></tr>
+</tbody></table>
+
+<h2>ゲーム形式の研修の進め方</h2>
+<ol>
+<li><b>まずそのまま動かす</b>：何も変えずに動かして 問題を自分の目で見てもらいます。</li>
+<li><b>説明の前に問いかける</b>：「注文は全部出せた。ではお金はどこに消えた？」のような問いを1つだけ出します。</li>
+<li><b>試してまちがえてもらう</b>：答えは先に言いません。まちがえた理由を話し合うところに学びがあります。</li>
+<li><b>結果をくらべる</b>：グループごとの設定と結果をホワイトボードに書いてくらべます。</li>
+<li><b>職場に持ち帰る</b>：明日から自分の職場で見るところを 1人1つ書いてもらいます。</li>
+</ol>
+<p>人数は何人でもできます。2〜3人で1つの画面を見ながら進めると 話し合いが生まれます。オンラインの研修でも 画面を共有すれば使えます。</p>
+
+<h2>講義だけの研修とのちがい</h2>
+<table><thead><tr><th></th><th>講義</th><th>ゲーム形式</th></tr></thead><tbody>
+<tr><td>覚え方</td><td>言葉と考え方を聞く</td><td>自分で動かして 結果から気づく</td></tr>
+<tr><td>試せる回数</td><td>考え方を聞くだけ</td><td>1日や1か月の動きを数分で何度もためせる</td></tr>
+<tr><td>数字</td><td>例の数字を見る</td><td>自分が変えた人数や順番で 利益とコストが変わる</td></tr>
+<tr><td>よいところ</td><td>考え方を短い時間で整理できる</td><td>試した結果をもとに話し合える</td></tr>
+</tbody></table>
+<p>講義とゲームはどちらかではなく 組み合わせると効きます。ゲームのあとに考え方を説明すると 言葉が体験とつながります。</p>
+
+<h2>無料版とPro版</h2>
+<p>無料版で遊ぶことも 研修で使うこともできます。造りすぎ工場とサプライヤーのパズルには 研修をする人向けのPro版があり 注文や工数 コストなどを自分の職場に合わせて変えられ 進行役の手引きもつきます（回らないパスタ屋は無料版だけです）。日本語のPro版は準備中です。研修に合わせた作り直しや 進め方の相談は <a href="../../consult/">相談する</a> からどうぞ（最初の1往復は無料）。</p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。</p>
+<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a></p>
+'''
+JA3_FAQ = [
+    ("無料で研修に使えますか？", "使えます。無料版はブラウザでそのまま遊べて 登録もいりません。研修をする人向けのPro版は 設定を自分の職場に合わせて変えられ 進行役の手引きがつきます（日本語版は準備中）。"),
+    ("リーンやトヨタ生産方式にくわしくなくても進行できますか？", "はじめてでも このページの手順で進められます。まずそのまま動かして 結果を見てから 何が起きたかを問いかけてください。"),
+    ("オンライン研修でも使えますか？", "使えます。ブラウザで動くので 画面を共有すれば オンラインでも教室でも使えます。"),
+    ("新人研修に向いているのはどれですか？", "造りすぎ工場です。必要な量を超えて造ると 在庫やコストがどう増えるのかを 短い時間で体験できます。"),
+]
+
+# ---------- 英語：overproduction waste examples ----------
+EN3_BODY = '''  <p class="lead"><b>Overproduction waste means making more than the customer needs, or making it earlier than needed.</b> It is one of the seven wastes of the Toyota Production System, and it is often called the worst one, because it creates the other wastes and hides problems. Below are concrete overproduction waste examples — in a factory, in an office and in services — with numbers.</p>
+
+<h2>Example 1: a line that "never stops"</h2>
+<p>A plant receives an order of 480 units a day and has 480 minutes of working time, so the takt time is one minute per unit. The rule on the floor is "never let a process stop, build as much as you can," and the line builds 600 units a day.</p>
+<ul>
+<li>120 extra units are made every day.</li>
+<li>If each unit ties up, say, $10 of material, that is $1,200 a day sitting on the floor.</li>
+<li>If the extra units are not used later, after 20 working days that is 2,400 units and $24,000 — plus the space to store them and the people to move them.</li>
+</ul>
+<p>On the books, inventory is an asset, so the plant can look profitable. On the floor, money is tied up in material and inventory, and the extra units need space, handling and checking.</p>
+
+<h2>Example 2: piles between processes</h2>
+<p>Process A runs faster than process B. Nobody has set how many parts may wait between them, so A keeps going. By the afternoon there are hundreds of parts in front of B. If B finds a defect that started in A, many of the parts waiting in the pile may have the same problem — and A may have been making it for hours.</p>
+
+<h2>Example 3: batch printing in an office</h2>
+<p>A team prints and assembles 500 information packs at the start of the month "to be efficient." Halfway through, the form changes. The remaining packs go in the recycling bin. The waste came from printing more packs than were needed, before they were needed.</p>
+
+<h2>Example 4: food prepared ahead in a restaurant</h2>
+<p>A kitchen preps 80 portions of a dish before lunch because "it was busy last Friday." Only 50 sell. The rest is thrown out at closing, and the cooks spent the morning on food nobody ordered instead of on what customers wanted.</p>
+
+<h2>Why overproduction is often called the worst waste</h2>
+<table><thead><tr><th>Overproduction leads to…</th><th>How</th></tr></thead><tbody>
+<tr><td>Inventory</td><td>What is made early usually has to be stored.</td></tr>
+<tr><td>Transportation</td><td>It is often moved to storage and back again.</td></tr>
+<tr><td>Motion</td><td>People search through piles for the right item.</td></tr>
+<tr><td>Defects found late</td><td>Problems hide in the pile until the next process uses it.</td></tr>
+<tr><td>Hidden waiting</td><td>Spare people and machines look busy, so nobody sees the extra capacity.</td></tr>
+</tbody></table>
+
+<h2>How to spot overproduction</h2>
+<ul>
+<li>Work-in-process regularly exceeds its agreed limit, or piles up between steps with no limit at all.</li>
+<li>"We had time, so we made the next batch" is normal.</li>
+<li>Machine or labor utilization is a target in itself.</li>
+<li>Aisles and spare corners fill up with material.</li>
+</ul>
+
+<h2>How to reduce it</h2>
+<ol>
+<li><b>Work to takt time.</b> Set the pace from customer demand (available time ÷ demand), not from machine speed.</li>
+<li><b>Pull, don't push.</b> Let the next process take what it needs, when it needs it, and make only what was taken. Kanban is a common tool for this.</li>
+<li><b>Set a WIP limit.</b> Decide how much work-in-process may wait between steps — enough to keep the line flowing — and stop producing when the limit is reached. Review it as conditions change.</li>
+<li><b>Allow stopping.</b> If there is nothing needed, stop. The idle time makes spare capacity visible, so it can be used for improvement or moved where it is needed.</li>
+</ol>
+
+<h2>See it in a game</h2>
+<p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game about a factory with four processes and a daily order of 480 units, like Example 1. Follow the old "never stop" rule and every ordered unit ships — yet the day ends in a loss. Players change the crew and the work-in-process until the line actually makes money. In a workshop, one question opens the discussion: <em>"Every unit shipped. So where did the money go?"</em></p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
+<p>More games: <a href="../lean-simulation-games/">lean simulation games for training</a>. Related: <a href="../heijunka-examples/">heijunka examples</a>.</p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
+'''
+EN3_FAQ = [
+    ("What is overproduction waste in lean?", "Making more than the customer needs, or making it earlier than needed. It is one of the seven wastes of the Toyota Production System."),
+    ("What is a simple example of overproduction waste?", "A line that has an order of 480 units a day but builds 600 because no process is allowed to stop. The 120 extra units become inventory that needs space, handling and money."),
+    ("Why is overproduction considered the worst of the seven wastes?", "Because it creates other wastes such as inventory, transportation and motion, and it hides problems such as defects and idle capacity."),
+    ("Does overproduction happen outside manufacturing?", "Yes. Printing documents before they are needed, preparing more food than is likely to sell and processing batches before the next step needs them can all be overproduction."),
+]
+
+if __name__ == '__main__':
+    page('ja', 'ja/learn/kenshu-game/', '../../../',
+         '製造業の研修に使えるゲーム｜トヨタ生産方式を体験する無料の研修ゲーム｜Mendomi Lab',
+         '製造業の新人研修 監督者研修 改善チームの勉強会に使える トヨタ生産方式を体験する無料のブラウザゲーム。造りすぎのムダ 平準化 ネックを30〜90分で学べます。ゲーム形式の研修の進め方つき。',
+         '製造業の研修に使えるゲーム：トヨタ生産方式を体験する無料の研修ゲーム', JA3_BODY, JA3_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/ja/"), ("製造業の研修ゲーム", "https://mendomilab.com/ja/learn/kenshu-game/")],
+         None, og='og_ja_of')
+    page('en', 'learn/overproduction-waste/', '../../',
+         'Overproduction Waste Examples: Factory, Office and Service (with Numbers) | Mendomi Lab',
+         'Overproduction waste examples with numbers: a line that never stops, piles between processes, office batch printing and restaurant prep. Why it is called the worst of the seven wastes, how to spot it and how to reduce it.',
+         'Overproduction waste examples: factory, office and service, with numbers', EN3_BODY, EN3_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("Overproduction waste examples", "https://mendomilab.com/learn/overproduction-waste/")],
+         'ja/learn/tsukurisugi-no-muda/', og='og_of')
