@@ -3,6 +3,8 @@
 import json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+GTAG=next(l for l in open('/home/claude/mendomilab/about/index.html').read().split('\n') if 'G-SGX5EJT1CN' in l)
+
 def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt, og=None):
     ld = [{"@context": "https://schema.org", "@type": "Article", "headline": h1,
            "inLanguage": lang, "author": {"@type": "Person", "name": "Tsutomu Takagi" if lang == 'en' else "高木 務"},
@@ -38,6 +40,7 @@ def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt, og=None):
     html = f'''<!DOCTYPE html>
 <html lang="{lang}">
 <head>
+{GTAG}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>

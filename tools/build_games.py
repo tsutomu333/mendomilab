@@ -1,6 +1,6 @@
 import json, os, html
 ROOT='/home/claude/mendomilab'
-GTAG=open(f'{ROOT}/about/index.html').read().split('\n')[2]  # the analytics <script> line
+GTAG=next(l for l in open(f'{ROOT}/about/index.html').read().split('\n') if 'G-SGX5EJT1CN' in l)  # the analytics <script> line
 
 OG={'games/overproduction-factory/':'og_of.png','games/suppliers-puzzle/':'og_sp.png','ja/games/factory/':'og_ja_of.png','ja/games/supplier/':'og_ja_sp.png','ja/games/pasta/':'og_ja_pasta.png'}
 def page(lang, path, title, desc, h1, lead, sections, faqs, buttons, alt_en, alt_ja, crumb_name):
