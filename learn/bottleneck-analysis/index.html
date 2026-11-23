@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bottleneck Analysis in Lean: How to Find and Fix a Bottleneck (with Numbers) | Mendomi Lab</title>
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="description" content="Bottleneck analysis with numbers: how one step sets your output, how to calculate capacity, four signs of a bottleneck on the floor, and the steps to fix it. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.">
+<link rel="canonical" href="https://mendomilab.com/learn/bottleneck-analysis/">
+<link rel="alternate" hreflang="en" href="https://mendomilab.com/learn/bottleneck-analysis/">
+<link rel="alternate" hreflang="ja" href="https://mendomilab.com/ja/learn/bottleneck/">
+<meta property="og:title" content="Bottleneck Analysis in Lean: How to Find and Fix a Bottleneck (with Numbers) | Mendomi Lab">
+<meta property="og:description" content="Bottleneck analysis with numbers: how one step sets your output, how to calculate capacity, four signs of a bottleneck on the floor, and the steps to fix it. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.">
+<meta property="og:url" content="https://mendomilab.com/learn/bottleneck-analysis/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://mendomilab.com/assets/social/og_of.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../../assets/site.css">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Bottleneck analysis in lean: how to find and fix a bottleneck", "inLanguage": "en", "author": {"@type": "Person", "name": "Tsutomu Takagi"}, "publisher": {"@type": "Organization", "name": "Mendomi Lab"}, "datePublished": "2026-11-23", "mainEntityOfPage": "https://mendomilab.com/learn/bottleneck-analysis/"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is a bottleneck in lean?", "acceptedAnswer": {"@type": "Answer", "text": "The step with the lowest capacity in a process. It limits the output of the whole system."}}, {"@type": "Question", "name": "How do you calculate a bottleneck?", "acceptedAnswer": {"@type": "Answer", "text": "Divide available time by each step's cycle time to get its capacity. The step with the lowest capacity is the bottleneck. 480 minutes (28,800 seconds) at a 72-second cycle time gives 28,800 ÷ 72 = 400 units a day, before downtime and defects."}}, {"@type": "Question", "name": "How do you identify a bottleneck on the floor?", "acceptedAnswer": {"@type": "Answer", "text": "Work piles up in front of it, the next step waits for it, it never stops while others have idle time, and its cycle time is longer than takt time."}}, {"@type": "Question", "name": "What happens after you fix a bottleneck?", "acceptedAnswer": {"@type": "Answer", "text": "Another step, or demand itself, becomes the new constraint. Bottleneck analysis is a cycle: find it, fix it, and look for the next one."}}]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Mendomi Lab", "item": "https://mendomilab.com/"}, {"@type": "ListItem", "position": 2, "name": "Bottleneck analysis", "item": "https://mendomilab.com/learn/bottleneck-analysis/"}]}]</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../../"><span class="mark">面</span><span class="name">Mendomi<small>Lab</small></span></a>
+  <nav><a href="../../#games">Games</a><a href="../../consult/">Work with me</a><a href="../../about/">About</a><a class="lang" href="../../ja/learn/bottleneck/" hreflang="ja">日本語</a></nav>
+</div></header>
+
+<main class="wrap prose">
+  <p class="crumb" style="font-size:.85em;opacity:.7"><a href="../../">Mendomi Lab</a> › Bottleneck analysis</p>
+  <h1>Bottleneck analysis in lean: how to find and fix a bottleneck</h1>
+  <p class="lead"><b>A bottleneck is the step with the lowest capacity in a process. It sets the maximum output of the whole line.</b> However fast the other steps are, the system cannot produce more than the bottleneck. That is why improvement starts with finding it. Below is a simple bottleneck analysis with numbers.</p>
+
+<h2>A bottleneck example with numbers</h2>
+<p>Four steps run in sequence. Their hourly capacity is:</p>
+<table><thead><tr><th>Step</th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead><tbody>
+<tr><td>Units per hour</td><td>60</td><td><b>40</b></td><td>50</td><td>70</td></tr>
+</tbody></table>
+<p>Even with plenty of orders, the line can produce at most <b>40 units an hour</b>, because B is the bottleneck. Adding people to A so it makes 80 an hour changes nothing — the parts simply pile up in front of B.</p>
+<p>Improve B to 60 an hour and the limit rises to 50. Now C is the bottleneck. <b>Fix one bottleneck and another step — or demand itself — becomes the next constraint.</b></p>
+
+<h2>How to calculate capacity</h2>
+<p><b>Daily capacity of a step = available time per day ÷ cycle time of that step</b></p>
+<p>With 480 minutes (28,800 seconds) available and a 72-second cycle time, a step can make 28,800 ÷ 72 = 400 units a day. If demand is 480 a day (a 60-second takt time), that step cannot keep up. Steps whose cycle time is longer than takt time lack capacity for demand; if there are several, the slowest is the bottleneck candidate. This is an estimate that ignores downtime and defects. See <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a>.</p>
+
+<h2>Four signs of a bottleneck on the floor</h2>
+<ul>
+<li><b>Work piles up in front of it.</b></li>
+<li><b>The next step is waiting for it.</b></li>
+<li><b>It never stops,</b> while other steps have idle time.</li>
+<li><b>Its cycle time is longer than takt time</b> when you measure it.</li>
+</ul>
+<p>Don't be fooled by how busy a place looks. The most hectic spot is not always the bottleneck, and a queue can be caused somewhere else.</p>
+
+<h2>How to fix a bottleneck, step by step</h2>
+<ol>
+<li><b>Find it</b> with the signs above and the numbers.</li>
+<li><b>Never let it stop.</b> Stagger breaks, shorten changeovers, and keep a small buffer in front of it so no bottleneck time is wasted.</li>
+<li><b>Pace everything else to it.</b> Steps faster than the bottleneck only build inventory if they keep running.</li>
+<li><b>Raise its capacity.</b> Remove waste from the work, or add people or equipment there.</li>
+<li><b>Look for the next one.</b> The bottleneck moves, so go back to step 1.</li>
+</ol>
+<p>This sequence follows the same logic as the five focusing steps of the theory of constraints.</p>
+
+<h2>Common mistakes</h2>
+<ul>
+<li><b>"More people means more output."</b> Adding people anywhere other than the bottleneck adds cost, not output.</li>
+<li><b>"Every step should run at full speed."</b> Running non-bottlenecks flat out is overproduction (<a href="../overproduction-waste/">overproduction waste examples</a>).</li>
+<li><b>"Bottlenecks are machines."</b> Manual work, inspection, transport and office approvals can all be bottlenecks.</li>
+</ul>
+
+<h2>Bottlenecks outside the factory</h2>
+<p>In a restaurant, the bottleneck can be the seats, the kitchen, the servers, the cashier or the dishwashing. Empty tables but slow food: the kitchen. Food ready but not served: the floor staff. Finished guests queuing to pay: the cashier. Adding staff everywhere because it is busy can raise cost without raising sales.</p>
+
+<h2>Practice it in a game</h2>
+<p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game with four processes and a daily order of 480 units. Players set the people per process, watch where work piles up, and find the setup that makes a profit. More games: <a href="../lean-simulation-games/">lean simulation games</a>.</p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
+
+<h2>Questions</h2>
+<h3>What is a bottleneck in lean?</h3>
+<p>The step with the lowest capacity in a process. It limits the output of the whole system.</p>
+<h3>How do you calculate a bottleneck?</h3>
+<p>Divide available time by each step's cycle time to get its capacity. The step with the lowest capacity is the bottleneck. 480 minutes (28,800 seconds) at a 72-second cycle time gives 28,800 ÷ 72 = 400 units a day, before downtime and defects.</p>
+<h3>How do you identify a bottleneck on the floor?</h3>
+<p>Work piles up in front of it, the next step waits for it, it never stops while others have idle time, and its cycle time is longer than takt time.</p>
+<h3>What happens after you fix a bottleneck?</h3>
+<p>Another step, or demand itself, becomes the new constraint. Bottleneck analysis is a cycle: find it, fix it, and look for the next one.</p>
+</main>
+
+<footer class="site"><div class="wrap">
+  <div><a href="../../about/">About</a><a href="../../consult/">Work with me</a><a href="../../privacy/">Privacy</a></div>
+  <div>Mendomi Lab is a project of A&amp;T Works</div>
+  <div>© 2026 Mendomi Lab. Not affiliated with Toyota Motor Corporation or OJT Solutions Inc.</div>
+</div></footer>
+</body>
+</html>

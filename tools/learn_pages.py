@@ -525,7 +525,7 @@ JA4_BODY = '''  <p class="lead"><b>タクトタイムは お客様の注文で�
 <h2>タクトタイムを体験してみる</h2>
 <p><a href="../../games/factory/">造りすぎ工場</a>は 1日480台の注文がある架空の工場で タクトタイムと工程ごとの必要人数を自分で出して 利益が出る形を見つける無料のブラウザゲームです。「工程は止めるな 造れるだけ造れ」のまま動かすと どうなるかから始まります。</p>
 <p><a class="btn primary" href="../../play/factory/">無料で遊ぶ</a><a class="btn ghost" href="../../games/factory/">ゲームの説明を見る</a></p>
-<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a> ／ <a href="../kenshu-game/">製造業の研修に使えるゲーム</a></p>
+<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a> ／ <a href="../kenshu-game/">製造業の研修に使えるゲーム</a> ／ <a href="../bottleneck/">ボトルネック工程とは？</a></p>
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
@@ -585,7 +585,7 @@ EN4_BODY = '''  <p class="lead"><b>Takt time is the pace the customer requires �
 <h2>Practice it in a game</h2>
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game: a fictional factory with a daily order of 480 units. Players work out the takt time and the people needed per process, and find the setup that actually makes a profit — starting from the old rule "never let a process stop, build as much as you can."</p>
 <p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
-<p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../heijunka-examples/">heijunka examples</a> / <a href="../lean-simulation-games/">lean simulation games</a></p>
+<p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../heijunka-examples/">heijunka examples</a> / <a href="../lean-simulation-games/">lean simulation games</a> / <a href="../bottleneck-analysis/">bottleneck analysis</a></p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -610,3 +610,134 @@ if __name__ == '__main__':
          'Takt time vs cycle time: formula, examples and staffing', EN4_BODY, EN4_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Takt time vs cycle time", "https://mendomilab.com/learn/takt-time-vs-cycle-time/")],
          'ja/learn/takt-time/', og='og_of')
+
+
+# ---------- 日本語：ボトルネック工程 ----------
+JA5_BODY = '''  <p class="lead"><b>ボトルネック（ネック）工程とは 工程の中でいちばん能力が低く 全体でつくれる量の上限を決めてしまう工程です。</b>ほかの工程がどれだけ速くても 全体の生産量はネックの速さをこえられません。だから改善はまずネックを見つけることから始めます。</p>
+
+<h2>数字で見るボトルネック</h2>
+<p>4つの工程が順番につながったラインで 1時間につくれる量が次のようだったとします。</p>
+<table><thead><tr><th>工程</th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead><tbody>
+<tr><td>1時間につくれる量</td><td>60個</td><td><b>40個</b></td><td>50個</td><td>70個</td></tr>
+</tbody></table>
+<p>注文が十分にあっても このラインでつくれるのは <b>1時間40個まで</b>です。Bがネックだからです。Aに人を足して80個つくれるようにしても 生産量は40個のまま。Bの前に仕掛品がたまるだけです。</p>
+<p>Bを改善して60個にすると 上限は50個になります。今度はCがネックになりました。<b>ネックを1つ直すと 別の工程（または注文の量）が次の制約になります。</b></p>
+
+<h2>工程の能力の計算方法</h2>
+<p><b>1日につくれる量 ＝ 1日の稼働時間 ÷ その工程のサイクルタイム</b></p>
+<p>稼働480分（28,800秒）で サイクルタイム72秒の工程なら 28,800 ÷ 72 ＝ 400個です。1日の注文が480個（タクトタイム60秒）なら この工程は足りません。サイクルタイムがタクトタイムより長い工程は 注文に対して能力が足りない工程です。いくつもあるときは その中でいちばん能力の低い工程がネックの候補です。なお この計算は止まる時間や不良を入れていない目安です。タクトタイムの出し方は <a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> にまとめています。</p>
+
+<h2>現場でネックを見つける4つのしるし</h2>
+<ul>
+<li><b>前に仕掛品がたまっている</b>：前の工程から来たものが 待たされて山になっている</li>
+<li><b>後ろが待っている</b>：次の工程の人が手を止めて 物が来るのを待っている</li>
+<li><b>いつも止まらずに動いている</b>：ほかの工程に手待ちがあるのに そこだけは休みなく動いている</li>
+<li><b>サイクルタイムがタクトタイムより長い</b>：測ってくらべると数字でわかる</li>
+</ul>
+<p>見かけの忙しさにだまされないことも大事です。いちばんバタバタしている場所が ネックとはかぎりません。行列の原因が 別の場所にあることもあります。</p>
+
+<h2>ボトルネックの改善の順番</h2>
+<ol>
+<li><b>ネックを見つける</b>：上の4つのしるしと数字で確かめます。</li>
+<li><b>ネックを止めない</b>：休けいをずらす 段取り替えを短くする ネックの前に少しだけ仕掛品を置くなどして ネックの時間をむだにしません。</li>
+<li><b>ほかの工程をネックに合わせる</b>：ネックより速い工程が造り続けると 在庫がふえるだけです。造る量をネックに合わせます。</li>
+<li><b>ネックの能力を上げる</b>：作業のムダを取る 人や設備を足すなどで ネックそのものを速くします。</li>
+<li><b>次のネックを探す</b>：ネックは移るので 1にもどります。</li>
+</ol>
+
+<h2>よくある誤解</h2>
+<ul>
+<li><b>「人を足せば生産量が上がる」</b>：ネック以外に人を足しても 生産量は増えません。人件費だけが増えます。</li>
+<li><b>「全部の工程をフルに動かすのがいい」</b>：ネックより速い工程をフルに動かすと 造りすぎになります（<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a>）。</li>
+<li><b>「ネックは機械のこと」</b>：人の作業 検査 運搬 事務の承認など どこでもネックになります。</li>
+</ul>
+
+<h2>飲食店のボトルネック</h2>
+<p>ボトルネックは工場だけの話ではありません。飲食店なら 席 厨房 ホール レジ 皿洗いのどれかがネックになります。席が空いているのに料理が出ないなら厨房 料理はできているのに運べないならホール 食べ終わったお客さんがレジに並んでいるならレジ。忙しいからといって全部の持ち場に人を足すと 売上は変わらず人件費だけが増えることもあります。飲食店の回転率を上げたいときも 考える順番は同じです。</p>
+
+<h2>ボトルネックを体験してみる</h2>
+<p><a href="../../games/pasta/">回らないパスタ屋</a>は 14席の小さなパスタ屋のランチ（11時〜14時）で 厨房 ホール レジの人数を変えて ネックを見つける無料のブラウザゲームです。「忙しいなら人を増やせ」で7人で回してきた店を どこがネックかを探して見直します。工場の題材なら <a href="../../games/factory/">造りすぎ工場</a> で 工程ごとの人数を考えられます。</p>
+<p><a class="btn primary" href="../../play/pasta/">無料で遊ぶ</a><a class="btn ghost" href="../../games/pasta/">ゲームの説明を見る</a></p>
+<p>あわせて読む：<a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> ／ <a href="../kenshu-game/">製造業の研修に使えるゲーム</a></p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
+'''
+JA5_FAQ = [
+    ("ボトルネック工程とは何ですか？", "工程の中でいちばん能力が低く 全体でつくれる量を決めてしまう工程です。ネック工程ともいいます。"),
+    ("ボトルネックの計算方法は？", "工程ごとに 稼働時間をサイクルタイムで割って 1日につくれる量を出します。いちばん少ない工程がネックです。稼働480分（28,800秒）でサイクルタイム72秒なら 28,800÷72＝400個です。止まる時間や不良を入れていない目安です。"),
+    ("ボトルネックはどうやって見つけますか？", "前に仕掛品がたまっている 後ろの工程が待っている いつも止まらずに動いている サイクルタイムがタクトタイムより長い の4つが目安です。"),
+    ("ボトルネックを解消すると終わりですか？", "終わりません。1つ直すと 次に能力の低い工程や 注文の量が新しい制約になります。見つけて直すことをくり返します。"),
+]
+
+# ---------- 英語：bottleneck analysis ----------
+EN5_BODY = '''  <p class="lead"><b>A bottleneck is the step with the lowest capacity in a process. It sets the maximum output of the whole line.</b> However fast the other steps are, the system cannot produce more than the bottleneck. That is why improvement starts with finding it. Below is a simple bottleneck analysis with numbers.</p>
+
+<h2>A bottleneck example with numbers</h2>
+<p>Four steps run in sequence. Their hourly capacity is:</p>
+<table><thead><tr><th>Step</th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead><tbody>
+<tr><td>Units per hour</td><td>60</td><td><b>40</b></td><td>50</td><td>70</td></tr>
+</tbody></table>
+<p>Even with plenty of orders, the line can produce at most <b>40 units an hour</b>, because B is the bottleneck. Adding people to A so it makes 80 an hour changes nothing — the parts simply pile up in front of B.</p>
+<p>Improve B to 60 an hour and the limit rises to 50. Now C is the bottleneck. <b>Fix one bottleneck and another step — or demand itself — becomes the next constraint.</b></p>
+
+<h2>How to calculate capacity</h2>
+<p><b>Daily capacity of a step = available time per day ÷ cycle time of that step</b></p>
+<p>With 480 minutes (28,800 seconds) available and a 72-second cycle time, a step can make 28,800 ÷ 72 = 400 units a day. If demand is 480 a day (a 60-second takt time), that step cannot keep up. Steps whose cycle time is longer than takt time lack capacity for demand; if there are several, the slowest is the bottleneck candidate. This is an estimate that ignores downtime and defects. See <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a>.</p>
+
+<h2>Four signs of a bottleneck on the floor</h2>
+<ul>
+<li><b>Work piles up in front of it.</b></li>
+<li><b>The next step is waiting for it.</b></li>
+<li><b>It never stops,</b> while other steps have idle time.</li>
+<li><b>Its cycle time is longer than takt time</b> when you measure it.</li>
+</ul>
+<p>Don't be fooled by how busy a place looks. The most hectic spot is not always the bottleneck, and a queue can be caused somewhere else.</p>
+
+<h2>How to fix a bottleneck, step by step</h2>
+<ol>
+<li><b>Find it</b> with the signs above and the numbers.</li>
+<li><b>Never let it stop.</b> Stagger breaks, shorten changeovers, and keep a small buffer in front of it so no bottleneck time is wasted.</li>
+<li><b>Pace everything else to it.</b> Steps faster than the bottleneck only build inventory if they keep running.</li>
+<li><b>Raise its capacity.</b> Remove waste from the work, or add people or equipment there.</li>
+<li><b>Look for the next one.</b> The bottleneck moves, so go back to step 1.</li>
+</ol>
+<p>This sequence follows the same logic as the five focusing steps of the theory of constraints.</p>
+
+<h2>Common mistakes</h2>
+<ul>
+<li><b>"More people means more output."</b> Adding people anywhere other than the bottleneck adds cost, not output.</li>
+<li><b>"Every step should run at full speed."</b> Running non-bottlenecks flat out is overproduction (<a href="../overproduction-waste/">overproduction waste examples</a>).</li>
+<li><b>"Bottlenecks are machines."</b> Manual work, inspection, transport and office approvals can all be bottlenecks.</li>
+</ul>
+
+<h2>Bottlenecks outside the factory</h2>
+<p>In a restaurant, the bottleneck can be the seats, the kitchen, the servers, the cashier or the dishwashing. Empty tables but slow food: the kitchen. Food ready but not served: the floor staff. Finished guests queuing to pay: the cashier. Adding staff everywhere because it is busy can raise cost without raising sales.</p>
+
+<h2>Practice it in a game</h2>
+<p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game with four processes and a daily order of 480 units. Players set the people per process, watch where work piles up, and find the setup that makes a profit. More games: <a href="../lean-simulation-games/">lean simulation games</a>.</p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
+'''
+EN5_FAQ = [
+    ("What is a bottleneck in lean?", "The step with the lowest capacity in a process. It limits the output of the whole system."),
+    ("How do you calculate a bottleneck?", "Divide available time by each step's cycle time to get its capacity. The step with the lowest capacity is the bottleneck. 480 minutes (28,800 seconds) at a 72-second cycle time gives 28,800 ÷ 72 = 400 units a day, before downtime and defects."),
+    ("How do you identify a bottleneck on the floor?", "Work piles up in front of it, the next step waits for it, it never stops while others have idle time, and its cycle time is longer than takt time."),
+    ("What happens after you fix a bottleneck?", "Another step, or demand itself, becomes the new constraint. Bottleneck analysis is a cycle: find it, fix it, and look for the next one."),
+]
+
+if __name__ == '__main__':
+    page('ja', 'ja/learn/bottleneck/', '../../../',
+         'ボトルネック工程とは？見つけ方と計算方法・改善の順番｜Mendomi Lab',
+         'ボトルネック（ネック）工程とは 全体の生産量を決めるいちばん能力の低い工程。数字の例 計算方法 現場で見つける4つのしるし 改善の順番 飲食店の例を トヨタの子会社のコンサル会社で20年以上改善をしてきた人が説明します。',
+         'ボトルネック工程とは？ 見つけ方と計算方法', JA5_BODY, JA5_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/ja/"), ("ボトルネック工程とは", "https://mendomilab.com/ja/learn/bottleneck/")],
+         'learn/bottleneck-analysis/', og='og_ja_pasta')
+    page('en', 'learn/bottleneck-analysis/', '../../',
+         'Bottleneck Analysis in Lean: How to Find and Fix a Bottleneck (with Numbers) | Mendomi Lab',
+         'Bottleneck analysis with numbers: how one step sets your output, how to calculate capacity, four signs of a bottleneck on the floor, and the steps to fix it. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.',
+         'Bottleneck analysis in lean: how to find and fix a bottleneck', EN5_BODY, EN5_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("Bottleneck analysis", "https://mendomilab.com/learn/bottleneck-analysis/")],
+         'ja/learn/bottleneck/', og='og_of')
