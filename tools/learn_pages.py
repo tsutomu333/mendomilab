@@ -174,6 +174,20 @@ EN_BODY = '''  <p class="lead"><b>Heijunka means leveling both the volume and th
 <p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Pro for trainers ($49)</a></p>
 <p>See all our <a href="../lean-simulation-games/">lean simulation games for training</a>.</p>
 
+<h2>How to run it in a 30-minute session</h2>
+<ol>
+<li><b>Round 1:</b> build in big batches — one model for days, then the next. Write down the staffing, equipment and inventory costs.</li>
+<li><b>Round 2:</b> change only the build order to a leveled mix. Keep everything else the same.</li>
+<li><b>Compare:</b> put the two results side by side and ask who chose each cost.</li>
+</ol>
+<h2>What to look for on a real floor</h2>
+<ul>
+<li>The monthly total is stable, but the daily schedule swings a lot. That gap is where leveling helps.</li>
+<li>Overtime on some days and idle people on others.</li>
+<li>Upstream processes or suppliers keeping extra stock "in case the big order comes".</li>
+<li>Long changeovers. Leveling the mix needs short changeovers, so they are usually the first thing to work on.</li>
+</ul>
+
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
 '''
@@ -452,6 +466,20 @@ EN3_BODY = '''  <p class="lead"><b>Overproduction waste means making more than t
 <p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
 <p>More games: <a href="../lean-simulation-games/">lean simulation games for training</a>. Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a> / <a href="../mura-muri-muda/">mura, muri, muda examples</a>.</p>
 
+<h2>How to run it in a 30-minute session</h2>
+<ol>
+<li><b>Round 1:</b> follow the "never stop" rule. Note the units shipped, the work-in-process left at the end of the day and the profit.</li>
+<li><b>Round 2:</b> change the crew so each process runs at the pace of the order, not at full speed.</li>
+<li><b>Round 3:</b> limit the work-in-process between processes, and compare the three results.</li>
+</ol>
+<h2>What to look for on a real floor</h2>
+<ul>
+<li>Piles of parts between processes, especially in front of a slower process.</li>
+<li>People "keeping busy" while the next process is stopped.</li>
+<li>Targets that reward output or machine utilization rather than what was actually shipped.</li>
+<li>Finished goods waiting for an order that has not come yet.</li>
+</ul>
+
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
 '''
@@ -586,6 +614,20 @@ EN4_BODY = '''  <p class="lead"><b>Takt time is the pace the customer requires �
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game: a fictional factory with a daily order of 480 units. Players work out the takt time and the people needed per process, and find the setup that actually makes a profit — starting from the old rule "never let a process stop, build as much as you can."</p>
 <p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
 <p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../heijunka-examples/">heijunka examples</a> / <a href="../lean-simulation-games/">lean simulation games</a> / <a href="../bottleneck-analysis/">bottleneck analysis</a></p>
+
+<h2>How to run it in a 30-minute session</h2>
+<ol>
+<li>Players first calculate the takt time from the daily order and the available working time.</li>
+<li>They compare it with the cycle time of each process and find which processes are faster or slower than takt.</li>
+<li>They set the number of people per process and check the profit. Then they discuss what changed.</li>
+</ol>
+<h2>What to look for on a real floor</h2>
+<ul>
+<li>Measure cycle time with a stopwatch over about 10 cycles, not from a standard sheet. Look at the spread as well as the average.</li>
+<li>Check whether takt time is recalculated when demand changes, or stays the same for months.</li>
+<li>A process far faster than takt usually builds piles in front of the next one.</li>
+<li>A process slower than takt is often covered by overtime that nobody counts as a problem.</li>
+</ul>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
