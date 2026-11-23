@@ -758,12 +758,12 @@ JA6_BODY = '''  <p class="lead"><b>かんばん方式とは 後の工程が使�
 <h2>数字で見る かんばんの流れ</h2>
 <p>部品が1箱20個入り 1箱にかんばんが1枚ついているとします。</p>
 <ol>
-<li>組立ラインで箱を使い始めたら かんばんを外して ポストに入れます。</li>
-<li>運ぶ人が決まった時間にかんばんを集め 前の工程へ行き 同じ部品を1箱（20個）引き取ります。</li>
-<li>引き取られた箱についていた生産指示かんばんが外れ 前の工程はその分（20個）だけをつくります。</li>
+<li>組立ラインで箱を使い始めたら 箱についている<b>引き取りかんばん</b>を外して ポストに入れます。</li>
+<li>運ぶ人が決まった時間に引き取りかんばんを集め 前の工程へ行き 同じ部品を1箱（20個）引き取ります。</li>
+<li>引き取るとき 箱についていた<b>生産指示かんばん</b>を外して 引き取りかんばんにつけかえます。外した生産指示かんばんが「20個つくって」の合図になり 前の工程はその分だけをつくります。</li>
 </ol>
-<p>つまり 使った分しかつくらず 運ばない。かんばんの枚数が そのまま工程のあいだに置ける在庫の上限になります。</p>
-<p>枚数の考え方の一例：1日400個使い 補充に半日かかり 1割の余裕を見て 1箱20個なら 400 × 0.5 × 1.1 ÷ 20 ＝ 11枚です。現場では 補充の間かくや運ぶ回数なども入れて決めます。</p>
+<p>つまり 箱単位で 使った分を補充する形でしかつくらず 運ばない。かんばんで管理している範囲（工程のあいだの棚 運んでいる途中 つくっている途中の箱）では かんばんの枚数 × 1箱の入り数 が 部品の量の上限になります。</p>
+<p>枚数の考え方の一例：1日400個使い 補充に半日かかり（かんばんを集める 運ぶ つくるまでの合計） 1割の余裕を見て 1箱20個なら 400 × 0.5 × 1.1 ÷ 20 ＝ 11枚です。端数が出たら切り上げます。現場では 集める間かくや運ぶ回数なども入れて 引き取りかんばんと生産指示かんばんそれぞれの枚数を決めます。</p>
 
 <h2>かんばんのルール</h2>
 <ul>
@@ -785,7 +785,7 @@ JA6_BODY = '''  <p class="lead"><b>かんばん方式とは 後の工程が使�
 <p>どれも「かんばんを入れれば在庫が減る」のではなく 波をならし 段取りを短くし 問題を1つずつ直した結果として在庫が減る ということです。</p>
 
 <h2>タスク管理のカンバンとのちがい</h2>
-<p>仕事の進み具合を「やること・やっている・終わった」の列で見せるタスク管理のカンバン（カンバンボード）は トヨタのかんばんの「進めている途中のものの数に上限をつける」考え方を借りたものです。工場のかんばんは 物と情報をいっしょに動かして つくる量そのものを決めるところがちがいます。</p>
+<p>仕事の進み具合を「やること・やっている・終わった」の列で見せるタスク管理のカンバン（カンバンボード）は トヨタのかんばんの「進めている途中のものの数に上限をつける」考え方を借りたものです。列を並べるだけでは足りず 「やっている」の列に入れる数の上限を決めて はじめてカンバンらしくなります。工場のかんばんは 物と情報をいっしょに動かして つくる量そのものを決めるところがちがいます。</p>
 
 <h2>かんばん・ジャストインタイムを体験してみる</h2>
 <p><a href="../../games/supplier/">サプライヤーのパズル</a> では 組み立ての順番（平準化しているかどうか）で 前の工程にあたるサプライヤーの人 設備 在庫のコストがどう変わるかを見られます。<a href="../../games/factory/">造りすぎ工場</a> では 工程のあいだに置く数を決めないと 在庫がふえていく様子を体験できます。どちらも無料のブラウザゲームです。</p>
@@ -803,7 +803,7 @@ JA6_FAQ = [
 ]
 
 # ---------- 英語：mura muri muda ----------
-EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are the three kinds of waste in the Toyota Production System: mura is unevenness, muri is overburden, and muda is non-value-adding work.</b> They are connected — unevenness tends to create overburden, and overburden leads to waste. Below are concrete examples, and why improvement usually starts with mura.</p>
+EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are three related ideas in the Toyota Production System, often called the "3 Ms": mura is unevenness, muri is overburden, and muda is waste — work that adds no value.</b> They are connected — unevenness tends to create overburden, and overburden leads to waste. Below are concrete examples, and why improvement usually starts with mura.</p>
 
 <h2>The three Ms at a glance</h2>
 <table><thead><tr><th></th><th>Meaning</th><th>Typical sign</th></tr></thead><tbody>
@@ -813,7 +813,7 @@ EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are the three kinds of wa
 </tbody></table>
 
 <h2>Example 1: a factory with a batched schedule</h2>
-<p>A plant builds 100 units a week: model A Monday to Wednesday, B on Thursday, C on Friday. A supplier that makes a part only for B sees zero demand four days a week and 20 sets on Thursday (<b>mura</b>). On Thursday its people work overtime and the machine runs flat out (<b>muri</b>). The rest of the week, the same people and machines sit idle — or keep building stock ahead (<b>muda</b>). Leveling the schedule to 4 sets a day removes the mura, and the muri and much of the muda go with it. See <a href="../heijunka-examples/">heijunka examples</a>.</p>
+<p>A plant builds 100 units a week: model A Monday to Wednesday, B on Thursday, C on Friday. A supplier that makes a part only for B sees zero demand four days a week and 20 sets on Thursday (<b>mura</b>). Assume the people and machine on this part have little other work. On Thursday they work overtime and the machine runs flat out (<b>muri</b>). The rest of the week, the same people and machines sit idle — or keep building stock ahead (<b>muda</b>). If the plant builds 4 B units every day and the supplier ships to match, the day-to-day mura in this example disappears, and the muri and much of the muda go with it. See <a href="../heijunka-examples/">heijunka examples</a>.</p>
 
 <h2>Example 2: an office at month end</h2>
 <p>Invoices arrive all month but are processed in the last three days (<b>mura</b>). The team works late and makes mistakes under pressure (<b>muri</b>). Mistakes are reworked and customers wait (<b>muda</b>). Processing a few invoices every day evens out the load.</p>
@@ -822,7 +822,7 @@ EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are the three kinds of wa
 <p>Everyone arrives between 12:00 and 12:30 (<b>mura</b>). The kitchen is overloaded and orders back up (<b>muri</b>). Guests leave without eating, and staff stand idle at 14:00 (<b>muda</b>). Taking reservations at staggered times or preparing some items before the peak spreads the load.</p>
 
 <h2>Why start with mura?</h2>
-<p>Many teams attack muda first — cutting inventory, chasing idle time. But if the unevenness stays, the waste comes back: the inventory was there to absorb the waves. Leveling the work first (heijunka), then setting standard work so no one is overloaded, makes the remaining waste easier to see and remove.</p>
+<p>Many teams attack muda first — cutting inventory, chasing idle time. But if the unevenness stays, the waste comes back: the inventory was there to absorb the waves. Leveling the work (heijunka) and setting standard work so no one is overloaded make the remaining waste easier to see and remove. This is a priority, not a strict order: obvious overburden that risks safety or quality should be fixed right away.</p>
 
 <h2>Common mistakes</h2>
 <ul>
