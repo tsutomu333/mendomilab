@@ -100,7 +100,7 @@ JA_BODY = '''  <p class="lead"><b>平準化とは 造る量と種類を 日ご�
 <li><b>平準化して造る</b>：毎日4台分ずつ。1日に造れる量は4台分あれば足ります（まとめて造るときの5分の1）。造りためる在庫も小さくできます。</li>
 </ul>
 <p>つまり まとめて造ると 前の工程とサプライヤーに「いちばん忙しい日に合わせた人と設備」か「在庫」のコストを押しつけることになります。このコストは 最後には部品の値段にのって お客様の側にもどってきます。</p>
-<p>トヨタではこれを ムラ（ばらつき）がムリ（無理な負荷）につながり ムリがムダ（使わない人と設備・在庫）につながる と説明します。平準化は 生産計画のムラを小さくする手段です。</p>
+<p>トヨタではこれを ムラ（ばらつき）がムリ（無理な負荷）につながり ムリがムダ（使わない人と設備・在庫）につながる と説明します。現場ではムダ・ムラ・ムリの3つをまとめて「ダラリ」（ム<b>ダ</b>・ム<b>ラ</b>・ム<b>リ</b>）と呼ぶこともあります。平準化は 生産計画のムラを小さくする手段です。</p>
 
 <h2>平準化と標準化の違い</h2>
 <table><thead><tr><th></th><th>平準化</th><th>標準化</th></tr></thead><tbody>
@@ -805,6 +805,7 @@ JA6_FAQ = [
 # ---------- 英語：mura muri muda ----------
 EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are three related ideas in the Toyota Production System, often called the "3 Ms": mura is unevenness, muri is overburden, and muda is waste — work that adds no value.</b> They are connected — unevenness tends to create overburden, and overburden leads to waste. Below are concrete examples, and why improvement usually starts with mura.</p>
 
+<p>On Japanese shop floors the trio is often remembered as <b>"darari"</b> — the last sounds of mu<b>da</b>, mu<b>ra</b> and mu<b>ri</b> — or simply as the 3 Mu. Either way, people check all three together.</p>
 <h2>The three Ms at a glance</h2>
 <table><thead><tr><th></th><th>Meaning</th><th>Typical sign</th></tr></thead><tbody>
 <tr><td><b>Mura</b> (斑)</td><td>Unevenness in volume, mix or timing</td><td>Busy days and quiet days; end-of-month rush</td></tr>
