@@ -402,7 +402,7 @@ JA3_FAQ = [
 ]
 
 # ---------- 英語：overproduction waste examples ----------
-EN3_BODY = '''  <p class="lead"><b>Overproduction waste means making more than the customer needs, or making it earlier than needed.</b> It is one of the seven wastes of the Toyota Production System, and it is often called the worst one, because it creates the other wastes and hides problems. Below are concrete overproduction waste examples — in a factory, in an office and in services — with numbers.</p>
+EN3_BODY = '''  <p class="lead"><b>Overproduction waste means making more than the customer needs, or making it earlier than needed.</b> It is one of the <a href="../7-wastes-of-lean/">seven wastes</a> of the Toyota Production System, and it is often called the worst one, because it creates the other wastes and hides problems. Below are concrete overproduction waste examples — in a factory, in an office and in services — with numbers.</p>
 
 <h2>Example 1: a line that "never stops"</h2>
 <p>A plant receives an order of 480 units a day and has 480 minutes of working time, so the takt time is one minute per unit. The rule on the floor is "never let a process stop, build as much as you can," and the line builds 600 units a day.</p>
@@ -658,7 +658,7 @@ JA5_BODY = '''  <p class="lead"><b>ボトルネック（ネック）工程とは
 <h2>ボトルネックを体験してみる</h2>
 <p><a href="../../games/pasta/">回らないパスタ屋</a>は 14席の小さなパスタ屋のランチ（11時〜14時）で 厨房 ホール レジの人数を変えて ネックを見つける無料のブラウザゲームです。「忙しいなら人を増やせ」で7人で回してきた店を どこがネックかを探して見直します。工場の題材なら <a href="../../games/factory/">造りすぎ工場</a> で 工程ごとの人数を考えられます。</p>
 <p><a class="btn primary" href="../../play/pasta/">無料で遊ぶ</a><a class="btn ghost" href="../../games/pasta/">ゲームの説明を見る</a></p>
-<p>あわせて読む：<a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> ／ <a href="../kenshu-game/">製造業の研修に使えるゲーム</a></p>
+<p>あわせて読む：<a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> ／ <a href="../kenshu-game/">製造業の研修に使えるゲーム</a> ／ <a href="../kaitenritsu/">飲食店の回転率とは？</a></p>
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
@@ -835,7 +835,7 @@ EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are three related ideas i
 <h2>See it in a game</h2>
 <p><a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> is a free browser game set in a fictional scenario inspired by Toyota production. Change the build order and watch how unevenness at the customer turns into capacity and inventory cost at two suppliers — mura, muri and muda in one screen.</p>
 <p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Pro for trainers ($49)</a></p>
-<p>Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../lean-simulation-games/">lean simulation games</a></p>
+<p>Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../7-wastes-of-lean/">7 wastes of lean</a> / <a href="../lean-simulation-games/">lean simulation games</a></p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -860,3 +860,114 @@ if __name__ == '__main__':
          'Mura, muri, muda: meaning and examples', EN6_BODY, EN6_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Mura, muri, muda", "https://mendomilab.com/learn/mura-muri-muda/")],
          None, og='og_sp')
+
+
+# ---------- 日本語：飲食店の回転率 ----------
+JA7_BODY = '''  <p class="lead"><b>飲食店の回転率は 一定の時間に 1つの席を何人のお客さんが使ったかを表す数字です。計算は「その時間に席に案内したお客さんの数 ÷ 席の数」です。</b>回転率を上げるには お客さんを急がせるより 料理や会計で詰まっている場所（ネック）を見つけて そこを直すほうが効きます。</p>
+
+<h2>回転率の計算方法</h2>
+<p><b>回転率 ＝ その時間に席に案内したお客さんの数 ÷ 席の数</b></p>
+<p>待ちきれずに帰った人は入れません。時間の終わりをまたいで残った人をどう数えるかは 毎回同じ数え方にそろえます。</p>
+<p>例：14席の店で ランチ（11時〜14時）に42人が来たら 42 ÷ 14 ＝ <b>3回転</b>です。</p>
+<table><thead><tr><th>席の数</th><th>ランチの客数</th><th>回転率</th></tr></thead><tbody>
+<tr><td>14席</td><td>28人</td><td>2回転</td></tr>
+<tr><td>14席</td><td>42人</td><td>3回転</td></tr>
+<tr><td>14席</td><td>56人</td><td>4回転</td></tr>
+</tbody></table>
+
+<h2>回転率の上限はどう決まる？</h2>
+<p>1人が席にいる時間（来てから帰るまで）が平均40分なら ランチの3時間＝180分で 1つの席は 180 ÷ 40 ＝ <b>4.5回転</b>が計算上の目安になります（席がずっと埋まっていて 時間の前後にまたがる人を数えない場合）。実際はお客さんが来ない時間や 2人のお客さんが4人席に座ることがあるので これより下がります。</p>
+<p>席にいる時間の中身は だいたい次の4つです。</p>
+<ul>
+<li>注文を聞くまで待つ時間</li>
+<li>料理が出るまで待つ時間</li>
+<li>食べている時間</li>
+<li>会計を待つ時間</li>
+</ul>
+<p>食べている時間をけずるのは お客さんの満足を下げます。けずるなら <b>待つ時間</b>です。</p>
+
+<h2>回転率を上げる方法：まず「ネック」を見つける</h2>
+<p>待つ時間が長いのは どこかがいっぱいになっているからです。時間帯ごとに どこで待ちや仕事がたまっているかを見て いちばん流れを止めている場所から直します。直すと ネックが別の場所に移ることもあります。それが <b>ネック</b>（ボトルネック）です。</p>
+<ul>
+<li><b>厨房がネック</b>：料理が出るまでが長い。ピークの前に仕込みを進める メニューをしぼる 調理の順番をそろえる。</li>
+<li><b>ホールがネック</b>：注文を聞く 片づけるのが追いつかず 空いた席にお客さんを案内できない。</li>
+<li><b>レジがネック</b>：食べ終わったお客さんが席で待つ 列ができる。先に会計する 支払い方法をふやす。</li>
+</ul>
+<p>大事なのは <b>ネックでない場所に人を足しても 回転率は上がらない</b>ことです。厨房がネックのときにホールの人をふやしても 料理が出る速さは変わりません。効果の少ない場所への増員は 人件費に見合わないことが多いです。くわしくは <a href="../bottleneck/">ボトルネック工程とは？</a> にまとめています。</p>
+
+<h2>やってはいけないこと</h2>
+<ul>
+<li><b>お客さんを急がせる</b>：食べている時間を短くすると リピートが減り 長い目で見た売上が下がるおそれがあります。</li>
+<li><b>「忙しいなら人をふやせ」</b>：ネックでない持ち場に人を足すと 人件費がふえて利益は下がります。</li>
+<li><b>回転率だけを見る</b>：回転率が上がっても 客単価や人件費しだいで利益は変わります。回転率と人件費を いっしょに見てください。</li>
+</ul>
+
+<h2>ゲームで試す：回らないパスタ屋</h2>
+<p><a href="../../games/pasta/">回らないパスタ屋</a> は 14席・ランチ11時〜14時の店で 厨房 ホール レジの人数を変えて ランチの利益がいちばん大きくなる人数を見つける無料のブラウザゲームです。いまは「忙しいなら人をふやせ」で7人で回しています。どこがネックかを見つけて 人数を合わせると 帰ってしまうお客さんと利益がどう変わるかを試せます。</p>
+<p><a class="btn primary" href="../../play/pasta/">回らないパスタ屋で遊ぶ</a></p>
+<p>あわせて読む：<a href="../bottleneck/">ボトルネック工程とは？</a> ／ <a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> ／ <a href="../kenshu-game/">研修に使えるゲーム</a></p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。工場で使う「ネックを見つけて合わせる」考え方は 飲食店にもそのまま使えます。お店に合わせた相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
+'''
+JA7_FAQ = [
+    ("飲食店の回転率の計算方法は？", "その時間に来たお客さんの数 ÷ 席の数 です。14席の店にランチで42人来たら 3回転です。"),
+    ("ランチの回転率の目安は？", "どの店にも当てはまる目標の数字はありません。業態 席にいる時間 席の組み合わせで変わります。平均40分ならランチ3時間で計算上は4.5回転が目安です。同じ曜日・時間帯の自分の店の回転率を 客単価や利益といっしょにくらべてください。"),
+    ("回転率を上げるにはどうすればいい？", "お客さんを急がせるのではなく 待つ時間をへらします。厨房 ホール レジのどこがいっぱいになっているか（ネック）を見つけて そこを直すのが近道です。"),
+    ("人をふやせば回転率は上がりますか？", "ネックの持ち場に足せば上がることがあります。ネックでない持ち場に足しても回転率はほとんど変わらず 人件費に見合わないことが多いです。"),
+]
+
+# ---------- 英語：7 wastes ----------
+EN7_BODY = '''  <p class="lead"><b>The 7 wastes of lean (muda) are overproduction, waiting, transportation, over-processing, inventory, motion and defects.</b> They come from the Toyota Production System. Each is an activity or a condition that uses time or money but creates no value for the customer. Some non-value-adding work is still necessary (safety checks, legal requirements), so the goal is to remove the unnecessary part while protecting safety and quality. Below is a simple example of each, in a factory and outside one.</p>
+
+<h2>The 7 wastes with examples</h2>
+<table><thead><tr><th>Waste</th><th>Factory example</th><th>Office / service example</th></tr></thead><tbody>
+<tr><td><b>Overproduction</b></td><td>Building 120 parts when the next step needs 100 today</td><td>Printing 50 reports when 10 people read them</td></tr>
+<tr><td><b>Waiting</b></td><td>An operator watching a machine that could run on its own</td><td>A form waiting three days for a signature</td></tr>
+<tr><td><b>Transportation</b></td><td>Moving parts to a warehouse and back to the line</td><td>Emailing a file through four people before it reaches the person who acts on it</td></tr>
+<tr><td><b>Over-processing</b></td><td>Polishing a hidden surface beyond what function or quality requires</td><td>Re-typing data already in another system</td></tr>
+<tr><td><b>Inventory</b></td><td>A pile of work in progress between two processes</td><td>A backlog of tickets nobody is working on</td></tr>
+<tr><td><b>Motion</b></td><td>Walking ten steps to fetch a tool for every unit</td><td>Searching shared drives for the latest version</td></tr>
+<tr><td><b>Defects</b></td><td>Scrap and rework</td><td>An invoice sent with the wrong amount</td></tr>
+</tbody></table>
+<p>An easy way to remember them is <b>TIMWOOD</b>: Transportation, Inventory, Motion, Waiting, Over-processing, Overproduction, Defects. Some lists add an eighth — unused skills of people.</p>
+
+<h2>Why overproduction is called the worst</h2>
+<p>Overproduction creates the others. Extra parts need to be moved (transportation), stored (inventory) and searched for (motion), and defects in them are found late. It also hides problems: when there is always stock, nobody notices that a machine is slow or a step is unstable. See <a href="../overproduction-waste/">overproduction waste examples</a>.</p>
+
+<h2>How to find the 7 wastes in your own work</h2>
+<ol>
+<li>Follow one item (a part, a document, an order) from start to finish.</li>
+<li>Write down every step and sort it into: value-adding, necessary but not value-adding, and pure waste.</li>
+<li>For each pure-waste step, ask which of the seven wastes it is, and remove those first.</li>
+<li>Use overproduction and waiting as starting points, then trace the cause on the floor. Check for unevenness and overburden (<a href="../mura-muri-muda/">mura and muri</a>) as well as breakdowns and long changeovers.</li>
+</ol>
+
+<h2>See waste in a game</h2>
+<p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game where you run a small line and watch what happens when every process builds as much as it can — inventory piles up and lead time stretches. <a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> shows how an uneven build order turns into waiting and inventory at suppliers.</p>
+<p><a class="btn primary" href="../../games/overproduction-factory/">Overproduction Factory</a><a class="btn ghost" href="../lean-simulation-games/">All lean games</a></p>
+<p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../mura-muri-muda/">mura, muri, muda</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a></p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
+'''
+EN7_FAQ = [
+    ("What are the 7 wastes of lean?", "Overproduction, waiting, transportation, over-processing, inventory, motion and defects. They come from the Toyota Production System and are often remembered as TIMWOOD."),
+    ("Which of the 7 wastes is the worst?", "Overproduction is usually called the worst, because it creates the other wastes (inventory, transportation, motion) and hides problems."),
+    ("Do the 7 wastes apply outside manufacturing?", "Yes. Offices, hospitals and restaurants have the same wastes: waiting for approvals, re-typing data, backlogs, searching for files and errors that need rework."),
+    ("What is the 8th waste?", "Some lists add unused skills or talent of people. It is not in the original seven from Toyota, but it is widely used."),
+]
+
+if __name__ == '__main__':
+    page('ja', 'ja/learn/kaitenritsu/', '../../../',
+         '飲食店の回転率とは？計算方法と上げる方法（ネックの見つけ方）｜Mendomi Lab',
+         '飲食店の回転率の計算方法（来店客数÷席数）と上限の考え方 回転率を上げる方法を 厨房・ホール・レジのネック（ボトルネック）の見つけ方から説明します。無料ゲーム「回らないパスタ屋」で試せます。',
+         '飲食店の回転率とは？ 計算方法と上げる方法', JA7_BODY, JA7_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/ja/"), ("飲食店の回転率とは", "https://mendomilab.com/ja/learn/kaitenritsu/")],
+         None, og='og_ja_pasta')
+    page('en', 'learn/7-wastes-of-lean/', '../../',
+         'The 7 Wastes of Lean: Examples in Factory and Office (TIMWOOD) | Mendomi Lab',
+         'The 7 wastes of lean manufacturing (overproduction, waiting, transportation, over-processing, inventory, motion, defects) with a factory and an office example for each, why overproduction is the worst, and how to find waste in your own work.',
+         'The 7 wastes of lean, with examples', EN7_BODY, EN7_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("7 wastes of lean", "https://mendomilab.com/learn/7-wastes-of-lean/")],
+         None, og='og_of')
