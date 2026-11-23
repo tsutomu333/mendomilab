@@ -3,7 +3,7 @@
 import json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt):
+def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt, og=None):
     ld = [{"@context": "https://schema.org", "@type": "Article", "headline": h1,
            "inLanguage": lang, "author": {"@type": "Person", "name": "Tsutomu Takagi" if lang == 'en' else "高木 務"},
            "publisher": {"@type": "Organization", "name": "Mendomi Lab"},
@@ -16,7 +16,7 @@ def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt):
     if lang == 'ja':
         top = rel + 'ja/'
         nav = (f'<a href="{top}#games">ゲーム</a><a href="{top}consult/">相談する</a>'
-               f'<a href="{top}about/">Mendomi Labについて</a><a class="lang" href="{rel}{alt}" hreflang="en">English</a>')
+               f'<a href="{top}about/">Mendomi Labについて</a><a class="lang" href="{rel}{alt or ""}" hreflang="en">English</a>')
         foot = (f'<div><a href="{top}about/">Mendomi Labについて</a><a href="{top}consult/">相談する</a>'
                 f'<a href="{top}privacy/">プライバシー</a><a href="{top}tokushoho/">特定商取引法にもとづく表記</a></div>\n'
                 '  <div>Mendomi Lab は A&amp;T Works のプロジェクトです</div>\n'
@@ -25,7 +25,7 @@ def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt):
     else:
         top = rel
         nav = (f'<a href="{top}#games">Games</a><a href="{top}consult/">Work with me</a>'
-               f'<a href="{top}about/">About</a><a class="lang" href="{rel}{alt}" hreflang="ja">日本語</a>')
+               f'<a href="{top}about/">About</a><a class="lang" href="{rel}{alt or "ja/"}" hreflang="ja">日本語</a>')
         foot = (f'<div><a href="{top}about/">About</a><a href="{top}consult/">Work with me</a>'
                 f'<a href="{top}privacy/">Privacy</a></div>\n'
                 '  <div>Mendomi Lab is a project of A&amp;T Works</div>\n'
@@ -33,6 +33,8 @@ def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt):
         faqh = 'Questions'
     crumb_html = ' › '.join([f'<a href="{rel}{u.split("mendomilab.com/")[1]}">{n}</a>' for n, u in crumbs[:-1]] + [crumbs[-1][0]])
     en_url, ja_url = (path, alt) if lang == 'en' else (alt, path)
+    alts = (f'<link rel="alternate" hreflang="en" href="https://mendomilab.com/{en_url}">\n'
+            f'<link rel="alternate" hreflang="ja" href="https://mendomilab.com/{ja_url}">\n') if alt else ''
     html = f'''<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -42,13 +44,11 @@ def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt):
 <link rel="icon" href="{rel}favicon.svg" type="image/svg+xml">
 <meta name="description" content="{desc}">
 <link rel="canonical" href="https://mendomilab.com/{path}">
-<link rel="alternate" hreflang="en" href="https://mendomilab.com/{en_url}">
-<link rel="alternate" hreflang="ja" href="https://mendomilab.com/{ja_url}">
-<meta property="og:title" content="{title}">
+{alts}<meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="https://mendomilab.com/{path}">
 <meta property="og:type" content="article">
-<meta property="og:image" content="https://mendomilab.com/assets/social/og_{'ja_sp' if lang == 'ja' else 'sp'}.png">
+<meta property="og:image" content="https://mendomilab.com/assets/social/{og or ('og_ja_sp' if lang == 'ja' else 'og_sp')}.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="{rel}assets/site.css">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
@@ -120,6 +120,7 @@ JA_BODY = '''  <p class="lead"><b>平準化とは 造る量と種類を 日ご�
 <h2>平準化を体験してみる</h2>
 <p>平準化のよさは 説明を聞くより 自分で順番を変えてコストが動くのを見るほうがわかります。<a href="../../games/supplier/">サプライヤーのパズル</a>は トヨタの生産を題材にした架空の例で 組み立ての順番を変えると 2つのサプライヤーの人 設備 在庫のコストがどう変わるかを見る無料のブラウザゲームです。研修で使うと「このコストを決めたのはサプライヤー？ それともトヨタ？」という問いから話が深まります。</p>
 <p><a class="btn primary" href="../../play/supplier/">無料で遊ぶ</a><a class="btn ghost" href="../../games/supplier/">ゲームの説明を見る</a></p>
+<p>7つのムダの中でいちばん悪いと言われる造りすぎについては <a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> にまとめています。</p>
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
@@ -171,6 +172,7 @@ EN_BODY = '''  <p class="lead"><b>Heijunka means leveling both the volume and th
 <h2>Try heijunka yourself</h2>
 <p>Heijunka is easier to understand when you change the build order yourself and see how costs change. <a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> is a free browser game set in a fictional scenario inspired by Toyota production: you run two suppliers, change the build order, and see how staffing, equipment and inventory costs change. In a workshop it opens one powerful question: <em>"Who chose this cost — the supplier or Toyota?"</em></p>
 <p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Pro for trainers ($49)</a></p>
+<p>See all our <a href="../lean-simulation-games/">lean simulation games for training</a>.</p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -195,3 +197,141 @@ if __name__ == '__main__':
          'Heijunka examples: production leveling in real life, with numbers', EN_BODY, EN_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Heijunka examples", "https://mendomilab.com/learn/heijunka-examples/")],
          'ja/learn/heijunka/')
+
+
+# ---------- 日本語：造りすぎのムダ ----------
+JA2_BODY = '''  <p class="lead"><b>造りすぎのムダとは お客様が必要とする量より多く または必要なときより早く造ることです。</b>トヨタ生産方式の「7つのムダ」の1つで その中でもいちばん悪いムダと言われます。ほかのムダを生み しかもかくしてしまうからです。</p>
+
+<h2>7つのムダ</h2>
+<table><thead><tr><th>ムダ</th><th>どんなことか</th></tr></thead><tbody>
+<tr><td><b>造りすぎのムダ</b></td><td>必要より多く 早く造る</td></tr>
+<tr><td>手待ちのムダ</td><td>材料や前の工程を待って 手が止まる</td></tr>
+<tr><td>運搬のムダ</td><td>必要以上に運ぶ 置きかえる</td></tr>
+<tr><td>加工そのもののムダ</td><td>お客様の価値にならない加工や手間</td></tr>
+<tr><td>在庫のムダ</td><td>材料 仕掛品 完成品が必要以上にある</td></tr>
+<tr><td>動作のムダ</td><td>探す かがむ 歩くなど 価値を生まない動き</td></tr>
+<tr><td>不良をつくるムダ</td><td>不良品と その手直し</td></tr>
+</tbody></table>
+
+<h2>なぜ造りすぎがいちばん悪いのか</h2>
+<p>造りすぎると ほかのムダが次々に出てきます。</p>
+<ul>
+<li><b>在庫のムダ</b>：造った分は置いておくしかありません。</li>
+<li><b>運搬のムダ</b>：置き場に運び また取りに行きます。</li>
+<li><b>動作のムダ</b>：山の中から必要なものを探します。</li>
+<li><b>不良が見つかるのが遅れる</b>：工程のあいだに在庫があると 前の工程で出た不良が後の工程で見つかるまで時間がかかります。そのあいだに同じ不良を造り続けることがあります。</li>
+</ul>
+<p>そしていちばんこわいのは <b>手待ちのムダがかくれる</b>ことです。本当は人や機械が余っていても 造り続けているので 全員が忙しく見えます。どこに余力があるのか だれにも見えなくなります。</p>
+
+<h2>数字で見る造りすぎ</h2>
+<p>1日の注文が480台 稼働時間が480分の工場では タクトタイム（お客様の注文で決まる速さ）は1台1分です。</p>
+<p>ここで「工程は止めるな 造れるだけ造れ」というルールで 1日600台造ったとします。</p>
+<ul>
+<li>注文は480台。毎日120台が余ります。</li>
+<li>仮に1台に材料費などが1,000円かかるとすると 120台分で毎日12万円です。</li>
+<li>余った分があとで使われないとすると 1か月（20日）で2,400台 240万円。その置き場と運ぶ人も必要になります。</li>
+</ul>
+<p>帳簿では在庫は資産として数えられるので 利益が出ているように見えることもあります。でもトヨタ生産方式では 必要以上の在庫をムダと考えます。材料のお金が先に出ていき 置き場や運搬の手間もかかるからです。造りすぎ工場でも 売れると決まっていない在庫は価値ゼロとして数えます。</p>
+
+<h2>職場で造りすぎを見つけるチェック</h2>
+<ul>
+<li>工程と工程のあいだに 決まった数より多い仕掛品が置いてある</li>
+<li>「手があいたから とりあえず次の分を造っておく」が当たり前になっている</li>
+<li>人や機械の稼働率（どれだけ動いているか）を上げることが目標になっている</li>
+<li>まとめて造ったほうが効率がいい と思われている</li>
+<li>置き場が足りなくなって 通路や空いた場所に物が置かれている</li>
+</ul>
+
+<h2>造りすぎをなくすには</h2>
+<ol>
+<li><b>タクトタイムで造る</b>：造る速さを 機械の速さではなく お客様の注文で決めます。</li>
+<li><b>後工程引取り</b>：後の工程が 必要なものを 必要なときに 必要な数だけ引き取り 前の工程は引き取られた分だけを造って補充します。かんばんはそのための道具です。</li>
+<li><b>工程のあいだに置く数を決める</b>：ラインを止めずに流すのに必要な最低限の仕掛品（標準手持ち）を決め それ以上は造りません。</li>
+<li><b>止まってよいと決める</b>：やることがなければ止まる。止まった時間は 改善できる余力が見えたしるしです。</li>
+</ol>
+
+<h2>現場でよくある誤解</h2>
+<ul>
+<li><b>「人や機械を止めるのはもったいない」</b>：止めずに造った分は 在庫と置き場と運搬のコストになります。もったいないのは止まることではなく 売れないものを造ることです。</li>
+<li><b>「在庫があれば安心」</b>：在庫は 不良や設備の問題 段取りの長さなどを見えなくします。問題がかくれたままになります。</li>
+<li><b>「稼働率が高いほどよい」</b>：トヨタ生産方式で大事にするのは 必要なときに設備が動ける状態にある割合（可動率）です。どれだけ動かすかは注文に合わせて決めます。稼働率を上げるために必要以上に造ると 造りすぎになります。</li>
+</ul>
+
+<h2>造りすぎのムダを体験してみる</h2>
+<p><a href="../../games/factory/">造りすぎ工場</a>は 4つの工程と1日480台の注文がある架空の工場で「工程は止めるな 造れるだけ造れ」のルールのまま動かすと 注文は全部出せるのに利益がマイナスになるのを体験する無料のブラウザゲームです。人数と仕掛品の数を変えて 本当に利益が出る形を自分で見つけます。研修では「注文は全部出せた。ではお金はどこに消えた？」という問いから話が深まります。</p>
+<p><a class="btn primary" href="../../play/factory/">無料で遊ぶ</a><a class="btn ghost" href="../../games/factory/">ゲームの説明を見る</a></p>
+<p>平準化については <a href="../heijunka/">平準化とは？ わかりやすく解説</a> にまとめています。</p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
+'''
+JA2_FAQ = [
+    ("造りすぎのムダとは何ですか？", "お客様が必要とする量より多く または必要なときより早く造ることです。トヨタ生産方式の7つのムダの1つです。"),
+    ("7つのムダで一番悪いのはどれですか？", "造りすぎのムダです。在庫 運搬 動作などほかのムダを生み 手待ちや不良などの問題をかくしてしまうからです。"),
+    ("7つのムダの順番は決まっていますか？", "決まった順番で覚える必要はありません。ただし造りすぎのムダを最初に挙げることが多く いちばん悪いムダとして扱われます。"),
+    ("造りすぎのムダをなくすには何から始めればいいですか？", "まず休けいなどをのぞいた稼働時間を注文数で割って タクトタイムを出し いまの造る速さとくらべます。次に 工程のあいだにたまっている仕掛品を見て 置く数を決めます。"),
+]
+
+# ---------- 英語：lean simulation games ----------
+EN2_BODY = '''  <p class="lead"><b>These are free, browser-based lean simulation games for training.</b> Each one takes 10–20 minutes to play and 30–90 minutes as a workshop. Nothing to install and no sign-up — open the link, share your screen or put groups in front of a laptop, and run the session. They were built by a consultant with more than 20 years at a Toyota subsidiary consulting company, from the way lean is actually taught on the shop floor.</p>
+
+<h2>The games</h2>
+<table><thead><tr><th>Game</th><th>Lean topic</th><th>Play time</th><th>Workshop</th><th>Price</th></tr></thead><tbody>
+<tr><td><a href="../../games/overproduction-factory/">Overproduction Factory</a></td><td>Overproduction waste, takt time, people per process, standard WIP</td><td>10–20 min</td><td>30–90 min</td><td>Free / Pro $29, team $99</td></tr>
+<tr><td><a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a></td><td>Heijunka (production leveling), supplier capacity and inventory cost</td><td>10–20 min</td><td>30–90 min</td><td>Free / Pro $49, team $149</td></tr>
+</tbody></table>
+
+<h3>Overproduction Factory</h3>
+<p>Four processes and a daily order of 480 units. The old rule on the floor is "never let a process stop, build as much as you can." Follow it and every ordered unit ships — yet the day ends in a loss. Players change the crew and the work-in-process between processes until the line actually makes money. Best for a first lean session, supervisors and improvement teams.</p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="../../games/overproduction-factory/">How it works</a></p>
+
+<h3>The Supplier's Puzzle</h3>
+<p>Set in a fictional scenario inspired by Toyota production, the customer needs 8,000 cars this month and players run two suppliers. They change the build order, people and machines and explore how a leveled sequence can lower the supplier's cost. Best for purchasing, planning and supplier development teams, and for teaching heijunka.</p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="../../games/suppliers-puzzle/">How it works</a></p>
+
+<h2>How to choose</h2>
+<ul>
+<li><b>New to lean, or one session only:</b> start with Overproduction Factory. It opens the most basic question — are we building what the customer needs?</li>
+<li><b>Teaching heijunka or working with suppliers:</b> use The Supplier's Puzzle. Read <a href="../heijunka-examples/">heijunka examples with numbers</a> first if you need a refresher.</li>
+<li><b>A half-day workshop:</b> run both. Overproduction first, then the supplier view of the same problem.</li>
+</ul>
+
+<h2>How to run a lean simulation session</h2>
+<ol>
+<li><b>Run it as it starts.</b> Let groups play without changing anything, so they see the problem with their own eyes.</li>
+<li><b>Ask before you explain.</b> One good question does more than a slide: "Every unit shipped. So where did the money go?"</li>
+<li><b>Let them try and fail.</b> The games never show the answer first. Wrong attempts are where the learning happens.</li>
+<li><b>Compare runs.</b> Write each group's settings and results on a board and compare.</li>
+<li><b>Bring it home.</b> End with one thing each person will look for in their own workplace tomorrow.</li>
+</ol>
+
+<h2>Browser games vs. hands-on kits</h2>
+<p>Classic hands-on simulations — building with blocks or folding paper products on a mini line — are great in a room. Browser games add three things: they run in remote and hybrid classes, they replay a full day or month in minutes so groups can test several ideas, and they show cost and profit numbers that are hard to track by hand. The two work well together.</p>
+
+<h2>Free version and Pro</h2>
+<p>The free versions are enough to play and to run a basic session. Pro is for trainers. It lets you change the settings to match your own workplace — orders, work times, prices and wages in Overproduction Factory; models, volumes, machines and costs in The Supplier's Puzzle — and adds a 6-page facilitator guide with the session plan, questions and common answers, offline use and one year of bug fixes.</p>
+<p><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Overproduction Factory Pro</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Supplier's Puzzle Pro</a></p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help fitting these games to your course or workplace, <a href="../../consult/">get in touch</a>.</p>
+'''
+EN2_FAQ = [
+    ("Are these lean simulation games free?", "Yes. The free versions run in a browser with no sign-up. Pro versions for trainers add customization, a facilitator guide and offline use."),
+    ("Can I use them in an online or university class?", "Yes. They run in a modern web browser, so they work with screen sharing and in classrooms. They fit operations management and lean courses."),
+    ("Do I need to be a lean expert to run them?", "No. The games are designed so the problem shows itself. The Pro facilitator guide gives the session plan, the questions to ask and the answers people usually give."),
+    ("How long does a session take?", "Each game takes 10–20 minutes to play alone, and 30, 60 or 90 minutes as a facilitated workshop."),
+]
+
+if __name__ == '__main__':
+    page('ja', 'ja/learn/tsukurisugi-no-muda/', '../../../',
+         '造りすぎのムダとは？7つのムダで一番悪い理由と見つけ方｜Mendomi Lab',
+         '造りすぎのムダとは 必要より多く早く造ること。7つのムダの中でなぜ一番悪いのか 数字の例 職場で見つけるチェック なくす方法を トヨタの子会社のコンサル会社で20年以上改善をしてきた人が説明します。',
+         '造りすぎのムダとは？ 7つのムダで一番悪いと言われる理由', JA2_BODY, JA2_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/ja/"), ("造りすぎのムダとは", "https://mendomilab.com/ja/learn/tsukurisugi-no-muda/")],
+         None, og='og_ja_of')
+    page('en', 'learn/lean-simulation-games/', '../../',
+         'Lean Simulation Games Online: Free Browser Games for Lean Training | Mendomi Lab',
+         'Free browser-based lean simulation games for training and classes: overproduction, takt time and heijunka. No install, 30–90 minute workshops, Pro versions for trainers. Built by a 20+ year consultant at a Toyota subsidiary.',
+         'Lean simulation games online: free browser games for lean training', EN2_BODY, EN2_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("Lean simulation games", "https://mendomilab.com/learn/lean-simulation-games/")],
+         None, og='og')
