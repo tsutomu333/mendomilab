@@ -192,8 +192,8 @@ if __name__ == '__main__':
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("平準化とは", "https://mendomilab.com/ja/learn/heijunka/")],
          'learn/heijunka-examples/')
     page('en', 'learn/heijunka-examples/', '../../',
-         'Heijunka Examples: Production Leveling in Real Life (with Numbers) | Mendomi Lab',
-         'Concrete heijunka examples with numbers: a batched vs. leveled week, what the supplier sees, how a heijunka box works, and examples outside the factory. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.',
+         'Heijunka Examples with Numbers | Mendomi Lab',
+         "Heijunka (production leveling) examples with numbers: a leveled weekly schedule, a supplier's view, and a heijunka box. Try it in a free browser game.",
          'Heijunka examples: production leveling in real life, with numbers', EN_BODY, EN_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Heijunka examples", "https://mendomilab.com/learn/heijunka-examples/")],
          'ja/learn/heijunka/')
@@ -332,8 +332,8 @@ if __name__ == '__main__':
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("造りすぎのムダとは", "https://mendomilab.com/ja/learn/tsukurisugi-no-muda/")],
          'learn/overproduction-waste/', og='og_ja_of')
     page('en', 'learn/lean-simulation-games/', '../../',
-         'Lean Simulation Games Online: Free Browser Games for Lean Training | Mendomi Lab',
-         'Free browser-based lean simulation games for training and classes: overproduction, takt time and heijunka. No install, 30–90 minute workshops, Pro versions for trainers. Built by a 20+ year consultant at a Toyota subsidiary.',
+         'Lean Simulation Games Online (Free) | Mendomi Lab',
+         'Free browser-based lean simulation games for training: overproduction, heijunka and bottlenecks. How to run each one as a 30–90 minute workshop.',
          'Lean simulation games online: free browser games for lean training', EN2_BODY, EN2_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Lean simulation games", "https://mendomilab.com/learn/lean-simulation-games/")],
          None, og='og')
@@ -470,8 +470,8 @@ if __name__ == '__main__':
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("製造業の研修ゲーム", "https://mendomilab.com/ja/learn/kenshu-game/")],
          None, og='og_ja_of')
     page('en', 'learn/overproduction-waste/', '../../',
-         'Overproduction Waste Examples: Factory, Office and Service (with Numbers) | Mendomi Lab',
-         'Overproduction waste examples with numbers: a line that never stops, piles between processes, office batch printing and restaurant prep. Why it is called the worst of the seven wastes, how to spot it and how to reduce it.',
+         'Overproduction Waste Examples | Mendomi Lab',
+         'Overproduction waste examples with numbers in a factory, an office and a restaurant. Why it is called the worst of the 7 wastes and how to reduce it.',
          'Overproduction waste examples: factory, office and service, with numbers', EN3_BODY, EN3_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Overproduction waste examples", "https://mendomilab.com/learn/overproduction-waste/")],
          'ja/learn/tsukurisugi-no-muda/', og='og_of')
@@ -605,8 +605,8 @@ if __name__ == '__main__':
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("タクトタイムとサイクルタイム", "https://mendomilab.com/ja/learn/takt-time/")],
          'learn/takt-time-vs-cycle-time/', og='og_ja_of')
     page('en', 'learn/takt-time-vs-cycle-time/', '../../',
-         'Takt Time vs Cycle Time: Formula, Examples and Staffing | Mendomi Lab',
-         'Takt time vs cycle time explained with numbers: the takt time formula, what the comparison tells you, how to calculate people needed, and how lead time differs. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.',
+         'Takt Time vs Cycle Time: Formula & Examples | Mendomi',
+         'Takt time vs cycle time: the formulas, worked examples, and how to use the gap to decide staffing and spot overproduction.',
          'Takt time vs cycle time: formula, examples and staffing', EN4_BODY, EN4_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Takt time vs cycle time", "https://mendomilab.com/learn/takt-time-vs-cycle-time/")],
          'ja/learn/takt-time/', og='og_of')
@@ -736,8 +736,8 @@ if __name__ == '__main__':
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("ボトルネック工程とは", "https://mendomilab.com/ja/learn/bottleneck/")],
          'learn/bottleneck-analysis/', og='og_ja_pasta')
     page('en', 'learn/bottleneck-analysis/', '../../',
-         'Bottleneck Analysis in Lean: How to Find and Fix a Bottleneck (with Numbers) | Mendomi Lab',
-         'Bottleneck analysis with numbers: how one step sets your output, how to calculate capacity, four signs of a bottleneck on the floor, and the steps to fix it. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.',
+         'Bottleneck Analysis in Lean (with Numbers) | Mendomi',
+         'How to find a bottleneck with simple numbers, why adding people elsewhere does not help, and the order to fix it. With a free game to practice.',
          'Bottleneck analysis in lean: how to find and fix a bottleneck', EN5_BODY, EN5_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Bottleneck analysis", "https://mendomilab.com/learn/bottleneck-analysis/")],
          'ja/learn/bottleneck/', og='og_of')
@@ -855,8 +855,8 @@ if __name__ == '__main__':
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("かんばん方式とは", "https://mendomilab.com/ja/learn/kanban/")],
          None, og='og_ja_sp')
     page('en', 'learn/mura-muri-muda/', '../../',
-         'Mura, Muri, Muda: Meaning and Examples (Factory, Office, Restaurant) | Mendomi Lab',
-         'Mura, muri and muda explained with concrete examples from a factory, an office and a restaurant, how the three Ms connect, and why improvement usually starts with mura. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.',
+         'Mura, Muri, Muda: Meaning & Examples | Mendomi Lab',
+         'Mura, muri and muda explained with examples from a factory, an office and a restaurant, and why improvement usually starts with mura.',
          'Mura, muri, muda: meaning and examples', EN6_BODY, EN6_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Mura, muri, muda", "https://mendomilab.com/learn/mura-muri-muda/")],
          None, og='og_sp')
@@ -966,8 +966,8 @@ if __name__ == '__main__':
          [("Mendomi Lab", "https://mendomilab.com/ja/"), ("飲食店の回転率とは", "https://mendomilab.com/ja/learn/kaitenritsu/")],
          None, og='og_ja_pasta')
     page('en', 'learn/7-wastes-of-lean/', '../../',
-         'The 7 Wastes of Lean: Examples in Factory and Office (TIMWOOD) | Mendomi Lab',
-         'The 7 wastes of lean manufacturing (overproduction, waiting, transportation, over-processing, inventory, motion, defects) with a factory and an office example for each, why overproduction is the worst, and how to find waste in your own work.',
+         'The 7 Wastes of Lean with Examples | Mendomi Lab',
+         'The 7 wastes of lean (TIMWOOD) with a factory and an office example for each, why overproduction is the worst, and how to find waste in your work.',
          'The 7 wastes of lean, with examples', EN7_BODY, EN7_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("7 wastes of lean", "https://mendomilab.com/learn/7-wastes-of-lean/")],
          None, og='og_of')
