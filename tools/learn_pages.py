@@ -79,7 +79,7 @@ def page(lang, path, rel, title, desc, h1, body, faq, crumbs, alt, og=None):
 
 
 # ---------- 日本語：平準化とは ----------
-JA_BODY = '''  <p class="lead"><b>平準化とは 造る量と種類を 日ごと・時間ごとにならして造ることです。</b>同じものを何日もまとめて造るのではなく 毎日 少しずついろいろな種類を造ります。トヨタ生産方式（TPS）の土台の1つで ジャストインタイムとかんばんは 平準化ができていることが前提になっています。</p>
+JA_BODY = '''  <p class="lead"><b>平準化とは 造る量と種類を 日ごと・時間ごとにならして造ることです。</b>同じものを何日もまとめて造るのではなく 毎日 少しずついろいろな種類を造ります。トヨタ生産方式（TPS）の土台の1つで <a href="../kanban/">ジャストインタイムとかんばん</a>は 平準化ができていることが前提になっています。</p>
 
 <h2>数字で見る平準化の例</h2>
 <p>1週間（5日）で100台を造る工場があるとします。内訳は A車60台 B車20台 C車20台です。</p>
@@ -392,7 +392,7 @@ JA3_BODY = '''  <p class="lead"><b>製造業の研修で使える トヨタ生�
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。</p>
-<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a></p>
+<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a> ／ <a href="../kanban/">かんばん方式とは？</a></p>
 '''
 JA3_FAQ = [
     ("無料で研修に使えますか？", "使えます。無料版はブラウザでそのまま遊べて 登録もいりません。研修をする人向けのPro版は 設定を自分の職場に合わせて変えられ 進行役の手引きがつきます（日本語版は準備中）。"),
@@ -450,7 +450,7 @@ EN3_BODY = '''  <p class="lead"><b>Overproduction waste means making more than t
 <h2>See it in a game</h2>
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game about a factory with four processes and a daily order of 480 units, like Example 1. Follow the old "never stop" rule and every ordered unit ships — yet the day ends in a loss. Players change the crew and the work-in-process until the line actually makes money. In a workshop, one question opens the discussion: <em>"Every unit shipped. So where did the money go?"</em></p>
 <p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
-<p>More games: <a href="../lean-simulation-games/">lean simulation games for training</a>. Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a>.</p>
+<p>More games: <a href="../lean-simulation-games/">lean simulation games for training</a>. Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a> / <a href="../mura-muri-muda/">mura, muri, muda examples</a>.</p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -741,3 +741,121 @@ if __name__ == '__main__':
          'Bottleneck analysis in lean: how to find and fix a bottleneck', EN5_BODY, EN5_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Bottleneck analysis", "https://mendomilab.com/learn/bottleneck-analysis/")],
          'ja/learn/bottleneck/', og='og_of')
+
+
+# ---------- 日本語：かんばん方式 ----------
+JA6_BODY = '''  <p class="lead"><b>かんばん方式とは 後の工程が使った分だけを 前の工程に「運んで」「つくって」と知らせる札（かんばん）を使うしくみです。</b>トヨタ生産方式の柱の1つ「ジャストインタイム」（必要なものを 必要なときに 必要な量だけ）を実現するための道具です。</p>
+
+<h2>ジャストインタイムとかんばんの関係</h2>
+<p>ジャストインタイムは目的で かんばんはその手段です。前の工程が計画どおりにつくって後ろへ送る（押し出す）のではなく 後の工程が必要な分を取りに行く（引き取る）ことで つくりすぎと在庫を防ぎます。</p>
+
+<h2>かんばんは2種類</h2>
+<table><thead><tr><th>かんばん</th><th>何を知らせるか</th></tr></thead><tbody>
+<tr><td>引き取りかんばん</td><td>後の工程が 前の工程から「何を いくつ 引き取るか」</td></tr>
+<tr><td>生産指示かんばん</td><td>前の工程に「何を いくつ つくるか」</td></tr>
+</tbody></table>
+
+<h2>数字で見る かんばんの流れ</h2>
+<p>部品が1箱20個入り 1箱にかんばんが1枚ついているとします。</p>
+<ol>
+<li>組立ラインで箱を使い始めたら かんばんを外して ポストに入れます。</li>
+<li>運ぶ人が決まった時間にかんばんを集め 前の工程へ行き 同じ部品を1箱（20個）引き取ります。</li>
+<li>引き取られた箱についていた生産指示かんばんが外れ 前の工程はその分（20個）だけをつくります。</li>
+</ol>
+<p>つまり 使った分しかつくらず 運ばない。かんばんの枚数が そのまま工程のあいだに置ける在庫の上限になります。</p>
+<p>枚数の考え方の一例：1日400個使い 補充に半日かかり 1割の余裕を見て 1箱20個なら 400 × 0.5 × 1.1 ÷ 20 ＝ 11枚です。現場では 補充の間かくや運ぶ回数なども入れて決めます。</p>
+
+<h2>かんばんのルール</h2>
+<ul>
+<li>後の工程が 前の工程へ取りに行く</li>
+<li>前の工程は 引き取られた分だけをつくる</li>
+<li>かんばんのないものは つくらない・運ばない</li>
+<li>不良品を後の工程に送らない</li>
+<li>かんばんの枚数を少しずつ減らして 隠れていた問題を見つけていく</li>
+</ul>
+<p>そして大前提が <a href="../heijunka/">平準化</a> です。後の工程の使い方に大きな波があると かんばんは前の工程に波をそのまま伝えてしまいます。</p>
+
+<h2>ジャストインタイムのデメリットと注意点</h2>
+<ul>
+<li><b>止まりやすく見える</b>：在庫が少ないので 部品が1つ来ないとラインが止まります。災害や物流の止まりへの備え（どこにどれだけ置くか）は別に考える必要があります。</li>
+<li><b>平準化なしで入れると 前の工程にしわ寄せがいく</b>：つくる量や種類に波があるままかんばんだけ入れると サプライヤーがいちばん忙しい日に合わせた人や在庫を持つことになります。「下請けに在庫を押しつける」と言われるのは この形のときです。</li>
+<li><b>段取り替えを短くする必要がある</b>：小さいロットで何度もつくるので 切りかえの時間が長いと回りません。</li>
+<li><b>運ぶ回数がふえる</b>：少しずつ何度も運ぶので 運び方（決まった順に回る運搬など）の工夫がいります。</li>
+</ul>
+<p>どれも「かんばんを入れれば在庫が減る」のではなく 波をならし 段取りを短くし 問題を1つずつ直した結果として在庫が減る ということです。</p>
+
+<h2>タスク管理のカンバンとのちがい</h2>
+<p>仕事の進み具合を「やること・やっている・終わった」の列で見せるタスク管理のカンバン（カンバンボード）は トヨタのかんばんの「進めている途中のものの数に上限をつける」考え方を借りたものです。工場のかんばんは 物と情報をいっしょに動かして つくる量そのものを決めるところがちがいます。</p>
+
+<h2>かんばん・ジャストインタイムを体験してみる</h2>
+<p><a href="../../games/supplier/">サプライヤーのパズル</a> では 組み立ての順番（平準化しているかどうか）で 前の工程にあたるサプライヤーの人 設備 在庫のコストがどう変わるかを見られます。<a href="../../games/factory/">造りすぎ工場</a> では 工程のあいだに置く数を決めないと 在庫がふえていく様子を体験できます。どちらも無料のブラウザゲームです。</p>
+<p><a class="btn primary" href="../../play/supplier/">サプライヤーのパズルで遊ぶ</a><a class="btn ghost" href="../../play/factory/">造りすぎ工場で遊ぶ</a></p>
+<p>あわせて読む：<a href="../heijunka/">平準化とは？</a> ／ <a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../takt-time/">タクトタイムとサイクルタイムの違い</a></p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
+'''
+JA6_FAQ = [
+    ("かんばん方式とは何ですか？", "後の工程が使った分だけを 前の工程に運ぶ・つくるよう知らせる札（かんばん）を使うしくみです。ジャストインタイムを実現する道具です。"),
+    ("ジャストインタイムとかんばん方式の違いは？", "ジャストインタイムは 必要なものを必要なときに必要な量だけつくり運ぶという考え方（目的）です。かんばん方式は それを実現するための道具（手段）です。"),
+    ("ジャストインタイムのデメリットは？", "在庫が少ないので部品が届かないと止まりやすいこと 平準化をせずに入れると前の工程やサプライヤーに負担がかかること 段取り替えの短縮や運搬の工夫が必要なことです。"),
+    ("かんばんの枚数はどう決めますか？", "1日の使用量 補充にかかる時間 余裕分 1箱の入り数から決めます。例として 1日400個 補充に半日 1割の余裕 1箱20個なら 400×0.5×1.1÷20＝11枚です。"),
+]
+
+# ---------- 英語：mura muri muda ----------
+EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are the three kinds of waste in the Toyota Production System: mura is unevenness, muri is overburden, and muda is non-value-adding work.</b> They are connected — unevenness tends to create overburden, and overburden leads to waste. Below are concrete examples, and why improvement usually starts with mura.</p>
+
+<h2>The three Ms at a glance</h2>
+<table><thead><tr><th></th><th>Meaning</th><th>Typical sign</th></tr></thead><tbody>
+<tr><td><b>Mura</b> (斑)</td><td>Unevenness in volume, mix or timing</td><td>Busy days and quiet days; end-of-month rush</td></tr>
+<tr><td><b>Muri</b> (無理)</td><td>Overburden on people or machines</td><td>Overtime, rushing, skipped checks, breakdowns</td></tr>
+<tr><td><b>Muda</b> (無駄)</td><td>Activity that adds no value for the customer</td><td>Inventory, waiting, extra transport, rework</td></tr>
+</tbody></table>
+
+<h2>Example 1: a factory with a batched schedule</h2>
+<p>A plant builds 100 units a week: model A Monday to Wednesday, B on Thursday, C on Friday. A supplier that makes a part only for B sees zero demand four days a week and 20 sets on Thursday (<b>mura</b>). On Thursday its people work overtime and the machine runs flat out (<b>muri</b>). The rest of the week, the same people and machines sit idle — or keep building stock ahead (<b>muda</b>). Leveling the schedule to 4 sets a day removes the mura, and the muri and much of the muda go with it. See <a href="../heijunka-examples/">heijunka examples</a>.</p>
+
+<h2>Example 2: an office at month end</h2>
+<p>Invoices arrive all month but are processed in the last three days (<b>mura</b>). The team works late and makes mistakes under pressure (<b>muri</b>). Mistakes are reworked and customers wait (<b>muda</b>). Processing a few invoices every day evens out the load.</p>
+
+<h2>Example 3: a restaurant at lunch</h2>
+<p>Everyone arrives between 12:00 and 12:30 (<b>mura</b>). The kitchen is overloaded and orders back up (<b>muri</b>). Guests leave without eating, and staff stand idle at 14:00 (<b>muda</b>). Taking reservations at staggered times or preparing some items before the peak spreads the load.</p>
+
+<h2>Why start with mura?</h2>
+<p>Many teams attack muda first — cutting inventory, chasing idle time. But if the unevenness stays, the waste comes back: the inventory was there to absorb the waves. Leveling the work first (heijunka), then setting standard work so no one is overloaded, makes the remaining waste easier to see and remove.</p>
+
+<h2>Common mistakes</h2>
+<ul>
+<li><b>Treating muda as the only target.</b> Removing buffers without removing the unevenness usually creates muri.</li>
+<li><b>Calling everything "waste."</b> Some buffer is a deliberate choice while the unevenness still exists. Decide it on purpose and shrink it as you improve.</li>
+<li><b>Ignoring muri.</b> Overburdened people and machines lead to errors, injuries and breakdowns — which become more muda.</li>
+</ul>
+
+<h2>See it in a game</h2>
+<p><a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> is a free browser game set in a fictional scenario inspired by Toyota production. Change the build order and watch how unevenness at the customer turns into capacity and inventory cost at two suppliers — mura, muri and muda in one screen.</p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Pro for trainers ($49)</a></p>
+<p>Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../lean-simulation-games/">lean simulation games</a></p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
+'''
+EN6_FAQ = [
+    ("What do mura, muri and muda mean?", "Mura is unevenness, muri is overburden, and muda is activity that adds no value for the customer. Together they are the three Ms of the Toyota Production System."),
+    ("What is an example of mura, muri and muda?", "A batched schedule gives a supplier 20 sets of demand on one day and none on the others (mura). That day its people work overtime (muri). On the other days they sit idle or build stock ahead (muda)."),
+    ("Which should you eliminate first?", "Usually mura. Leveling the work removes the cause of much of the overburden and waste. Removing waste while the unevenness remains tends to bring the waste back or create overburden."),
+    ("How is heijunka related to mura?", "Heijunka (production leveling) is the main way to reduce mura in the production plan, by smoothing volume and mix over time."),
+]
+
+if __name__ == '__main__':
+    page('ja', 'ja/learn/kanban/', '../../../',
+         'かんばん方式とは？わかりやすく解説｜ジャストインタイムとの関係とデメリット｜Mendomi Lab',
+         'かんばん方式とは 後の工程が使った分だけを前の工程に知らせるしくみ。ジャストインタイムとの関係 2種類のかんばん 数字で見る流れと枚数の考え方 ルール デメリットと注意点を トヨタの子会社のコンサル会社で20年以上改善をしてきた人が説明します。',
+         'かんばん方式とは？ わかりやすく解説（ジャストインタイムとの関係とデメリット）', JA6_BODY, JA6_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/ja/"), ("かんばん方式とは", "https://mendomilab.com/ja/learn/kanban/")],
+         None, og='og_ja_sp')
+    page('en', 'learn/mura-muri-muda/', '../../',
+         'Mura, Muri, Muda: Meaning and Examples (Factory, Office, Restaurant) | Mendomi Lab',
+         'Mura, muri and muda explained with concrete examples from a factory, an office and a restaurant, how the three Ms connect, and why improvement usually starts with mura. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.',
+         'Mura, muri, muda: meaning and examples', EN6_BODY, EN6_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("Mura, muri, muda", "https://mendomilab.com/learn/mura-muri-muda/")],
+         None, og='og_sp')
