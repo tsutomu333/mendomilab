@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ボトルネック工程とは？見つけ方と計算方法・改善の順番｜Mendomi Lab</title>
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<meta name="description" content="ボトルネック（ネック）工程とは 全体の生産量を決めるいちばん能力の低い工程。数字の例 計算方法 現場で見つける4つのしるし 改善の順番 飲食店の例を トヨタの子会社のコンサル会社で20年以上改善をしてきた人が説明します。">
+<link rel="canonical" href="https://mendomilab.com/ja/learn/bottleneck/">
+<link rel="alternate" hreflang="en" href="https://mendomilab.com/learn/bottleneck-analysis/">
+<link rel="alternate" hreflang="ja" href="https://mendomilab.com/ja/learn/bottleneck/">
+<meta property="og:title" content="ボトルネック工程とは？見つけ方と計算方法・改善の順番｜Mendomi Lab">
+<meta property="og:description" content="ボトルネック（ネック）工程とは 全体の生産量を決めるいちばん能力の低い工程。数字の例 計算方法 現場で見つける4つのしるし 改善の順番 飲食店の例を トヨタの子会社のコンサル会社で20年以上改善をしてきた人が説明します。">
+<meta property="og:url" content="https://mendomilab.com/ja/learn/bottleneck/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://mendomilab.com/assets/social/og_ja_pasta.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "ボトルネック工程とは？ 見つけ方と計算方法", "inLanguage": "ja", "author": {"@type": "Person", "name": "高木 務"}, "publisher": {"@type": "Organization", "name": "Mendomi Lab"}, "datePublished": "2026-11-23", "mainEntityOfPage": "https://mendomilab.com/ja/learn/bottleneck/"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "ボトルネック工程とは何ですか？", "acceptedAnswer": {"@type": "Answer", "text": "工程の中でいちばん能力が低く 全体でつくれる量を決めてしまう工程です。ネック工程ともいいます。"}}, {"@type": "Question", "name": "ボトルネックの計算方法は？", "acceptedAnswer": {"@type": "Answer", "text": "工程ごとに 稼働時間をサイクルタイムで割って 1日につくれる量を出します。いちばん少ない工程がネックです。稼働480分（28,800秒）でサイクルタイム72秒なら 28,800÷72＝400個です。止まる時間や不良を入れていない目安です。"}}, {"@type": "Question", "name": "ボトルネックはどうやって見つけますか？", "acceptedAnswer": {"@type": "Answer", "text": "前に仕掛品がたまっている 後ろの工程が待っている いつも止まらずに動いている サイクルタイムがタクトタイムより長い の4つが目安です。"}}, {"@type": "Question", "name": "ボトルネックを解消すると終わりですか？", "acceptedAnswer": {"@type": "Answer", "text": "終わりません。1つ直すと 次に能力の低い工程や 注文の量が新しい制約になります。見つけて直すことをくり返します。"}}]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Mendomi Lab", "item": "https://mendomilab.com/ja/"}, {"@type": "ListItem", "position": 2, "name": "ボトルネック工程とは", "item": "https://mendomilab.com/ja/learn/bottleneck/"}]}]</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../../../ja/"><span class="mark">面</span><span class="name">Mendomi<small>Lab</small></span></a>
+  <nav><a href="../../../ja/#games">ゲーム</a><a href="../../../ja/consult/">相談する</a><a href="../../../ja/about/">Mendomi Labについて</a><a class="lang" href="../../../learn/bottleneck-analysis/" hreflang="en">English</a></nav>
+</div></header>
+
+<main class="wrap prose">
+  <p class="crumb" style="font-size:.85em;opacity:.7"><a href="../../../ja/">Mendomi Lab</a> › ボトルネック工程とは</p>
+  <h1>ボトルネック工程とは？ 見つけ方と計算方法</h1>
+  <p class="lead"><b>ボトルネック（ネック）工程とは 工程の中でいちばん能力が低く 全体でつくれる量の上限を決めてしまう工程です。</b>ほかの工程がどれだけ速くても 全体の生産量はネックの速さをこえられません。だから改善はまずネックを見つけることから始めます。</p>
+
+<h2>数字で見るボトルネック</h2>
+<p>4つの工程が順番につながったラインで 1時間につくれる量が次のようだったとします。</p>
+<table><thead><tr><th>工程</th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead><tbody>
+<tr><td>1時間につくれる量</td><td>60個</td><td><b>40個</b></td><td>50個</td><td>70個</td></tr>
+</tbody></table>
+<p>注文が十分にあっても このラインでつくれるのは <b>1時間40個まで</b>です。Bがネックだからです。Aに人を足して80個つくれるようにしても 生産量は40個のまま。Bの前に仕掛品がたまるだけです。</p>
+<p>Bを改善して60個にすると 上限は50個になります。今度はCがネックになりました。<b>ネックを1つ直すと 別の工程（または注文の量）が次の制約になります。</b></p>
+
+<h2>工程の能力の計算方法</h2>
+<p><b>1日につくれる量 ＝ 1日の稼働時間 ÷ その工程のサイクルタイム</b></p>
+<p>稼働480分（28,800秒）で サイクルタイム72秒の工程なら 28,800 ÷ 72 ＝ 400個です。1日の注文が480個（タクトタイム60秒）なら この工程は足りません。サイクルタイムがタクトタイムより長い工程は 注文に対して能力が足りない工程です。いくつもあるときは その中でいちばん能力の低い工程がネックの候補です。なお この計算は止まる時間や不良を入れていない目安です。タクトタイムの出し方は <a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> にまとめています。</p>
+
+<h2>現場でネックを見つける4つのしるし</h2>
+<ul>
+<li><b>前に仕掛品がたまっている</b>：前の工程から来たものが 待たされて山になっている</li>
+<li><b>後ろが待っている</b>：次の工程の人が手を止めて 物が来るのを待っている</li>
+<li><b>いつも止まらずに動いている</b>：ほかの工程に手待ちがあるのに そこだけは休みなく動いている</li>
+<li><b>サイクルタイムがタクトタイムより長い</b>：測ってくらべると数字でわかる</li>
+</ul>
+<p>見かけの忙しさにだまされないことも大事です。いちばんバタバタしている場所が ネックとはかぎりません。行列の原因が 別の場所にあることもあります。</p>
+
+<h2>ボトルネックの改善の順番</h2>
+<ol>
+<li><b>ネックを見つける</b>：上の4つのしるしと数字で確かめます。</li>
+<li><b>ネックを止めない</b>：休けいをずらす 段取り替えを短くする ネックの前に少しだけ仕掛品を置くなどして ネックの時間をむだにしません。</li>
+<li><b>ほかの工程をネックに合わせる</b>：ネックより速い工程が造り続けると 在庫がふえるだけです。造る量をネックに合わせます。</li>
+<li><b>ネックの能力を上げる</b>：作業のムダを取る 人や設備を足すなどで ネックそのものを速くします。</li>
+<li><b>次のネックを探す</b>：ネックは移るので 1にもどります。</li>
+</ol>
+
+<h2>よくある誤解</h2>
+<ul>
+<li><b>「人を足せば生産量が上がる」</b>：ネック以外に人を足しても 生産量は増えません。人件費だけが増えます。</li>
+<li><b>「全部の工程をフルに動かすのがいい」</b>：ネックより速い工程をフルに動かすと 造りすぎになります（<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a>）。</li>
+<li><b>「ネックは機械のこと」</b>：人の作業 検査 運搬 事務の承認など どこでもネックになります。</li>
+</ul>
+
+<h2>飲食店のボトルネック</h2>
+<p>ボトルネックは工場だけの話ではありません。飲食店なら 席 厨房 ホール レジ 皿洗いのどれかがネックになります。席が空いているのに料理が出ないなら厨房 料理はできているのに運べないならホール 食べ終わったお客さんがレジに並んでいるならレジ。忙しいからといって全部の持ち場に人を足すと 売上は変わらず人件費だけが増えることもあります。飲食店の回転率を上げたいときも 考える順番は同じです。</p>
+
+<h2>ボトルネックを体験してみる</h2>
+<p><a href="../../games/pasta/">回らないパスタ屋</a>は 14席の小さなパスタ屋のランチ（11時〜14時）で 厨房 ホール レジの人数を変えて ネックを見つける無料のブラウザゲームです。「忙しいなら人を増やせ」で7人で回してきた店を どこがネックかを探して見直します。工場の題材なら <a href="../../games/factory/">造りすぎ工場</a> で 工程ごとの人数を考えられます。</p>
+<p><a class="btn primary" href="../../play/pasta/">無料で遊ぶ</a><a class="btn ghost" href="../../games/pasta/">ゲームの説明を見る</a></p>
+<p>あわせて読む：<a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> ／ <a href="../kenshu-game/">製造業の研修に使えるゲーム</a></p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
+
+<h2>よくある質問</h2>
+<h3>ボトルネック工程とは何ですか？</h3>
+<p>工程の中でいちばん能力が低く 全体でつくれる量を決めてしまう工程です。ネック工程ともいいます。</p>
+<h3>ボトルネックの計算方法は？</h3>
+<p>工程ごとに 稼働時間をサイクルタイムで割って 1日につくれる量を出します。いちばん少ない工程がネックです。稼働480分（28,800秒）でサイクルタイム72秒なら 28,800÷72＝400個です。止まる時間や不良を入れていない目安です。</p>
+<h3>ボトルネックはどうやって見つけますか？</h3>
+<p>前に仕掛品がたまっている 後ろの工程が待っている いつも止まらずに動いている サイクルタイムがタクトタイムより長い の4つが目安です。</p>
+<h3>ボトルネックを解消すると終わりですか？</h3>
+<p>終わりません。1つ直すと 次に能力の低い工程や 注文の量が新しい制約になります。見つけて直すことをくり返します。</p>
+</main>
+
+<footer class="site"><div class="wrap">
+  <div><a href="../../../ja/about/">Mendomi Labについて</a><a href="../../../ja/consult/">相談する</a><a href="../../../ja/privacy/">プライバシー</a><a href="../../../ja/tokushoho/">特定商取引法にもとづく表記</a></div>
+  <div>Mendomi Lab は A&amp;T Works のプロジェクトです</div>
+  <div>© 2026 Mendomi Lab. トヨタ自動車株式会社・株式会社OJTソリューションズとは関係ありません。</div>
+</div></footer>
+</body>
+</html>
