@@ -262,6 +262,7 @@ JA2_BODY = '''  <p class="lead"><b>造りすぎのムダとは お客様が必�
 <p><a class="btn primary" href="../../play/factory/">無料で遊ぶ</a><a class="btn ghost" href="../../games/factory/">ゲームの説明を見る</a></p>
 <p>平準化については <a href="../heijunka/">平準化とは？ わかりやすく解説</a> にまとめています。</p>
 <p>研修での使い方は <a href="../kenshu-game/">製造業の研修に使えるゲーム</a> にまとめています。</p>
+<p>タクトタイムの出し方は <a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> にまとめています。</p>
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
@@ -449,7 +450,7 @@ EN3_BODY = '''  <p class="lead"><b>Overproduction waste means making more than t
 <h2>See it in a game</h2>
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game about a factory with four processes and a daily order of 480 units, like Example 1. Follow the old "never stop" rule and every ordered unit ships — yet the day ends in a loss. Players change the crew and the work-in-process until the line actually makes money. In a workshop, one question opens the discussion: <em>"Every unit shipped. So where did the money go?"</em></p>
 <p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
-<p>More games: <a href="../lean-simulation-games/">lean simulation games for training</a>. Related: <a href="../heijunka-examples/">heijunka examples</a>.</p>
+<p>More games: <a href="../lean-simulation-games/">lean simulation games for training</a>. Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a>.</p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -474,3 +475,138 @@ if __name__ == '__main__':
          'Overproduction waste examples: factory, office and service, with numbers', EN3_BODY, EN3_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Overproduction waste examples", "https://mendomilab.com/learn/overproduction-waste/")],
          'ja/learn/tsukurisugi-no-muda/', og='og_of')
+
+
+# ---------- 日本語：タクトタイムとサイクルタイム ----------
+JA4_BODY = '''  <p class="lead"><b>タクトタイムは お客様の注文で決まる「1個あたり何秒で造ればよいか」です。サイクルタイムは 工程や作業者が「実際に1個造るのに何秒かかっているか」です。</b>タクトタイムは目標の速さ サイクルタイムは今の速さ。この2つをくらべると 注文に間に合うか 人の配置が合っているか 造りすぎていないかを見直す手がかりになります。</p>
+
+<h2>タクトタイムの計算方法</h2>
+<p><b>タクトタイム ＝ 1日の稼働時間 ÷ 1日に必要な数</b></p>
+<p>稼働時間は 休けいや朝礼などをのぞいた 実際に造れる時間です。</p>
+<table><thead><tr><th>例</th><th>計算</th><th>タクトタイム</th></tr></thead><tbody>
+<tr><td>稼働8時間（480分）で 1日480台</td><td>28,800秒 ÷ 480台</td><td>60秒</td></tr>
+<tr><td>稼働7.5時間（450分）で 1日300台</td><td>27,000秒 ÷ 300台</td><td>90秒</td></tr>
+<tr><td>月20日稼働 1日8時間（休けいなどをのぞく）で 月9,600台</td><td>1日480台 → 28,800秒 ÷ 480台</td><td>60秒</td></tr>
+</tbody></table>
+<p>注文や造れる時間が変わればタクトタイムも変わります。機械の速さや人数は 計算式に入りません。</p>
+
+<h2>サイクルタイムとは</h2>
+<p>サイクルタイムは 工程から製品が1個ずつ送り出される間隔です。1人の作業者を測るときは その人が決まった作業を1回くり返す時間を見ます。ストップウォッチで何回か測り ばらつきも見ます。</p>
+
+<h2>タクトタイムとサイクルタイムの違い</h2>
+<table><thead><tr><th></th><th>タクトタイム</th><th>サイクルタイム</th></tr></thead><tbody>
+<tr><td>何の時間か</td><td>お客様が求める速さ（目標）</td><td>工程が実際に造っている速さ（実力）</td></tr>
+<tr><td>決めるもの</td><td>注文の数と稼働時間</td><td>作業のやり方 設備 人</td></tr>
+<tr><td>出し方</td><td>計算する</td><td>現場で測る</td></tr>
+<tr><td>変えたいとき</td><td>注文や稼働時間が変わったときに見直す</td><td>改善で縮める</td></tr>
+</tbody></table>
+
+<h2>2つをくらべると何がわかるか</h2>
+<table><thead><tr><th>状態</th><th>起きていること</th><th>やること</th></tr></thead><tbody>
+<tr><td>サイクルタイム ＜ タクトタイム</td><td>必要な速さより速く造れる。必要な数をこえて造れば<b>造りすぎ</b>になり 必要な数で止めれば手待ちが出る</td><td>タクトタイムに合わせて造る。余った力は人の配置を見直して改善に回す</td></tr>
+<tr><td>サイクルタイム ＞ タクトタイム</td><td>その工程が注文に間に合わないおそれがある。残業や欠品につながる</td><td>ネックの原因を調べ 作業の改善や 設備・人の配置を見直す</td></tr>
+<tr><td>サイクルタイム ≒ タクトタイム</td><td>お客様の速さで流れている</td><td>ばらつきを小さくする</td></tr>
+</tbody></table>
+
+<h2>必要な人数の出し方</h2>
+<p><b>必要人数の目安 ＝ 1個を造る人の作業時間の合計 ÷ タクトタイム</b></p>
+<p>たとえば4つの工程の作業時間の合計が240秒で タクトタイムが60秒なら 240 ÷ 60 ＝ 計算上は4人です。ただし 1人ひとりの作業を60秒以内に分けられるかも確かめます。合計が250秒なら4.17人。すぐ5人にするのではなく まず作業のムダを取って240秒以内にできないかを考え できなければ5人や稼働時間の見直しを考えます。</p>
+
+<h2>リードタイムとの違い</h2>
+<p>リードタイムは 注文を受けてから（または材料が入ってから）お客様に届くまでの時間です。タクトタイムとサイクルタイムが「1個あたりの速さ」なのに対して リードタイムは「全体でどれだけ待たせるか」です。工程のあいだに在庫が多いほど リードタイムは長くなります。</p>
+
+<h2>現場でよくある誤解</h2>
+<ul>
+<li><b>「機械の速さがタクトタイム」</b>：それはサイクルタイムです。タクトタイムはお客様の注文から計算します。</li>
+<li><b>「稼働時間に休けいも入れる」</b>：休けいや会議の時間は造れません。入れるとタクトタイムが長く出て 間に合わなくなります。</li>
+<li><b>「速く造れるなら速く造ったほうがいい」</b>：タクトタイムより速く造り続けると 造りすぎになります。速く造れる力は 人を減らしたり別の仕事に回したりして使います。</li>
+</ul>
+
+<h2>タクトタイムを体験してみる</h2>
+<p><a href="../../games/factory/">造りすぎ工場</a>は 1日480台の注文がある架空の工場で タクトタイムと工程ごとの必要人数を自分で出して 利益が出る形を見つける無料のブラウザゲームです。「工程は止めるな 造れるだけ造れ」のまま動かすと どうなるかから始まります。</p>
+<p><a class="btn primary" href="../../play/factory/">無料で遊ぶ</a><a class="btn ghost" href="../../games/factory/">ゲームの説明を見る</a></p>
+<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a> ／ <a href="../kenshu-game/">製造業の研修に使えるゲーム</a></p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
+'''
+JA4_FAQ = [
+    ("タクトタイムとサイクルタイムの違いは何ですか？", "タクトタイムはお客様の注文で決まる目標の速さ（稼働時間÷必要数）で 計算して出します。サイクルタイムは工程が実際に1個造るのにかかる時間で 現場で測ります。"),
+    ("タクトタイムの計算方法は？", "1日の稼働時間（休けいなどをのぞく）を1日に必要な数で割ります。稼働480分で480台なら 28,800秒÷480台＝60秒です。"),
+    ("サイクルタイムがタクトタイムより短いとどうなりますか？", "必要な数をこえて造れば造りすぎになり 必要な数で止めれば手待ちが出ます。タクトタイムに合わせて造り 余った力は人の配置を見直して改善に回します。"),
+    ("必要な人数はどう出しますか？", "1個を造る人の作業時間の合計をタクトタイムで割ると目安が出ます。合計240秒でタクトタイム60秒なら計算上は4人です。1人ひとりの作業をタクトタイム以内に分けられるかも確かめます。"),
+]
+
+# ---------- 英語：takt time vs cycle time ----------
+EN4_BODY = '''  <p class="lead"><b>Takt time is the pace the customer requires — how many seconds you have per unit. Cycle time is how long a process or operator actually takes to complete one unit.</b> Takt time is the target; cycle time is your current speed. Comparing the two helps you check whether you can meet demand, whether staffing fits, and whether you are overproducing.</p>
+
+<h2>Takt time formula</h2>
+<p><b>Takt time = available working time per day ÷ units required per day</b></p>
+<p>Available time excludes breaks, meetings and other planned stops.</p>
+<table><thead><tr><th>Example</th><th>Calculation</th><th>Takt time</th></tr></thead><tbody>
+<tr><td>480 min available, 480 units a day</td><td>28,800 s ÷ 480</td><td>60 s</td></tr>
+<tr><td>450 min available, 300 units a day</td><td>27,000 s ÷ 300</td><td>90 s</td></tr>
+<tr><td>20 days × 480 min available (after breaks), 9,600 units a month</td><td>480 a day → 28,800 s ÷ 480</td><td>60 s</td></tr>
+</tbody></table>
+<p>When demand or available time changes, takt time changes. Machine speed and headcount are not part of the formula.</p>
+
+<h2>What cycle time is</h2>
+<p>Cycle time is the interval at which a process releases one unit. For a single operator, it is the time to complete their work sequence once. Measure it several times with a stopwatch and look at the variation, not just the average.</p>
+
+<h2>Takt time vs cycle time</h2>
+<table><thead><tr><th></th><th>Takt time</th><th>Cycle time</th></tr></thead><tbody>
+<tr><td>What it is</td><td>The pace the customer needs (target)</td><td>The pace the process achieves (actual)</td></tr>
+<tr><td>Set by</td><td>Demand and available time</td><td>Method, equipment and people</td></tr>
+<tr><td>How you get it</td><td>Calculate it</td><td>Measure it on the floor</td></tr>
+<tr><td>How it changes</td><td>Review when demand or available time changes</td><td>Reduce through improvement</td></tr>
+</tbody></table>
+
+<h2>What the comparison tells you</h2>
+<table><thead><tr><th>Situation</th><th>What happens</th><th>What to do</th></tr></thead><tbody>
+<tr><td>Cycle time &lt; takt time</td><td>You can build faster than needed. Produce beyond the quantity needed and you <b>overproduce</b>; stop at the quantity needed and there is waiting time</td><td>Build to takt. Use the spare capacity by rebalancing people and improving</td></tr>
+<tr><td>Cycle time &gt; takt time</td><td>The process risks missing demand: overtime or shortages</td><td>Find the cause at the bottleneck; improve the work or rebalance people and equipment</td></tr>
+<tr><td>Cycle time ≈ takt time</td><td>Work flows at the customer's pace</td><td>Reduce variation</td></tr>
+</tbody></table>
+
+<h2>How many people you need</h2>
+<p><b>People needed (estimate) = total manual work time per unit ÷ takt time</b></p>
+<p>If the work across four processes adds up to 240 seconds and takt time is 60 seconds, the calculation gives 240 ÷ 60 = 4 people — provided the work can be split so each person stays within 60 seconds. If it adds up to 250 seconds, that is 4.17. Before adding a fifth person, look for waste and try to bring the total within 240 seconds; if you cannot, consider a fifth person or a change in working time.</p>
+
+<h2>Takt time vs cycle time vs lead time</h2>
+<p>Lead time is the time from receiving an order (or material) until the customer receives the product. Takt and cycle time are about pace per unit; lead time is about how long the customer waits overall. The more inventory sits between processes, the longer the lead time.</p>
+
+<h2>Common mistakes</h2>
+<ul>
+<li><b>Calling machine speed "takt time."</b> That is cycle time. Takt time comes from customer demand.</li>
+<li><b>Including breaks in available time.</b> Nobody produces during breaks. Including them makes takt look longer than it is, and you fall behind.</li>
+<li><b>"If we can go faster, we should."</b> Producing beyond what is needed is overproduction. Build to takt and use the extra capacity by freeing people for other work or improvement.</li>
+</ul>
+
+<h2>Practice it in a game</h2>
+<p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game: a fictional factory with a daily order of 480 units. Players work out the takt time and the people needed per process, and find the setup that actually makes a profit — starting from the old rule "never let a process stop, build as much as you can."</p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
+<p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../heijunka-examples/">heijunka examples</a> / <a href="../lean-simulation-games/">lean simulation games</a></p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
+'''
+EN4_FAQ = [
+    ("What is the difference between takt time and cycle time?", "Takt time is the pace the customer requires (available time ÷ demand); you calculate it. Cycle time is how long a process actually takes to complete one unit; you measure it."),
+    ("What is the takt time formula?", "Takt time = available working time ÷ units required. With 480 minutes available and 480 units a day, takt time is 28,800 s ÷ 480 = 60 seconds."),
+    ("What happens if cycle time is shorter than takt time?", "Produce beyond the quantity needed and you overproduce; stop at the quantity needed and there is waiting time. Build to takt and use the spare capacity by rebalancing people and improving."),
+    ("How do you calculate the number of operators needed?", "Divide the total manual work time per unit by takt time for an estimate. 240 seconds of work at a 60-second takt gives 4 people, if the work can be split so each person stays within takt."),
+]
+
+if __name__ == '__main__':
+    page('ja', 'ja/learn/takt-time/', '../../../',
+         'タクトタイムとサイクルタイムの違い｜計算方法と例・必要人数の出し方｜Mendomi Lab',
+         'タクトタイムはお客様の注文で決まる目標の速さ サイクルタイムは今の速さ。計算方法と例 2つをくらべてわかること 必要人数の出し方 リードタイムとの違いを トヨタの子会社のコンサル会社で20年以上改善をしてきた人が説明します。',
+         'タクトタイムとサイクルタイムの違い（計算方法と例）', JA4_BODY, JA4_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/ja/"), ("タクトタイムとサイクルタイム", "https://mendomilab.com/ja/learn/takt-time/")],
+         'learn/takt-time-vs-cycle-time/', og='og_ja_of')
+    page('en', 'learn/takt-time-vs-cycle-time/', '../../',
+         'Takt Time vs Cycle Time: Formula, Examples and Staffing | Mendomi Lab',
+         'Takt time vs cycle time explained with numbers: the takt time formula, what the comparison tells you, how to calculate people needed, and how lead time differs. Written by a consultant with 20+ years at a Toyota subsidiary consulting company.',
+         'Takt time vs cycle time: formula, examples and staffing', EN4_BODY, EN4_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("Takt time vs cycle time", "https://mendomilab.com/learn/takt-time-vs-cycle-time/")],
+         'ja/learn/takt-time/', og='og_of')
