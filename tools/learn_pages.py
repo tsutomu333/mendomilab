@@ -201,6 +201,55 @@ EN_FAQ = [
     ("How is heijunka related to mura, muri and muda?", "Uneven schedules (mura) overburden people and machines (muri), which leads to waste such as idle capacity and inventory (muda). Heijunka reduces that unevenness in the plan itself."),
 ]
 
+EN9_BODY = """
+<p class="lead"><b>Mendomi (面倒見, <i>mendōmi</i>) is a Japanese word for looking after people.</b> At work it means a leader or senior who takes care of the people around them, at work and beyond, until trust grows to the point where people think, "For this boss, I'll go the extra mile." On Toyota-style shop floors it is a quality people expect from a good leader.</p>
+
+<h2>The word, piece by piece</h2>
+<table>
+<thead><tr><th>Part</th><th>Reading</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>面倒</td><td>mendō</td><td>trouble, bother, the work of caring for someone</td></tr>
+<tr><td>見</td><td>mi</td><td>to look, to watch over</td></tr>
+<tr><td>面倒見がいい</td><td>mendōmi ga ii</td><td>"good at looking after people" (a common compliment)</td></tr>
+</tbody>
+</table>
+<p>So <em>mendomi</em> literally means taking on the bother of watching over someone. It is not the same as being kind or soft. A leader with good mendomi will also tell you clearly when something is wrong, because they care how you grow.</p>
+
+<h2>Mendomi in the Toyota Production System</h2>
+<p>The Toyota Way has two pillars: <b>continuous improvement</b> and <b>respect for people</b>. Mendomi is how respect for people looks on the shop floor, day to day:</p>
+<ul>
+<li>A team leader notices a new member struggling and stays with them until they can do the job.</li>
+<li>A supervisor asks "why?" with the team instead of blaming the person when a problem appears.</li>
+<li>A senior teaches the reason behind a standard, not only the steps.</li>
+<li>A manager checks how people are doing outside work too, because life affects work.</li>
+</ul>
+<p>Lean tools such as kanban, 5S and standardized work only last when people trust their leaders enough to stop the line, report problems and suggest improvements. That trust is built through mendomi.</p>
+
+<h2>Why it matters for lean programs</h2>
+<p>Many lean programs copy the tools and stop there. Working for more than 20 years alongside people who led Toyota shop floors, I came to feel that the real source of their strength was mendomi: leaders who develop people one by one. When that is missing, improvements fade once the consultant leaves.</p>
+
+<h2>How to practice mendomi as a leader</h2>
+<ol>
+<li><b>Watch</b>: go to where the work happens and see each person, not only the numbers.</li>
+<li><b>Stay</b>: when someone is stuck, stay with them until they can do it themselves.</li>
+<li><b>Explain why</b>: share the reason behind each rule so people can improve it.</li>
+<li><b>Follow up</b>: come back the next day and the next week. Care that stops after one talk is not mendomi.</li>
+</ol>
+
+<h2>Try lean thinking in a game</h2>
+<ul>
+<li><a href="../../games/overproduction-factory/">Overproduction Factory</a>: feel why building too much loses money.</li>
+<li><a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a>: feel why level production (heijunka) helps your supplier.</li>
+</ul>
+<p>Related: <a href="../lean-vs-toyota-production-system/">Lean vs Toyota Production System</a> / <a href="../7-wastes-of-lean/">7 wastes of lean</a> / <a href="../../about/">About Mendomi Lab</a></p>
+"""
+EN9_FAQ = [
+    ("What does mendomi mean?", "Mendomi (面倒見) is a Japanese word for looking after people. At work it means a leader or senior who cares for and develops the people around them until they trust each other."),
+    ("How do you pronounce mendomi?", "men-doh-mee. The middle o is long: mendōmi."),
+    ("Is mendomi a Toyota term?", "It is an everyday Japanese word, not a Toyota trademark. On Toyota-style shop floors it is a quality people expect from good leaders, and it is how the Toyota Way pillar of respect for people shows up day to day."),
+    ("Is mendomi the same as being kind?", "No. A leader with good mendomi also tells you clearly when something is wrong, because they care about how you grow."),
+]
+
 if __name__ == '__main__':
     page('ja', 'ja/learn/heijunka/', '../../../',
          '平準化とは？わかりやすく解説｜標準化との違いとトヨタの例｜Mendomi Lab',
@@ -1121,3 +1170,9 @@ if __name__ == '__main__':
          'Lean vs Toyota Production System: what is the difference?', EN8_BODY, EN8_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("Lean vs TPS", "https://mendomilab.com/learn/lean-vs-toyota-production-system/")],
          None, og='og_of')
+    page('en', 'learn/what-is-mendomi/', '../../',
+         'What Does Mendomi (面倒見) Mean? Looking After People at Toyota | Mendomi Lab',
+         'Mendomi (面倒見) is a Japanese word for looking after people. What it means, how to pronounce it, how it shows up in the Toyota Production System, and how leaders can practice it.',
+         'What does mendomi (面倒見) mean?', EN9_BODY, EN9_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("What is mendomi", "https://mendomilab.com/learn/what-is-mendomi/")],
+         None)
