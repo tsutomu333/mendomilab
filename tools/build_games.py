@@ -3,6 +3,10 @@ ROOT='/home/claude/mendomilab'
 GTAG=next(l for l in open(f'{ROOT}/about/index.html').read().split('\n') if 'G-SGX5EJT1CN' in l)  # the analytics <script> line
 
 OG={'games/overproduction-factory/':'og_of.png','games/suppliers-puzzle/':'og_sp.png','ja/games/factory/':'og_ja_of.png','ja/games/supplier/':'og_ja_sp.png','ja/games/pasta/':'og_ja_pasta.png'}
+PRODUCTS={
+ 'ja/games/factory/':('造りすぎ工場 Pro 日本語版','数字を変えられる設定パネルつきのPro版と進行役の手引き（PDF）。研修や授業で使えるブラウザのゲーム。',[('1人用',4500,'https://buy.stripe.com/5kQ00b8sa979gBU8SbcV202'),('チーム用',15000,'https://buy.stripe.com/9B6aEPbEm835fxQ9WfcV203')]),
+ 'ja/games/supplier/':('サプライヤーのパズル Pro 日本語版','計算式が見えるPro版と進行役の手引き（PDF）。平準化を部品会社の側から体験するブラウザのゲーム。',[('1人用',7500,'https://buy.stripe.com/eVq7sD6k23MPclEd8rcV204'),('チーム用',23000,'https://buy.stripe.com/6oU4greQy5UXetM1pJcV205')]),
+}
 def page(lang, path, title, desc, h1, lead, sections, faqs, buttons, alt_en, alt_ja, crumb_name):
     depth=path.strip('/').count('/')+1
     up='../'*depth
@@ -32,6 +36,10 @@ def page(lang, path, title, desc, h1, lead, sections, faqs, buttons, alt_en, alt
           {"@type":"ListItem","position":1,"name":crumb_home,"item":'https://mendomilab.com/'+('' if lang=='en' else 'ja/')},
           {"@type":"ListItem","position":2,"name":games_lbl,"item":'https://mendomilab.com/'+('' if lang=='en' else 'ja/')+'#games'},
           {"@type":"ListItem","position":3,"name":crumb_name,"item":canon}]}]
+    if path in PRODUCTS:
+        n,d,offs=PRODUCTS[path]
+        ld.append({"@context":"https://schema.org","@type":"Product","name":n,"description":d,"image":f"https://mendomilab.com/assets/social/{OG[path]}","brand":{"@type":"Brand","name":"Mendomi Lab"},
+          "offers":[{"@type":"Offer","name":on,"price":str(pr),"priceCurrency":"JPY","availability":"https://schema.org/InStock","url":u,"seller":{"@type":"Organization","name":"A&T Works"}} for on,pr,u in offs]})
     out=f'''<!DOCTYPE html>
 <html lang="{lang}">
 <head>
