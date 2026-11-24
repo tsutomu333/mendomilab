@@ -491,7 +491,7 @@ function finish(){
       <tr><td colspan="2"><small>帳簿上の利益（在庫を資産として数えた場合）は ${yen(p+invVal)}。このゲームはトヨタ生産方式の考え方で、売れると決まっていない在庫の価値をゼロとして利益を出している。</small></td></tr>
     </tbody></table>`:"")+
     L.slice(0,2).map(([h,t])=>`<div class="lesson"><h4>${h}</h4><p>${t}</p></div>`).join("")+freed+
-    `<div class="lesson trainers"><h4>研修や授業で使う方へ</h4><p>注文 工数 価格 賃金を自分の職場に合わせて変えられるPro版は 日本語版を準備中です。ほかのゲームは <a href="/ja/#games">Mendomi Lab</a> にあります。</p><p style="margin-top:6px">自分のラインや授業に合わせたいときや 少し話してみたいときは <a href="/ja/consult/" target="_blank" rel="noopener">気軽に聞いてください（最初の1往復は無料）→</a></p></div>`;
+    `<div class="lesson trainers"><h4>研修や授業で使う方へ</h4><p>注文 工数 価格 賃金を自分の職場に合わせて変えられる<a href="/ja/games/factory/#pro">Pro版</a>もあります（4,500円から）。ほかのゲームは <a href="/ja/#games">Mendomi Lab</a> にあります。</p><p style="margin-top:6px">自分のラインや授業に合わせたいときや 少し話してみたいときは <a href="/ja/consult/" target="_blank" rel="noopener">気軽に聞いてください（最初の1往復は無料）→</a></p></div>`;
   renderCalc(S,p,invVal,g);
   r.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
 }
