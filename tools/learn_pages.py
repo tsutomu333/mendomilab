@@ -409,7 +409,7 @@ JA3_BODY = '''  <p class="lead"><b>製造業の研修で使える トヨタ生�
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。</p>
-<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a> ／ <a href="../kanban/">かんばん方式とは？</a></p>
+<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../heijunka/">平準化とは？</a> ／ <a href="../kanban/">かんばん方式とは？</a> ／ <a href="../lean-tps-chigai/">リーンとトヨタ生産方式の違い</a></p>
 '''
 JA3_FAQ = [
     ("無料で研修に使えますか？", "使えます。無料版はブラウザでそのまま遊べて 登録もいりません。研修をする人向けのPro版は 設定を自分の職場に合わせて変えられ 進行役の手引きがつきます（日本語版は準備中）。"),
@@ -835,7 +835,7 @@ JA6_BODY = '''  <p class="lead"><b>かんばん方式とは 後の工程が使�
 <h2>かんばん・ジャストインタイムを体験してみる</h2>
 <p><a href="../../games/supplier/">サプライヤーのパズル</a> では 組み立ての順番（平準化しているかどうか）で 前の工程にあたるサプライヤーの人 設備 在庫のコストがどう変わるかを見られます。<a href="../../games/factory/">造りすぎ工場</a> では 工程のあいだに置く数を決めないと 在庫がふえていく様子を体験できます。どちらも無料のブラウザゲームです。</p>
 <p><a class="btn primary" href="../../play/supplier/">サプライヤーのパズルで遊ぶ</a><a class="btn ghost" href="../../play/factory/">造りすぎ工場で遊ぶ</a></p>
-<p>あわせて読む：<a href="../heijunka/">平準化とは？</a> ／ <a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../takt-time/">タクトタイムとサイクルタイムの違い</a></p>
+<p>あわせて読む：<a href="../heijunka/">平準化とは？</a> ／ <a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../takt-time/">タクトタイムとサイクルタイムの違い</a> ／ <a href="../lean-tps-chigai/">リーンとトヨタ生産方式の違い</a></p>
 
 <h2>書いた人</h2>
 <p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への導入の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
@@ -880,7 +880,7 @@ EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are three related ideas i
 <h2>See it in a game</h2>
 <p><a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> is a free browser game set in a fictional scenario inspired by Toyota production. Change the build order and watch how unevenness at the customer turns into capacity and inventory cost at two suppliers — mura, muri and muda in one screen.</p>
 <p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Pro for trainers ($49)</a></p>
-<p>Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../7-wastes-of-lean/">7 wastes of lean</a> / <a href="../lean-simulation-games/">lean simulation games</a></p>
+<p>Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../7-wastes-of-lean/">7 wastes of lean</a> / <a href="../lean-simulation-games/">lean simulation games</a> / <a href="../lean-vs-toyota-production-system/">lean vs TPS</a></p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -991,7 +991,7 @@ EN7_BODY = '''  <p class="lead"><b>The 7 wastes of lean (muda) are overproductio
 <h2>See waste in a game</h2>
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game where you run a small line and watch what happens when every process builds as much as it can — inventory piles up and lead time stretches. <a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> shows how an uneven build order turns into waiting and inventory at suppliers.</p>
 <p><a class="btn primary" href="../../games/overproduction-factory/">Overproduction Factory</a><a class="btn ghost" href="../lean-simulation-games/">All lean games</a></p>
-<p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../mura-muri-muda/">mura, muri, muda</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a></p>
+<p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../mura-muri-muda/">mura, muri, muda</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a> / <a href="../lean-vs-toyota-production-system/">lean vs TPS</a></p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -1015,4 +1015,109 @@ if __name__ == '__main__':
          'The 7 wastes of lean (TIMWOOD) with a factory and an office example for each, why overproduction is the worst, and how to find waste in your work.',
          'The 7 wastes of lean, with examples', EN7_BODY, EN7_FAQ,
          [("Mendomi Lab", "https://mendomilab.com/"), ("7 wastes of lean", "https://mendomilab.com/learn/7-wastes-of-lean/")],
+         None, og='og_of')
+
+# ---------- 日本語：リーン生産方式とトヨタ生産方式の違い ----------
+JA8_BODY = '''  <p class="lead"><b>トヨタ生産方式（TPS）は トヨタが自分の工場で長い時間をかけて作り上げたやり方です。リーン生産方式は それをアメリカの研究者が調べて ほかの会社でも使えるように言葉にまとめたものです。</b>中身の多くは同じですが 生まれ方と 何を大事にするかに ちがいがあります。</p>
+
+<h2>ひと目でわかる違い</h2>
+<table><thead><tr><th></th><th>トヨタ生産方式（TPS）</th><th>リーン生産方式</th></tr></thead><tbody>
+<tr><th>生まれたところ</th><td>トヨタの工場（大野耐一さんたちが中心）</td><td>アメリカの研究（MITの自動車産業の調査）</td></tr>
+<tr><th>名前ができた時期</th><td>戦後から1970年代にかけて形になった</td><td>1988年の論文で「lean production」という言葉が使われ 1990年の本『The Machine That Changed the World』で広まった</td></tr>
+<tr><th>柱</th><td>ジャスト・イン・タイムと自働化（ニンベンのついた自働化）</td><td>価値・価値の流れ・流れ・引っぱり・完ぺきの5原則（1996年の本『Lean Thinking』）</td></tr>
+<tr><th>大事にすること</th><td>現場で問題を見えるようにして 人が考えて改善を続けること</td><td>ムダを減らして 顧客にとっての価値の流れをつくること</td></tr>
+<tr><th>使われる場所</th><td>トヨタとそのグループ・取引先が中心</td><td>製造業のほか 病院・ソフトウェア・事務などにも広がった</td></tr>
+</tbody></table>
+
+<h2>同じところ</h2>
+<ul>
+<li>つくりすぎ・在庫・待ちなどの <a href="../tsukurisugi-no-muda/">ムダ</a> を減らす</li>
+<li>後工程が使った分だけ前工程がつくる（引っぱり）。<a href="../kanban/">かんばん</a> はその道具</li>
+<li>注文の量と種類をならす（<a href="../heijunka/">平準化</a>）</li>
+<li>客が求める速さ（<a href="../takt-time/">タクトタイム</a>）に合わせてつくる</li>
+</ul>
+
+<h2>ちがいが出やすいところ</h2>
+<p><b>1. 道具から入るか 考え方から入るか</b><br>リーンとして入ってくると かんばん・5S・見える化などの <b>道具</b> から始まることが多いです。トヨタ生産方式では 道具は 問題を見えるようにして改善するための手段です。道具だけまねても 問題を見て直す人がいないと続きません。</p>
+<p><b>2. 自働化の扱い</b><br>トヨタ生産方式のもう1本の柱「自働化」は 異常があったら機械や人が止めて 不良を後に流さない考え方です。リーンの説明では ジャスト・イン・タイムやムダ取りにくらべて 小さく扱われることがあります。</p>
+<p><b>3. 人を育てることの重さ</b><br>トヨタ生産方式は 改善を続ける人を育てることと一体です。トヨタの現場で長く働いた人たちと仕事をして わたしが強く感じたのは トヨタの強さの源は 上司や先輩が部下を気にかけて育てる「めんどう見」にあるということでした。</p>
+
+<h2>どちらの言葉を使えばいい？</h2>
+<p>社内で話すときは どちらでもかまいません。大事なのは 名前より <b>何を目指すか</b> をそろえることです。「在庫を減らす」だけを目標にすると 欠品や残業がふえることがあります。顧客が求める量とタイミングに合わせてつくる という目的をはっきりさせてから 道具を選んでください。</p>
+
+<h2>ゲームで試す</h2>
+<p>どちらの考え方も 体を動かすとわかりやすくなります。</p>
+<ul>
+<li><a href="../../games/factory/">造りすぎ工場</a>：「止めるな・つくれ」で流すと 全部出荷しても赤字になる。ジャスト・イン・タイムの意味を体験できます</li>
+<li><a href="../../games/supplier/">サプライヤーのパズル</a>：組み立ての順番を変えると 部品会社のコストが変わる。平準化の意味を体験できます</li>
+</ul>
+<p>あわせて読む：<a href="../tsukurisugi-no-muda/">造りすぎのムダとは？</a> ／ <a href="../kanban/">かんばん方式とは？</a> ／ <a href="../kenshu-game/">研修に使えるゲーム</a></p>
+
+<h2>書いた人</h2>
+<p>高木 務（Mendomi Lab）。トヨタの子会社のコンサル会社で20年以上 トヨタの現場で長く働いた人たちと組んで 30社以上の工場の改善をしてきました。研修や職場への取り入れ方の相談は <a href="../../consult/">相談する</a> からどうぞ。</p>
+'''
+JA8_FAQ = [
+    ("リーン生産方式とトヨタ生産方式は同じものですか？", "中身の多くは同じです。トヨタ生産方式はトヨタが作り上げたやり方で リーン生産方式はそれをアメリカの研究者が調べて ほかの会社でも使えるようにまとめたものです。"),
+    ("リーンという言葉はいつできましたか？", "1988年の論文で「lean production」という言葉が使われ 1990年の本『The Machine That Changed the World』で広まりました。"),
+    ("トヨタ生産方式の2本の柱は何ですか？", "ジャスト・イン・タイムと自働化です。自働化は 異常があったら止めて 不良を後に流さない考え方です。"),
+    ("リーンを入れてもうまくいかないのはなぜですか？", "道具だけをまねて 問題を見て直す人が育っていないことが多いです。目的をそろえ 改善を続ける人を育てることが先です。"),
+]
+
+# ---------- 英語：Lean vs TPS ----------
+EN8_BODY = '''  <p class="lead"><b>The Toyota Production System (TPS) is the way Toyota built up in its own plants over decades. Lean is the name researchers in the United States gave to it when they studied it and described it so other companies could use it.</b> Most of the content is the same. The differences are in where each came from and what each tends to emphasize.</p>
+
+<h2>The difference at a glance</h2>
+<table><thead><tr><th></th><th>Toyota Production System (TPS)</th><th>Lean</th></tr></thead><tbody>
+<tr><th>Origin</th><td>Toyota's plants (Taiichi Ohno and colleagues)</td><td>US research (the MIT study of the world auto industry)</td></tr>
+<tr><th>When the name appeared</th><td>Took shape from the post-war years to the 1970s</td><td>"Lean production" was used in a 1988 paper and popularized by the 1990 book <em>The Machine That Changed the World</em></td></tr>
+<tr><th>Pillars</th><td>Just-in-time and jidoka (automation with a human touch)</td><td>Five principles: value, value stream, flow, pull, perfection (<em>Lean Thinking</em>, 1996)</td></tr>
+<tr><th>Emphasis</th><td>Making problems visible on the floor and developing people who keep improving</td><td>Removing waste and creating a flow of value for the customer</td></tr>
+<tr><th>Where it is used</th><td>Mainly Toyota, its group companies and suppliers</td><td>Manufacturing, and also hospitals, software, offices and services</td></tr>
+</tbody></table>
+
+<h2>What they share</h2>
+<ul>
+<li>Reducing waste such as <a href="../overproduction-waste/">overproduction</a>, inventory and waiting (see <a href="../7-wastes-of-lean/">the 7 wastes</a>)</li>
+<li>Pull: an earlier process makes only what the next process used</li>
+<li>Leveling volume and mix (<a href="../heijunka-examples/">heijunka</a>)</li>
+<li>Producing at the customer's pace (<a href="../takt-time-vs-cycle-time/">takt time</a>)</li>
+</ul>
+
+<h2>Where they tend to differ</h2>
+<p><b>1. Tools first or thinking first</b><br>When lean is introduced, it often starts with <b>tools</b>: kanban, 5S, visual management. In TPS the tools are means to make problems visible so people can fix them. Copying the tools without people who see and solve problems rarely lasts.</p>
+<p><b>2. Jidoka</b><br>The second pillar of TPS, jidoka, means stopping a machine or a line when something is abnormal so defects do not flow downstream. Lean summaries sometimes give it less weight than just-in-time and waste removal.</p>
+<p><b>3. Developing people</b><br>TPS cannot be separated from developing people who keep improving. Working with people who spent long careers on Toyota's shop floors, I came to see that much of Toyota's strength comes from what they call <em>mendomi</em>: leaders and seniors who genuinely look after and develop the people around them.</p>
+
+<h2>Which word should you use?</h2>
+<p>Either is fine. What matters is agreeing on the goal. If the only goal is "less inventory", you may get stock-outs and overtime. Make the purpose clear first, producing what the customer needs when they need it, and then choose the tools.</p>
+
+<h2>Try it in a game</h2>
+<ul>
+<li><a href="../../games/overproduction-factory/">Overproduction Factory</a>: follow "never stop, keep building", ship every unit, and still lose money. A hands-on way to feel just-in-time.</li>
+<li><a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a>: change the build order and watch the supplier's costs change. A hands-on way to feel heijunka.</li>
+</ul>
+<p>Related: <a href="../7-wastes-of-lean/">7 wastes of lean</a> / <a href="../mura-muri-muda/">mura, muri, muda</a> / <a href="../lean-simulation-games/">lean simulation games</a></p>
+
+<h2>About the author</h2>
+<p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
+'''
+EN8_FAQ = [
+    ("Is lean the same as the Toyota Production System?", "Mostly, yes. TPS is the system Toyota developed. Lean is the name US researchers gave it when they studied TPS and described it for other companies."),
+    ("Who coined the term lean production?", "It was used in a 1988 paper from the MIT auto industry research program and popularized by the 1990 book The Machine That Changed the World."),
+    ("What are the two pillars of TPS?", "Just-in-time and jidoka. Jidoka means stopping when something is abnormal so defects do not flow to the next process."),
+    ("Why do lean programs fail?", "Often because tools are copied without developing people who see and solve problems. Agree on the purpose first and develop people who keep improving."),
+]
+
+if __name__ == '__main__':
+    page('ja', 'ja/learn/lean-tps-chigai/', '../../../',
+         'リーン生産方式とトヨタ生産方式の違いは？｜Mendomi Lab',
+         'リーン生産方式とトヨタ生産方式（TPS）の違いを 生まれたところ・柱・大事にすることの表で説明します。同じところ・ちがいが出やすいところ・言葉の選び方も。無料ゲームで体験できます。',
+         'リーン生産方式とトヨタ生産方式の違い', JA8_BODY, JA8_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/ja/"), ("リーンとトヨタ生産方式の違い", "https://mendomilab.com/ja/learn/lean-tps-chigai/")],
+         None, og='og_ja_of')
+    page('en', 'learn/lean-vs-toyota-production-system/', '../../',
+         'Lean vs Toyota Production System: Differences | Mendomi Lab',
+         'Lean vs the Toyota Production System (TPS): origin, pillars and emphasis compared in one table, what they share, where they differ, and which word to use.',
+         'Lean vs Toyota Production System: what is the difference?', EN8_BODY, EN8_FAQ,
+         [("Mendomi Lab", "https://mendomilab.com/"), ("Lean vs TPS", "https://mendomilab.com/learn/lean-vs-toyota-production-system/")],
          None, og='og_of')
