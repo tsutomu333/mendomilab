@@ -4,7 +4,7 @@ GTAG=next(l for l in open(f'{ROOT}/about/index.html').read().split('\n') if 'G-S
 SHIP={"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"0","currency":"JPY"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"JP"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":0,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":0,"unitCode":"DAY"}}}
 RET={"@type":"MerchantReturnPolicy","applicableCountry":"JP","returnPolicyCategory":"https://schema.org/MerchantReturnNotPermitted","merchantReturnLink":"https://mendomilab.com/ja/tokushoho/"}
 
-OG={'games/overproduction-factory/':'og_of.png','games/suppliers-puzzle/':'og_sp.png','ja/games/factory/':'og_ja_of.png','ja/games/supplier/':'og_ja_sp.png','ja/games/pasta/':'og_ja_pasta.png'}
+OG={'games/overproduction-factory/':'og_of.png','games/suppliers-puzzle/':'og_sp.png','ja/games/factory/':'og_ja_of.png','ja/games/supplier/':'og_ja_sp.png','ja/games/pasta/':'og_ja_pasta.png','ja/games/kadou/':'og.png'}
 PRODUCTS={
  'ja/games/factory/':('造りすぎ工場 Pro 日本語版','数字を変えられる設定パネルつきのPro版と進行役の手引き（PDF）。研修や授業で使えるブラウザのゲーム。',[('1人用',4500,'https://buy.stripe.com/5kQ00b8sa979gBU8SbcV202'),('チーム用',15000,'https://buy.stripe.com/9B6aEPbEm835fxQ9WfcV203')]),
  'ja/games/supplier/':('サプライヤーのパズル Pro 日本語版','計算式が見えるPro版と進行役の手引き（PDF）。平準化を部品会社の側から体験するブラウザのゲーム。',[('1人用',7500,'https://buy.stripe.com/eVq7sD6k23MPclEd8rcV204'),('チーム用',23000,'https://buy.stripe.com/6oU4greQy5UXetM1pJcV205')]),
@@ -169,4 +169,21 @@ page('ja','ja/games/pasta/',
   ('自分の店に合わせて作り直せますか？','相談してください。席の数 料理の時間 お客さんの来かたを変えた版を作ることができます（最初の1往復は無料）。')],
  [('無料で遊ぶ','../../play/pasta/','primary'),('作った人に相談する','../../consult/','ghost')],
  None,'ja/games/pasta/','回らないパスタ屋')
+
+# ---------- JA: 止まる工場・止める工場 ----------
+page('ja','ja/games/kadou/',
+ '止まる工場・止める工場｜可動率と稼働率のちがいがわかる無料の研修ゲーム｜Mendomi Lab',
+ '設備が止まっている時間には 故障で止まってしまう時間と 注文の分をつくり終えて止めている時間の2種類がある。トヨタ生産方式の可動率（べきどうりつ）と稼働率（かせどうりつ）のちがいを 設備の台数を変えて体験する無料ゲームです。',
+ '止まる工場・止める工場：トヨタ生産方式の可動率と稼働率を体験するゲーム',
+ '設備が動いていない時間を ひとつの数字だけで見ると 故障で止まった時間も 注文がなくて止めた時間も 同じ「停止」になってしまいます。トヨタ生産方式では 動かすべきときに動けたかを見る可動率と 注文に対してどれだけ動かしたかを見る稼働率を分けて考えます。このゲームでは 設備の台数を変えて1日を動かし 2つのちがいを数字とお金で確かめます。',
+ [('このゲームで学べること','<ul><li><b>可動率（べきどうりつ）</b>：動かしたいときに動けた割合。故障で止まる時間（赤）は直すもので 100%をめざすこと</li><li><b>稼働率（かせどうりつ）</b>：設備の能力に対してどれだけ動かしたか。注文で決まるので 低くてもいいこと</li><li>赤があると 取り返すために設備を多く持つことになること</li><li>注文の分をつくり終えて止めている時間（黄）を埋めようとして動かすと 造りすぎになること</li><li>黄が多いときは 設備を持ちすぎていないかを考えること</li></ul>'),
+  ('だれ向けか・何分かかるか','<p>製造業の新人研修 設備や生産管理の担当者 大学の生産管理の授業に。1人で遊ぶなら15〜20分。研修なら30〜45分で 造りすぎ工場の前後に入れると 造りすぎのムダとのつながりが見えます。</p>'),
+  ('研修での進め方','<ol><li><b>ステージ1（赤）</b>：故障のある工場で 注文に間に合う台数を探します。計算では3台で足りるはずなのに 足りないのはなぜか</li><li><b>ふり返り</b>：進行役が聞きます。「赤の時間はなくせる？ なくなったら何台ですむ？」</li><li><b>ステージ2（黄）</b>：故障のない工場で 注文が少ない日に「稼働率を上げろ」と言われたらどうするかをためします</li><li><b>自分の職場に持ち帰る</b>：自分の職場の数字は 赤と黄を分けて見ているかを話します</li></ol>'),
+  ('料金','<p>無料です。登録もいりません。</p>')],
+ [('可動率と稼働率のちがいは何ですか？','可動率は 動かしたいときにちゃんと動けた割合で 故障などで止まってしまった時間だけを見ます。稼働率は 設備の能力に対してどれだけ動かしたかで 注文がなくて止めている時間も含めて見ます。可動率は100%をめざし 稼働率は注文しだいです。'),
+  ('読み方を変えるのはなぜですか？','どちらも「かどうりつ」と読めてしまうので トヨタ生産方式では可動率を「べきどうりつ」 稼働率を「かせどうりつ」と読んで 耳で聞いても区別できるようにしています。'),
+  ('インストールや登録はいりますか？','いりません。ブラウザでそのまま遊べます。'),
+  ('自分の工場の数字に合わせられますか？','相談してください。設備の能力 故障の時間 注文の数を変えた版を作ることができます（最初の1往復は無料）。')],
+ [('無料で遊ぶ','../../play/kadou/','primary'),('作った人に相談する','../../consult/','ghost')],
+ None,'ja/games/kadou/','止まる工場・止める工場')
 print('built')

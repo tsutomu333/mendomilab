@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script>/* ?notrack=1 once = this browser is not counted (owner's own visits). ?notrack=0 undoes it */window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SGX5EJT1CN');(function(){var off=false;try{if(/[?&]notrack=1/.test(location.search))localStorage.setItem('notrack','1');if(/[?&]notrack=0/.test(location.search))localStorage.removeItem('notrack');off=localStorage.getItem('notrack')==='1';}catch(e){}if(!off){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-SGX5EJT1CN';document.head.appendChild(s);}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>止まる工場・止める工場｜トヨタ生産方式の可動率と稼働率｜Mendomi Lab</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mendomi Lab">
+<meta property="og:title" content="止まる工場・止める工場｜トヨタ生産方式の可動率と稼働率｜Mendomi Lab">
+<meta property="og:description" content="設備が動いていない時間には2種類ある。トヨタが可動率（べきどうりつ）と稼働率（かせどうりつ）を言い分ける理由を体験するゲーム（無料）。">
+<meta property="og:image" content="https://mendomilab.com/assets/social/og.png">
+<meta property="og:url" content="https://mendomilab.com/ja/play/kadou/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="設備が動いていない時間には2種類ある。トヨタが可動率（べきどうりつ）と稼働率（かせどうりつ）を言い分ける理由を体験するゲーム（無料）。">
+<link rel="canonical" href="https://mendomilab.com/ja/play/kadou/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=IBM+Plex+Mono:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+</head>
+<body>
+<style>
+/* Layout: 造りすぎ工場・回らないパスタ屋と同じ1本の縦の流れ。上から2種類の止まり→注文→設備→結果 */
+:root{
+  --bg:#E8ECE6; --surface:#F8F9F6; --fg:#1B221E; --muted:#58645D; --line:#C7CEC6;
+  --tape:#E6AE0B; --tape-ink:#1B221E; --good:#2C8253; --bad:#C2412D; --btn:#1B221E; --btn-fg:#F8F9F6; --stamp:#C8322A;
+  --run:#2C8253; --hold:#E6AE0B; --down:#C2412D; --empty:#DDE2DB;
+  --display:"Dela Gothic One","Hiragino Sans","Yu Gothic",sans-serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111613; --surface:#1A201C; --fg:#E6ECE7; --muted:#97A39C; --line:#2D3731;
+  --tape:#E6AE0B; --tape-ink:#151515; --good:#52B381; --bad:#E3634C; --btn:#E6AE0B; --btn-fg:#151515; --stamp:#E8604F;
+  --run:#52B381; --hold:#E6AE0B; --down:#E3634C; --empty:#252D28; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#1A201C; --fg:#E6ECE7; --muted:#97A39C; --line:#2D3731;
+  --tape:#E6AE0B; --tape-ink:#151515; --good:#52B381; --bad:#E3634C; --btn:#E6AE0B; --btn-fg:#151515; --stamp:#E8604F;
+  --run:#52B381; --hold:#E6AE0B; --down:#E3634C; --empty:#252D28; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:560px;margin:0 auto;padding-block:24px 48px;display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--display);font-weight:400;font-size:2rem;line-height:1.2;margin:0;text-wrap:balance}
+.stage{font-family:var(--num);font-size:.75rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.mission{margin:0}
+.mission b{background:linear-gradient(transparent 60%, color-mix(in srgb,var(--tape) 55%, transparent) 60%)}
+rt{font-size:.62em;color:var(--muted);font-family:var(--body);font-weight:400}
+
+.tabs{display:flex;gap:8px}
+.tabs button{flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);font-family:var(--body);font-size:.9rem;cursor:pointer;text-align:left;line-height:1.35}
+.tabs button small{display:block;font-family:var(--num);font-size:.68rem;letter-spacing:.1em;color:var(--muted)}
+.tabs button[aria-pressed="true"]{border-color:var(--fg);border-width:2px;padding:9px 11px;font-weight:700}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kind{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;border-top:6px solid var(--k)}
+.kind h3{margin:0;font-size:1rem}
+.kind p{margin:4px 0 0;font-size:.8rem;color:var(--muted)}
+.kind .name{margin-top:8px;font-size:.95rem;font-weight:700;color:var(--fg)}
+
+.clock{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line)}
+.clock .time{font-family:var(--num);font-size:1.25rem;font-weight:600;font-variant-numeric:tabular-nums}
+.pbar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0;background:var(--tape)}
+.clock .made{font-family:var(--num);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+
+.flow{display:flex;flex-direction:column;gap:10px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.box h3{margin:0;font-size:1.05rem;font-weight:700}
+.sub{font-size:.78rem;color:var(--muted)}
+.sub b{white-space:nowrap}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px}
+.order{font-family:var(--num);font-weight:600;font-size:1.5rem;text-align:right;line-height:1.1}
+.order small{display:block;font-family:var(--body);font-size:.68rem;font-weight:400;color:var(--muted)}
+.choices{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.choices button{padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);font-family:var(--body);font-size:.85rem;cursor:pointer}
+.choices button[aria-pressed="true"]{background:var(--tape);color:var(--tape-ink);border-color:var(--tape);font-weight:700}
+.choices button:disabled{opacity:.4;cursor:default}
+
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:40px;height:40px;font-size:1.3rem;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--fg);line-height:1;cursor:pointer;font-family:var(--body)}
+.stepper button:disabled{opacity:.35;cursor:default}
+.stepper output{min-width:64px;text-align:center;font-family:var(--num);font-weight:600;font-size:1.3rem;line-height:1.1}
+.stepper output small{display:block;font-family:var(--body);font-size:.68rem;font-weight:400;color:var(--muted)}
+button:focus-visible{outline:3px solid var(--tape);outline-offset:2px}
+
+.machines{display:flex;flex-direction:column;gap:8px}
+.mach{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:8px;align-items:center}
+.mach .lab{font-size:.78rem;color:var(--muted)}
+.mach .cnt{font-family:var(--num);font-size:.78rem;font-variant-numeric:tabular-nums;min-width:3.5em;text-align:right}
+.tl{display:flex;height:26px;border-radius:4px;overflow:hidden;background:var(--empty);border:1px solid var(--line)}
+.tl span{display:flex;align-items:center;justify-content:center;height:100%;font-size:.68rem;white-space:nowrap;overflow:hidden;font-weight:700}
+.tl .g{background:var(--run);color:#F8F9F6}.tl .y{background:var(--hold);color:#1B221E}.tl .r{background:var(--down);color:#F8F9F6}
+.ticks{display:flex;justify-content:space-between;font-family:var(--num);font-size:.68rem;color:var(--muted);margin-left:60px;margin-right:52px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.72rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+
+.meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.meter{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.meter .k{font-size:.78rem;color:var(--muted);line-height:1.3}
+.meter .v{font-family:var(--num);font-weight:600;font-size:1.4rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.meter .f{font-size:.68rem;color:var(--muted)}
+.meter.bad .v{color:var(--bad)}
+
+.ledger{width:100%;border-collapse:collapse;font-size:.9rem}
+.ledger td{padding:6px 0;border-bottom:1px solid var(--line)}
+.ledger td:last-child{text-align:right;font-family:var(--num);font-variant-numeric:tabular-nums}
+.ledger tr.total td{border-bottom:none;font-weight:700;font-size:1.05rem;padding-top:10px}
+.ledger .minus{color:var(--muted)}
+.ledger small{font-size:.72rem;line-height:1.4}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.primary{flex:1 1 200px;padding:14px 18px;border:none;border-radius:6px;background:var(--btn);color:var(--btn-fg);font-family:var(--body);font-weight:700;font-size:1rem;cursor:pointer}
+.primary:disabled{opacity:.4;cursor:default}
+.ghost{flex:0 1 auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);font-family:var(--body);font-size:.9rem;cursor:pointer}
+.ghost[aria-pressed="true"]{background:var(--tape);color:var(--tape-ink);border-color:var(--tape)}
+
+.result{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.grade{display:flex;align-items:center;gap:16px}
+.grade .letter{font-family:var(--display);font-size:3.4rem;line-height:1;width:72px;height:72px;flex:none;display:grid;place-items:center;border:3px solid currentColor;border-radius:50%}
+.grade .letter.S,.grade .letter.A{color:var(--good)}
+.grade .letter.C{color:var(--bad)}
+.grade p{margin:0}
+.grade .big{font-family:var(--num);font-size:1.5rem;font-weight:600}
+.grade .note{color:var(--muted);font-size:.8rem}
+.lesson{border-top:1px solid var(--line);padding-top:12px}
+.lesson h4{margin:0 0 4px;font-size:1rem}
+.lesson p{margin:0;font-size:.9rem;max-width:62ch}
+.lesson a{color:var(--fg);font-weight:700}
+
+details.info{font-size:.88rem;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+details.info summary{cursor:pointer;font-weight:700}
+details.info ul{padding-left:1.2em;margin:8px 0 2px;display:flex;flex-direction:column;gap:4px}
+
+.titleblock{display:grid;gap:1px;background:var(--fg);border:2px solid var(--fg);margin-top:8px;
+  grid-template-columns:repeat(3,minmax(0,1fr)) 96px;
+  grid-template-areas:"name name name seal" "no rev date seal" "des stg tt seal"}
+.titleblock .cell{padding:6px 8px;background:var(--surface);min-width:0}
+.titleblock .cell > span{display:block;font-size:.62rem;letter-spacing:.12em;color:var(--muted)}
+.titleblock .cell b{display:block;font-family:var(--num);font-weight:600;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titleblock .cell.name b{font-family:var(--display);font-weight:400;font-size:1.05rem}
+.tb-name{grid-area:name}.tb-no{grid-area:no}.tb-rev{grid-area:rev}.tb-date{grid-area:date}.tb-des{grid-area:des}.tb-stg{grid-area:stg}.tb-tt{grid-area:tt}
+.titleblock .seal{grid-area:seal;display:flex;flex-direction:column;padding:0}
+.titleblock .seal > span{padding:6px 8px;text-align:center;border-bottom:1px solid var(--fg)}
+.titleblock .seal .stampbox{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 0}
+.hanko{width:66px;height:66px;border:3px solid var(--stamp);border-radius:50%;color:var(--stamp);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-12deg);line-height:1;opacity:.9;position:relative}
+.hanko::after{content:"";position:absolute;inset:3px;border:1px solid var(--stamp);border-radius:50%}
+.hanko .k{font-family:var(--display);font-size:1.5rem}
+.hanko .v{font-family:var(--num);font-weight:600;font-size:.7rem;margin-top:3px}
+@media (max-width:420px){.titleblock{grid-template-columns:repeat(2,minmax(0,1fr)) 88px;
+  grid-template-areas:"name name seal" "no rev seal" "date des seal" "stg tt seal"}
+  .meters{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+
+.cwrap{overflow-x:auto;margin:6px 0 4px}
+table.cd{border-collapse:collapse;font-size:.8rem;width:100%}
+table.cd th,table.cd td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.cd th{color:var(--muted);font-weight:700}
+table.cd small{display:block;font-weight:400;color:var(--muted);font-size:.72rem;line-height:1.4}
+table.cd td.r{text-align:right;white-space:nowrap;font-family:var(--num)}
+table.cd tr.sum td{font-weight:700;border-bottom:none}
+.ch{margin:12px 0 0;font-size:.9rem}
+.cwait{margin:8px 0 2px;color:var(--muted);font-size:.85rem}
+</style>
+
+<style>
+.guide{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.guide .pg{font-family:var(--num);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.guide .q{font-size:1.15rem;line-height:1.7;margin:0}
+.guide .q b{background:linear-gradient(transparent 60%, color-mix(in srgb,var(--tape) 55%, transparent) 60%)}
+.guide .say{margin:0;font-size:1.05rem}
+.guide .say.bad{color:var(--bad);font-weight:700}
+.navs{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.navs .primary{flex:1 1 220px}
+.skip{background:none;border:none;color:var(--muted);font-family:var(--body);font-size:.82rem;text-decoration:underline;cursor:pointer;padding:4px 0;align-self:flex-start}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.hide{display:none!important}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="stage">トヨタ生産方式の可動率と稼働率</div>
+    <h1>止まる工場・止める工場</h1>
+  </header>
+  <p class="mission">設備が止まっている時間には、<b>直すべき停止</b>と<b>止めておいていい停止</b>がある。</p>
+
+  <div class="tabs hide" role="group" aria-label="ステージ">
+    <button id="t1" aria-pressed="true"><small>STAGE 1</small>赤：止まってしまう時間</button>
+    <button id="t2" aria-pressed="false"><small>STAGE 2</small>黄：止めている時間</button>
+  </div>
+
+  <details class="info">
+    <summary>ルール（くわしい前提）</summary>
+    <ul id="rules"></ul>
+  </details>
+
+  <!-- 紙芝居（最初の1回） -->
+  <section class="guide" id="guide" aria-live="polite"></section>
+
+  <!-- 自由にためす -->
+  <div class="flow hide" id="free">
+    <div class="box" id="goal"></div>
+    <div class="box">
+      <div class="row">
+        <div><h3>今日の注文</h3><div class="sub" id="orderSub"></div></div>
+        <div class="order" id="orderN"></div>
+      </div>
+      <div class="choices hide" id="demandChoices">
+        <button data-d="1400">多い日 1,400個</button>
+        <button data-d="1000">ふつうの日 1,000個</button>
+        <button data-d="600">少ない日 600個</button>
+      </div>
+    </div>
+    <div class="box">
+      <div class="row">
+        <div><h3>設備</h3><div class="sub">1台 8時間で<b>480個</b>・減価償却 <b>1台1日¥10,000</b></div></div>
+        <div class="stepper"><button id="dn" aria-label="設備を減らす">−</button><output id="nv"></output><button id="up" aria-label="設備を増やす">＋</button></div>
+      </div>
+      <div class="choices" id="opt1"><button id="noRed" aria-pressed="false"></button></div>
+      <div class="choices hide" id="opt2"><button id="mode0" aria-pressed="true">注文の分だけつくって止める</button><button id="mode1" aria-pressed="false">8時間ぜんぶ動かす</button></div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="start">1日を動かす</button>
+      <button class="ghost hide" id="fast" aria-pressed="false">早送り</button>
+    </div>
+    <div class="box">
+      <div class="machines" id="machines"></div>
+      <div class="ticks"><span>8:00</span><span>12:00</span><span>16:00</span></div>
+      <div class="legend" style="margin-top:8px"><span><i style="background:var(--run)"></i>つくっている</span><span><i style="background:var(--hold)"></i>止めている</span><span><i style="background:var(--down)"></i>止まってしまった</span></div>
+    </div>
+    <section class="result hide" id="result"></section>
+    <div class="navs" id="stageNav"><button class="ghost" id="toS2">次へ：ステージ2（黄：止めている時間）→</button></div>
+    <details class="info hide" id="money"><summary>お金の内訳</summary><table class="ledger" aria-label="今日の損益"><tbody id="ledger"></tbody></table></details>
+    <details class="info hide" id="calcData"><summary>計算式（データ入り）</summary><div id="calcBody"></div></details>
+    <div class="navs hide" id="sumNav"><button class="ghost" id="showSum">まとめを見る</button></div>
+    <section class="guide hide" id="summary"></section>
+    <button class="skip" id="toS1">← ステージ1にもどる</button>
+    <button class="skip" id="replay">説明つきで最初からやりなおす</button>
+  </div>
+
+  <details class="info">
+    <summary>解説（答えのヒントを含みます）</summary>
+    <ul>
+      <li><b>ひとつの数字だけで見ると</b>：設備の動きをひとつの数字だけで見ると、故障で止まった時間も、注文がなくて止めた時間も、同じ「停止」として扱われてしまうことがある。トヨタでは、設備を動かすべきときに動けたかを見る「可動率」と、注文に対して設備をどれだけ動かしたかを見る「稼働率」を区別する。</li>
+      <li><b><ruby>可動率<rt>べきどうりつ</rt></ruby></b>：動かしたいときに、ちゃんと動けた割合。赤だけを見る。赤は異常なので、100%をめざす。</li>
+      <li><b><ruby>稼働率<rt>かせどうりつ</rt></ruby></b>：設備の能力に対して、どれだけ動かしたか。注文で決まるので、低くてもいい。注文と設備の能力がちょうど合う日は100%でも造りすぎにならない。大事なのは稼働率を上げることではなく、注文に合わせてつくること。</li>
+      <li><b>赤のお金</b>：赤があると、その分を取り返すために設備を多めに持つことになる。赤は「設備を買いすぎる」という形でお金になっている。</li>
+      <li><b>黄のお金</b>：黄は「つくらなくていい分をつくらなかった」時間。ここを埋めようとして動かすと、売れない物ができる（造りすぎ）。ただし黄が多いときは、注文に対して設備を持ちすぎていないかを別に考える（設備は止めていても減価償却がかかる）。</li>
+      <li><b>読み分け</b>：どちらも「かどうりつ」と読めるので、トヨタでは可動率を「べきどうりつ」、稼働率を「かせどうりつ」と読んで、耳で聞いても区別する。</li>
+      <li><b>色</b>：このゲームでの表し方。緑＝つくっている・黄＝注文の分をつくり終えて止めている・赤＝故障で止まっている。工場の表示ランプの色の決め方は、工場や設備ごとにちがう。</li>
+    </ul>
+  </details>
+
+  <details class="info">
+    <summary>計算式</summary>
+    <ul>
+      <li><b>可動率</b> ＝ つくっていた時間（緑）÷（つくっていた時間（緑）＋ 止まってしまった時間（赤））</li>
+      <li><b>稼働率</b> ＝ つくっていた時間（緑）÷（台数 × 8時間）</li>
+      <li><b>売上</b> ＝ 注文に出せた数 × ¥100（注文より多くつくっても売れない）</li>
+      <li><b>材料費</b> ＝ つくった数 × ¥40</li>
+      <li><b>減価償却</b> ＝ 台数 × ¥10,000（動かしても止めても同じ）</li>
+      <li><b>欠品の損</b> ＝ 注文に足りなかった数 × ¥200（急ぎの運送やお客さんへの対応にかかる費用。トヨタの決まった数字ではなく、ゲーム上の仮の金額）</li>
+      <li><b>利益</b> ＝ 売上 − 材料費 − 減価償却 − 欠品の損</li>
+      <li><b>ランク</b> S：この条件でいちばんいい台数と同じ利益／A：その90%以上／B：黒字／C：赤字</li>
+    </ul>
+  </details>
+
+  <footer class="titleblock" aria-label="表題欄">
+    <div class="cell name tb-name"><span>名称</span><b>止まる工場・止める工場</b></div>
+    <div class="cell tb-no"><span>図番</span><b>TSK-K01</b></div>
+    <div class="cell tb-rev"><span>改訂</span><b>Rev.1.00</b></div>
+    <div class="cell tb-date"><span>日付</span><b>2026.11.25</b></div>
+    <div class="cell tb-des"><span>設計</span><b>A&amp;T Works</b></div>
+    <div class="cell tb-stg"><span>工程</span><b>番外編</b></div>
+    <div class="cell tb-tt"><span>設備</span><b>1台 480個/日</b></div>
+    <div class="cell seal"><span>検印</span><div class="stampbox"><div class="hanko" aria-label="検印 1.00"><span class="k">検</span><span class="v">1.00</span></div></div></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+/*SIM-START*/
+// 時間はすべて分。0＝8:00、480＝16:00
+const P={day:480,cap:480,price:100,mat:40,dep:10000,short:200,d1:1350,maxN:6};
+// ステージ1：どの設備も同じ時刻に止まってしまう（合計72分）
+const DOWN=[[110,36],[300,36]];
+function plan(stage,n,demand,noRed,full){
+  const red=stage===1&&!noRed, base=Math.floor(demand/n), extra=demand%n, rows=[];
+  for(let m=0;m<n;m++){
+    const tgt=full?P.cap:base+(m<extra?1:0); let p=0; const st=[];
+    for(let t=0;t<P.day;t++){
+      if(p<tgt){ if(red&&DOWN.some(([a,l])=>t>=a&&t<a+l)) st.push("r"); else {st.push("g"); p++;} }
+      else st.push("y");
+    }
+    rows.push(st);
+  }
+  return rows;
+}
+function tally(rows,demand,upTo){
+  const T=upTo==null?P.day:upTo; let g=0,r=0,y=0;
+  for(const st of rows) for(let t=0;t<T;t++){ if(st[t]==="g")g++; else if(st[t]==="r")r++; else y++; }
+  const made=g, sold=Math.min(made,demand), short=demand-sold, n=rows.length;
+  const sales=sold*P.price, mat=made*P.mat, dep=n*P.dep, sh=short*P.short;
+  return {g,r,y,made,sold,short,n,sales,mat,dep,sh,profit:sales-mat-dep-sh};
+}
+function best(stage,demand,noRed,full){
+  let b=-1e12,bn=1;
+  for(let n=1;n<=P.maxN;n++){const p=tally(plan(stage,n,demand,noRed,full),demand).profit; if(p>b){b=p;bn=n;}}
+  return {profit:b,n:bn};
+}
+/*SIM-END*/
+
+const $=id=>document.getElementById(id);
+const yen=v=>(v<0?"−¥":"¥")+Math.round(Math.abs(v)).toLocaleString("ja-JP");
+const num=v=>Math.round(v).toLocaleString("ja-JP");
+const pc=v=>Math.round(v*100)+"%";
+const hm=m=>{m=Math.round(m); return m>=60?`${Math.floor(m/60)}時間${m%60?(m%60)+"分":""}`:`${m}分`;};
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const redPer=rs=>Math.max(...rs.map(st=>st.filter(x=>x==="r").length));
+const RB=`<ruby>可動率<rt>べきどうりつ</rt></ruby>`, RK=`<ruby>稼働率<rt>かせどうりつ</rt></ruby>`;
+
+let stage=1;
+const G={1:1,2:1};            // 紙芝居のページ（1〜3、0＝自由にためす）
+const N={1:3,2:3};
+let D2=600, noRed=false, full=false;
+let rows=null, T=0, timer=null, running=false, fast=false, gFull=null;
+const demand=()=>stage===1?P.d1:D2;
+
+const RULES={
+1:["設備1台は1分で1個、8:00〜16:00の<b>8時間で480個</b>つくれる。残業はない。注文はどの設備にも同じだけ分ける。",
+   "つくっているあいだ、設備は<b>9:50と13:00</b>に36分ずつ故障で止まってしまう（1台あたり最大<b>72分</b>）。そのあいだはつくれない。故障が起きる時刻は、くらべやすいように全部の設備で同じ。ただし、注文の分をつくり終えて止めている設備は、故障の対象にならない。",
+   "注文の分をつくり終えた設備は止める。",
+   "売値1個¥100・材料費1個¥40・減価償却1台1日¥10,000（止めていてもかかる）・注文に足りない分は1個¥200の損（急ぎの運送やお客さんへの対応にかかる費用。ゲーム上の仮の金額）。"],
+2:["故障はない（<b>可動率100%</b>）。設備1台は8時間で480個つくれる。残業はない。",
+   "注文は日によって変わる（多い日1,400個・ふつうの日1,000個・少ない日600個）。",
+   "注文より多くつくった分は売れず、材料費だけかかる。",
+   "お金のルールはステージ1と同じ。"]};
+
+function barW(){ const w=document.querySelector(".wrap"); return Math.max(160,(w?w.clientWidth:560)-120-36); }
+function barsHTML(rs,t){
+  return rs.map((st,i)=>{
+    const seg=[]; let p=0;
+    for(let k=0;k<t;k++){ if(st[k]==="g")p++; if(seg.length&&seg[seg.length-1][0]===st[k]) seg[seg.length-1][1]++; else seg.push([st[k],1]); }
+    const lab=(k,l)=>{ const px=l/P.day*barW(); const c={g:["つくっている"],y:["止めている","止め"],r:["止まった","故障"]}[k]; for(const t of c){ if(px>=t.length*11.5+8) return t; } return ""; };
+    return `<div class="mach"><span class="lab">${i+1}台目</span><div class="tl">${seg.map(([k,l])=>`<span class="${k}" style="width:${l/P.day*100}%">${lab(k,l)}</span>`).join("")}</div><span class="cnt">${p}個</span></div>`;
+  }).join("");
+}
+const ticks=`<div class="ticks"><span>8:00</span><span>12:00</span><span>16:00</span></div>`;
+function kinds(){
+  return `<div class="two"><div class="kind" style="--k:var(--down)"><h3>赤：止まってしまった</h3><p>動かしたいのに、故障で止まった時間。</p><p class="name">${RB}で見る</p><p>100%をめざす</p></div>
+  <div class="kind" style="--k:var(--hold)"><h3>黄：止めている</h3><p>注文の分をつくり終えたので、わざと止めている時間。</p><p class="name">${RK}で見る</p><p>注文しだい。低くてもいい</p></div></div>
+  <p class="sub" style="margin:0">どちらも「設備が動いていない時間」。でもトヨタは名前を分けて、読みまで変えて言い分ける。</p>`;
+}
+function animate(rs,onFrame,onEnd){
+  clearInterval(timer); T=0; running=true; lock();
+  timer=setInterval(()=>{ T=Math.min(P.day,T+(fast?24:4)); onFrame(); if(T>=P.day){clearInterval(timer); timer=null; running=false; lock(); onEnd();} }, reduce?20:40);
+}
+function lock(){ $("t1").disabled=running; $("t2").disabled=running; }
+
+/* ---------- 紙芝居 ---------- */
+function guide(){
+  const g=$("guide"), p=G[stage];
+  $("free").classList.add("hide"); g.classList.remove("hide");
+  if(stage===1){
+    if(p===1){
+      g.innerHTML=`<div class="pg">STAGE 1 · 1 / 3</div>
+        <p class="q">あなたはこの工場の工場長。<br>今日の注文は <b>1,350個</b>。<br>設備は1台で1日 <b>480個</b> つくれる。<br>何台にする？</p>
+        <div class="row"><span class="sub">設備の台数</span><div class="stepper"><button id="gdn" aria-label="減らす">−</button><output>${N[1]}台</output><button id="gup" aria-label="増やす">＋</button></div></div>
+        <div class="navs"><button class="primary" id="gnext">この台数で1日を動かす</button></div>
+        <button class="skip" id="gskip">説明をとばして自由にためす</button>`;
+      $("gdn").onclick=()=>{N[1]=Math.max(1,N[1]-1);guide();}; $("gup").onclick=()=>{N[1]=Math.min(P.maxN,N[1]+1);guide();};
+      $("gnext").onclick=()=>{G[1]=2;guide();}; $("gskip").onclick=()=>{G[1]=0;freeMode();};
+    } else if(p===2){
+      const rs=plan(1,N[1],P.d1,false,false);
+      const draw=()=>{const s=tally(rs,P.d1,T), fin=T>=P.day;
+        g.innerHTML=`<div class="pg">STAGE 1 · 2 / 3 · ${N[1]}台で1日</div>
+          <div class="machines">${barsHTML(rs,T)}</div>${ticks}
+          ${fin?`<p class="say ${s.short?"bad":""}">${s.short?`注文に ${num(s.short)}個 たりない`:"注文に間に合った"}</p>
+          <p class="sub" style="margin:-8px 0 0">利益 ${yen(s.profit)}</p>
+          <p class="say">帯の中に<b style="color:var(--down)">赤いところ</b>がある。これは何？</p>
+          <div class="navs"><button class="ghost" id="gback">← 台数を変える</button><button class="primary" id="gnext">赤ってなに？</button></div>`:""}`;
+        if(fin){$("gback").onclick=()=>{G[1]=1;guide();}; $("gnext").onclick=()=>{G[1]=3;guide();};}
+      };
+      animate(rs,draw,draw); draw();
+    } else {
+      const rs=plan(1,N[1],P.d1,false,false), s=tally(rs,P.d1), B=s.g/(s.g+s.r), K=s.g/(s.n*P.day);
+      const wr=best(1,P.d1,false,false), nr=best(1,P.d1,true,false);
+      g.innerHTML=`<div class="pg">STAGE 1 · 3 / 3</div>
+        <p class="say">設備が動いていない時間には、2種類ある。</p>${kinds()}
+        <div class="mini"><div class="meter"><div class="k">今日の${RB}</div><div class="v">${pc(B)}</div></div><div class="meter"><div class="k">今日の${RK}</div><div class="v">${pc(K)}</div></div><div class="meter"><div class="k">赤の時間（1台あたり）</div><div class="v" style="font-size:1.1rem">${hm(redPer(rs))}</div><div class="f">${s.n}台の延べ ${hm(s.r)}</div></div></div>
+        <p class="say">この工場では赤があるので、いちばんいい台数は <b>${wr.n}台</b>。もし赤がなければ <b>${nr.n}台</b> ですむ。赤は「設備を買いすぎる」というお金になっている。</p>
+        <div class="navs"><button class="primary" id="gnext">自由にためす</button><button class="ghost" id="gto2">ステージ2へ進む →</button></div>`;
+      $("gnext").onclick=()=>{G[1]=0;freeMode();};
+      $("gto2").onclick=()=>{G[1]=0;goStage(2);};
+    }
+  } else {
+    if(p===1){
+      g.innerHTML=`<div class="pg">STAGE 2 · 1 / 3</div>
+        <p class="q">故障をなくした工場（可動率100%）。設備は <b>3台</b>。<br>今日は注文が少ない日で <b>600個</b>。<br>本社から「稼働率が低い。もっと動かせ」と言われている。<br>どうする？</p>
+        <div class="navs"><button class="primary" id="gA">注文の分だけつくって止める</button><button class="primary" id="gB">8時間ぜんぶ動かす</button></div>
+        <button class="skip" id="gskip">説明をとばして自由にためす</button>
+        <button class="skip" id="gs1">← ステージ1にもどる</button>`;
+      $("gs1").onclick=()=>goStage(1);
+      $("gA").onclick=()=>{gFull=false;G[2]=2;guide();}; $("gB").onclick=()=>{gFull=true;G[2]=2;guide();};
+      $("gskip").onclick=()=>{G[2]=0;freeMode();};
+    } else if(p===2){
+      const rs=plan(2,3,600,false,gFull);
+      const draw=()=>{const s=tally(rs,600,T), fin=T>=P.day, K=T?s.g/(3*T):0;
+        g.innerHTML=`<div class="pg">STAGE 2 · 2 / 3 · ${gFull?"8時間ぜんぶ動かす":"注文の分だけつくる"}</div>
+          <div class="machines">${barsHTML(rs,T)}</div>${ticks}
+          ${fin?`<div class="mini"><div class="meter"><div class="k">${RK}</div><div class="v">${pc(K)}</div></div><div class="meter"><div class="k">売れ残り</div><div class="v">${num(s.made-s.sold)}個</div></div><div class="meter ${s.profit<0?"bad":""}"><div class="k">利益</div><div class="v" style="font-size:1.1rem">${yen(s.profit)}</div></div></div>
+          <p class="say">${gFull?"稼働率は100%になった。でも売れない物が840個できて、赤字になった。":"稼働率は42%。でも黒字。帯の中の<b style=\"color:#9A6E00\">黄色いところ</b>は何？"}</p>
+          <div class="navs"><button class="ghost" id="gother">${gFull?"注文の分だけつくってみる":"8時間ぜんぶ動かしてみる"}</button><button class="primary" id="gnext">黄ってなに？</button></div>`:""}`;
+        if(fin){$("gother").onclick=()=>{gFull=!gFull;guide();}; $("gnext").onclick=()=>{G[2]=3;guide();};}
+      };
+      animate(rs,draw,draw); draw();
+    } else {
+      const a=tally(plan(2,3,600,false,false),600), b=tally(plan(2,3,600,false,true),600);
+      g.innerHTML=`<div class="pg">STAGE 2 · 3 / 3</div>
+        <p class="say">黄は「注文の分をつくり終えたから止めている」時間。異常ではない。</p>${kinds()}
+        <div class="cwrap"><table class="cd"><thead><tr><th></th><th>注文の分だけ</th><th>8時間ぜんぶ</th></tr></thead><tbody>
+          <tr><td>${RB}</td><td class="r">100%</td><td class="r">100%</td></tr>
+          <tr><td>${RK}</td><td class="r">${pc(a.g/(3*P.day))}</td><td class="r">${pc(b.g/(3*P.day))}</td></tr>
+          <tr><td>利益</td><td class="r">${yen(a.profit)}</td><td class="r">${yen(b.profit)}</td></tr></tbody></table></div>
+        <p class="say">稼働率は注文で決まる。注文が少ない日に黄を埋めると、造りすぎになる。注文と設備の能力がちょうど合う日だけ、稼働率100%でも造りすぎにならない。</p><p class="say">ただし、600個なら2台でもつくれる（利益${yen(tally(plan(2,2,600,false,false),600).profit)}）。黄は異常ではないけれど、設備を持ちすぎていないかは別に考える。</p>
+        <div class="navs"><button class="primary" id="gnext">自由にためす</button></div>`;
+      $("gnext").onclick=()=>{G[2]=0;freeMode();};
+    }
+  }
+}
+
+/* ---------- 自由にためす ---------- */
+let FOUND1=false; const FOUND2=new Set(); let SUMSHOWN=false;
+function goalUI(){
+  const ok=t=>`<span style="color:var(--good);font-weight:700">✓ ${t}</span>`, no=t=>`<span class="sub">□ ${t}</span>`;
+  if(stage===1){
+    $("goal").innerHTML=`<h3>ゴール</h3><p style="margin:4px 0 0">この工場（故障あり）で、いちばんもうかる台数を見つけよう。</p><p style="margin:6px 0 0">${FOUND1?ok("いちばんもうかる台数を見つけた"):no("まだ")}</p>`;
+    $("toS2").className=FOUND1?"primary":"ghost";
+  } else {
+    const L=[[1400,"多い日"],[1000,"ふつうの日"],[600,"少ない日"]];
+    $("goal").innerHTML=`<h3>ゴール</h3><p style="margin:4px 0 0">3つの注文それぞれで、いちばんもうかる台数とつくり方を見つけよう。</p><p style="margin:6px 0 0;display:flex;gap:14px;flex-wrap:wrap">${L.map(([d,t])=>FOUND2.has(d)?ok(t):no(t)).join("")}</p>`;
+    $("showSum").className=FOUND2.size===3?"primary":"ghost";
+  }
+}
+function showSummary(done){
+  const el=$("summary"); el.classList.remove("hide");
+  el.innerHTML=`<div class="pg">まとめ</div>
+    ${done?`<p class="say" style="color:var(--good);font-weight:700">3つの注文すべてで、いちばんもうかる台数を見つけました。</p>`:""}
+    <p class="say">設備が動いていない時間には、2種類ある。</p>${kinds()}
+    <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px">
+      <li><b>止まる工場</b>（赤）は直す。赤があると、取り返すために設備を多く持つことになる。${RB}は100%をめざす。</li>
+      <li><b>止める工場</b>（黄）はそれでいい。注文の分をつくったら止める。${RK}は注文しだいで、低くてもいい。</li>
+      <li>黄を埋めようとして動かすと造りすぎになる。黄が多いときは、設備を持ちすぎていないかを考える。</li>
+    </ul>`;
+  el.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+}
+function freeMode(){
+  $("guide").classList.add("hide"); $("free").classList.remove("hide");
+  $("demandChoices").classList.toggle("hide",stage!==2); $("opt1").classList.toggle("hide",stage!==1); $("opt2").classList.toggle("hide",stage!==2);
+  $("stageNav").classList.toggle("hide",stage!==1); $("toS1").classList.toggle("hide",stage!==2);
+  $("sumNav").classList.toggle("hide",stage!==2); if(stage!==2) $("summary").classList.add("hide");
+  goalUI();
+  syncFree(); idleFree();
+}
+function goStage(n){ stage=n; show(); document.querySelector(".wrap").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}); }
+function syncFree(){
+  $("orderN").innerHTML=`${num(demand())}<small>個</small>`;
+  $("orderSub").textContent=stage===1?"毎日同じ":"日によって変わる";
+  document.querySelectorAll("#demandChoices button").forEach(b=>{b.setAttribute("aria-pressed",String(+b.dataset.d===D2)); b.disabled=running;});
+  $("noRed").setAttribute("aria-pressed",String(noRed)); $("noRed").textContent=noRed?"赤をもどす（止まってしまう72分あり）":"赤をなくしてみる（可動率100%）";
+  $("mode0").setAttribute("aria-pressed",String(!full)); $("mode1").setAttribute("aria-pressed",String(full));
+  [$("noRed"),$("mode0"),$("mode1"),$("toS2"),$("toS1")].forEach(b=>b.disabled=running);
+  $("nv").innerHTML=`${N[stage]}台<small>¥10,000/日</small>`;
+  $("dn").disabled=running||N[stage]<=1; $("up").disabled=running||N[stage]>=P.maxN;
+  $("start").disabled=running; $("start").textContent=running?"動いています…":"1日を動かす";
+  $("fast").classList.toggle("hide",!running);
+}
+function idleFree(){
+  if(running) return;
+  rows=plan(stage,N[stage],demand(),noRed,full); T=0;
+  $("machines").innerHTML=barsHTML(rows,0);
+  ["result","money","calcData"].forEach(id=>$(id).classList.add("hide"));
+}
+function startFree(){
+  rows=plan(stage,N[stage],demand(),noRed,full); fast=false; $("fast").setAttribute("aria-pressed","false");
+  ["result","money","calcData"].forEach(id=>$(id).classList.add("hide"));
+  animate(rows,()=>{$("machines").innerHTML=barsHTML(rows,T); syncFree();},finishFree); syncFree();
+}
+function finishFree(){
+  syncFree();
+  const d=demand(), s=tally(rows,d), n=s.n, B=s.g+s.r?s.g/(s.g+s.r):1, K=s.g/(n*P.day), bst=stage===2?[best(2,d,false,false),best(2,d,false,true)].reduce((a,b)=>b.profit>a.profit?b:a):best(stage,d,noRed,full);
+  const g=s.profit>=bst.profit?"S":s.profit>=bst.profit*0.9?"A":s.profit>=0?"B":"C";
+  let msg;
+  if(stage===1){
+    if(s.short) msg=`注文に${num(s.short)}個たりない。赤（1台あたり${hm(redPer(rows))}・${s.n}台の延べ${hm(s.r)}）のぶん、つくれなかった。`;
+    else if(!noRed) msg=`間に合った。赤（1台あたり${hm(redPer(rows))}）があるので、可動率は${pc(B)}。「赤をなくしてみる」で何台ですむかくらべてみよう。`;
+    else msg=`赤がないと${best(1,d,true,false).n}台で間に合う。赤があると${best(1,d,false,false).n}台。その差が毎日の赤のコスト。`;
+  } else {
+    if(full) msg=`稼働率は${pc(K)}。でも${num(s.made-s.sold)}個が売れずに残り、材料費${yen((s.made-s.sold)*P.mat)}がまるごと損。`;
+    else if(s.short) msg=`注文に${num(s.short)}個たりない。設備の能力そのものが注文に足りない。`;
+    else if(K<0.995) msg=`稼働率は${pc(K)}。でも可動率は${pc(B)}のまま。黄は注文の分をつくり終えて止めている時間で、異常ではない。ただし設備を持ちすぎていないかは別の話。台数を減らせないか、ためしてみよう。`;
+    else msg=`注文と設備の能力がちょうど合うので、黄はほとんどない。こういう日は稼働率100%でも造りすぎにならない。大事なのは稼働率を上げることではなく、注文に合わせてつくること。`;
+  }
+  const r=$("result"); r.classList.remove("hide");
+  r.innerHTML=`<div class="grade"><div class="letter ${g}">${g}</div><div><p>今日の利益</p><p class="big">${yen(s.profit)}</p><p class="note">${g==="S"?"<b style=\"color:var(--good)\">この注文でいちばんもうかる台数です</b>":`いちばんもうかるときの利益 ${yen(bst.profit)}`}</p></div></div>
+    <div class="mini"><div class="meter ${B<1?"bad":""}"><div class="k">${RB}</div><div class="v">${pc(B)}</div></div><div class="meter"><div class="k">${RK}</div><div class="v">${pc(K)}</div></div><div class="meter ${s.short?"bad":""}"><div class="k">つくった／注文</div><div class="v" style="font-size:1rem">${num(s.made)}／${num(d)}</div></div></div>
+    <div class="lesson"><p>${msg}</p></div>
+    <div class="lesson trainers"><h4>職場や研修で使う方へ</h4><p>ほかのゲームは <a href="/ja/#games">Mendomi Lab</a> にあります。</p><p style="margin-top:6px">自分の工場や授業に合わせたいときや 少し話してみたいときは <a href="/ja/consult/" target="_blank" rel="noopener">気軽に聞いてください（最初の1往復は無料）→</a></p></div>`;
+  $("ledger").innerHTML=
+    `<tr><td>売上<br><small>注文に出せた ${num(s.sold)}個 × ¥100</small></td><td>${yen(s.sales)}</td></tr>`+
+    `<tr><td class="minus">材料費<br><small>つくった ${num(s.made)}個 × ¥40</small></td><td class="minus">−${yen(s.mat)}</td></tr>`+
+    `<tr><td class="minus">減価償却<br><small>${n}台 × ¥10,000（止めていてもかかる）</small></td><td class="minus">−${yen(s.dep)}</td></tr>`+
+    `<tr><td class="minus">欠品の損<br><small>たりない ${num(s.short)}個 × ¥200</small></td><td class="minus">−${yen(s.sh)}</td></tr>`+
+    `<tr class="total"><td>今日の利益</td><td>${yen(s.profit)}</td></tr>`;
+  $("calcBody").innerHTML=`<div class="cwrap"><table class="cd"><tbody>
+    <tr><td>時間の内訳</td><td>緑 ${hm(s.g)} ＋ 黄 ${hm(s.y)} ＋ 赤 ${hm(s.r)} ＝ ${n}台 × 8時間<small>台数ぶんを足した延べの時間</small></td></tr>
+    <tr><td>可動率<small>べきどうりつ</small></td><td>緑 ${hm(s.g)} ÷（緑 ${hm(s.g)} ＋ 赤 ${hm(s.r)}）＝ <b>${pc(B)}</b></td></tr>
+    <tr><td>稼働率<small>かせどうりつ</small></td><td>緑 ${hm(s.g)} ÷（${n}台 × 8時間）＝ <b>${pc(K)}</b></td></tr>
+    <tr><td>利益</td><td>${yen(s.sales)} − ${yen(s.mat)} − ${yen(s.dep)} − ${yen(s.sh)} ＝ <b>${yen(s.profit)}</b></td></tr>
+    <tr><td>ランク</td><td>利益 ${yen(s.profit)}／いちばんもうかるときの利益 ${yen(bst.profit)} ＝ <b>${g}</b><small>S：同じ／A：90%以上／B：黒字／C：赤字</small></td></tr></tbody></table></div>`;
+  if(g==="S"){ if(stage===1&&!noRed) FOUND1=true; if(stage===2) FOUND2.add(d); }
+  goalUI();
+  if(stage===2&&FOUND2.size===3&&!SUMSHOWN){ SUMSHOWN=true; showSummary(true); }
+  $("money").classList.remove("hide"); $("calcData").classList.remove("hide");
+  r.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
+}
+
+/* ---------- 共通 ---------- */
+function show(){
+  $("t1").setAttribute("aria-pressed",String(stage===1)); $("t2").setAttribute("aria-pressed",String(stage===2));
+  $("rules").innerHTML=RULES[stage].map(x=>`<li>${x}</li>`).join("");
+  clearInterval(timer); timer=null; running=false; lock();
+  if(G[stage]) guide(); else freeMode();
+}
+$("t1").onclick=()=>{stage=1; show();};
+$("t2").onclick=()=>{stage=2; show();};
+$("dn").onclick=()=>{N[stage]=Math.max(1,N[stage]-1); syncFree(); idleFree();};
+$("up").onclick=()=>{N[stage]=Math.min(P.maxN,N[stage]+1); syncFree(); idleFree();};
+$("noRed").onclick=()=>{noRed=!noRed; syncFree(); idleFree();};
+$("mode0").onclick=()=>{full=false; syncFree(); idleFree();};
+$("mode1").onclick=()=>{full=true; syncFree(); idleFree();};
+document.querySelectorAll("#demandChoices button").forEach(b=>b.onclick=()=>{D2=+b.dataset.d; syncFree(); idleFree();});
+$("start").onclick=startFree;
+$("fast").onclick=()=>{fast=!fast; $("fast").setAttribute("aria-pressed",String(fast));};
+$("toS2").onclick=()=>goStage(2);
+$("showSum").onclick=()=>showSummary(FOUND2.size===3);
+$("toS1").onclick=()=>goStage(1);
+$("replay").onclick=()=>{G[stage]=1; show();};
+show();
+})();
+</script>
+
+</body>
+</html>
