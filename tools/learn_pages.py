@@ -174,7 +174,7 @@ EN_BODY = '''  <p class="lead"><b>Heijunka means leveling both the volume and th
 
 <h2>Try heijunka yourself</h2>
 <p>Heijunka is easier to understand when you change the build order yourself and see how costs change. <a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> is a free browser game set in a fictional scenario inspired by Toyota production: you run two suppliers, change the build order, and see how staffing, equipment and inventory costs change. In a workshop it opens one powerful question: <em>"Who chose this cost — the supplier or Toyota?"</em></p>
-<p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Pro for trainers ($49)</a></p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.com/games/suppliers-puzzle/#pro">Pro for trainers ($49)</a></p>
 <p>See all our <a href="../lean-simulation-games/">lean simulation games for training</a>.</p>
 
 <h2>How to run it in a 30-minute session</h2>
@@ -378,7 +378,7 @@ EN2_BODY = '''  <p class="lead"><b>These are free, browser-based lean simulation
 
 <h2>Free version and Pro</h2>
 <p>The free versions are enough to play and to run a basic session. Pro is for trainers. It lets you change the settings to match your own workplace — orders, work times, prices and wages in Overproduction Factory; models, volumes, machines and costs in The Supplier's Puzzle — and adds a 6-page facilitator guide with the session plan, questions and common answers, offline use and one year of bug fixes.</p>
-<p><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Overproduction Factory Pro</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Supplier's Puzzle Pro</a></p>
+<p><a class="btn ghost" href="https://mendomilab.com/games/overproduction-factory/#pro">Overproduction Factory Pro</a><a class="btn ghost" href="https://mendomilab.com/games/suppliers-puzzle/#pro">Supplier's Puzzle Pro</a></p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help fitting these games to your course or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -515,7 +515,7 @@ EN3_BODY = '''  <p class="lead"><b>Overproduction waste means making more than t
 
 <h2>See it in a game</h2>
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game about a factory with four processes and a daily order of 480 units, like Example 1. Follow the old "never stop" rule and every ordered unit ships — yet the day ends in a loss. Players change the crew and the work-in-process until the line actually makes money. In a workshop, one question opens the discussion: <em>"Every unit shipped. So where did the money go?"</em></p>
-<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.com/games/overproduction-factory/#pro">Pro for trainers ($29)</a></p>
 <p>More games: <a href="../lean-simulation-games/">lean simulation games for training</a>. Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../takt-time-vs-cycle-time/">takt time vs cycle time</a> / <a href="../mura-muri-muda/">mura, muri, muda examples</a>.</p>
 
 <h2>How to run it in a 30-minute session</h2>
@@ -664,7 +664,7 @@ EN4_BODY = '''  <p class="lead"><b>Takt time is the pace the customer requires �
 
 <h2>Practice it in a game</h2>
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game: a fictional factory with a daily order of 480 units. Players work out the takt time and the people needed per process, and find the setup that actually makes a profit — starting from the old rule "never let a process stop, build as much as you can."</p>
-<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.com/games/overproduction-factory/#pro">Pro for trainers ($29)</a></p>
 <p>Related: <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../heijunka-examples/">heijunka examples</a> / <a href="../lean-simulation-games/">lean simulation games</a> / <a href="../bottleneck-analysis/">bottleneck analysis</a></p>
 
 <h2>How to run it in a 30-minute session</h2>
@@ -810,7 +810,7 @@ EN5_BODY = '''  <p class="lead"><b>A bottleneck is the step with the lowest capa
 
 <h2>Practice it in a game</h2>
 <p><a href="../../games/overproduction-factory/">Overproduction Factory</a> is a free browser game with four processes and a daily order of 480 units. Players set the people per process, watch where work piles up, and find the setup that makes a profit. More games: <a href="../lean-simulation-games/">lean simulation games</a>.</p>
-<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/overproduction-factory-pro">Pro for trainers ($29)</a></p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/overproduction-factory">Play free</a><a class="btn ghost" href="https://mendomilab.com/games/overproduction-factory/#pro">Pro for trainers ($29)</a></p>
 
 <h2>About the author</h2>
 <p>Tsutomu Takagi (Mendomi Lab). For more than 20 years I worked at a consulting company that is a Toyota subsidiary, teaming up with people who spent long careers on Toyota's shop floors and improving more than 30 factories. If you want help bringing these ideas into your training or workplace, <a href="../../consult/">get in touch</a>.</p>
@@ -928,7 +928,7 @@ EN6_BODY = '''  <p class="lead"><b>Mura, muri and muda are three related ideas i
 
 <h2>See it in a game</h2>
 <p><a href="../../games/suppliers-puzzle/">The Supplier's Puzzle</a> is a free browser game set in a fictional scenario inspired by Toyota production. Change the build order and watch how unevenness at the customer turns into capacity and inventory cost at two suppliers — mura, muri and muda in one screen.</p>
-<p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.gumroad.com/l/supplier-puzzle-pro">Pro for trainers ($49)</a></p>
+<p><a class="btn primary" href="https://ttmtkg.itch.io/the-suppliers-puzzle">Play free</a><a class="btn ghost" href="https://mendomilab.com/games/suppliers-puzzle/#pro">Pro for trainers ($49)</a></p>
 <p>Related: <a href="../heijunka-examples/">heijunka examples</a> / <a href="../overproduction-waste/">overproduction waste examples</a> / <a href="../7-wastes-of-lean/">7 wastes of lean</a> / <a href="../lean-simulation-games/">lean simulation games</a> / <a href="../lean-vs-toyota-production-system/">lean vs TPS</a></p>
 
 <h2>About the author</h2>
