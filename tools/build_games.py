@@ -1,6 +1,8 @@
 import json, os, html
 ROOT='/home/claude/mendomilab'
 GTAG=next(l for l in open(f'{ROOT}/about/index.html').read().split('\n') if 'G-SGX5EJT1CN' in l)  # the analytics <script> line
+SHIP={"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"0","currency":"JPY"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"JP"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":0,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":0,"maxValue":0,"unitCode":"DAY"}}}
+RET={"@type":"MerchantReturnPolicy","applicableCountry":"JP","returnPolicyCategory":"https://schema.org/MerchantReturnNotPermitted","merchantReturnLink":"https://mendomilab.com/ja/tokushoho/"}
 
 OG={'games/overproduction-factory/':'og_of.png','games/suppliers-puzzle/':'og_sp.png','ja/games/factory/':'og_ja_of.png','ja/games/supplier/':'og_ja_sp.png','ja/games/pasta/':'og_ja_pasta.png'}
 PRODUCTS={
@@ -39,7 +41,7 @@ def page(lang, path, title, desc, h1, lead, sections, faqs, buttons, alt_en, alt
     if path in PRODUCTS:
         n,d,offs=PRODUCTS[path]
         ld.append({"@context":"https://schema.org","@type":"Product","name":n,"description":d,"image":f"https://mendomilab.com/assets/social/{OG[path]}","brand":{"@type":"Brand","name":"Mendomi Lab"},
-          "offers":[{"@type":"Offer","name":on,"price":str(pr),"priceCurrency":"JPY","availability":"https://schema.org/InStock","url":u,"seller":{"@type":"Organization","name":"A&T Works"}} for on,pr,u in offs]})
+          "offers":[{"@type":"Offer","name":on,"price":str(pr),"priceCurrency":"JPY","availability":"https://schema.org/InStock","url":u,"seller":{"@type":"Organization","name":"A&T Works"},"shippingDetails":SHIP,"hasMerchantReturnPolicy":RET} for on,pr,u in offs]})
     out=f'''<!DOCTYPE html>
 <html lang="{lang}">
 <head>
