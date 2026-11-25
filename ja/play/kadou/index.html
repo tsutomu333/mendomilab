@@ -506,7 +506,7 @@ function finishFree(){
   r.innerHTML=`<div class="grade"><div class="letter ${g}">${g}</div><div><p>今日の利益</p><p class="big">${yen(s.profit)}</p><p class="note">${g==="S"?"<b style=\"color:var(--good)\">この注文でいちばんもうかる台数です</b>":`いちばんもうかるときの利益 ${yen(bst.profit)}`}</p></div></div>
     <div class="mini"><div class="meter ${B<1?"bad":""}"><div class="k">${RB}</div><div class="v">${pc(B)}</div></div><div class="meter"><div class="k">${RK}</div><div class="v">${pc(K)}</div></div><div class="meter ${s.short?"bad":""}"><div class="k">つくった／注文</div><div class="v" style="font-size:1rem">${num(s.made)}／${num(d)}</div></div></div>
     <div class="lesson"><p>${msg}</p></div>
-    <div class="lesson trainers"><h4>職場や研修で使う方へ</h4><p>ほかのゲームは <a href="/ja/#games">Mendomi Lab</a> にあります。</p><p style="margin-top:6px">自分の工場や授業に合わせたいときや 少し話してみたいときは <a href="/ja/consult/" target="_blank" rel="noopener">気軽に聞いてください（最初の1往復は無料）→</a></p></div>`;
+    <div class="lesson trainers"><h4>研修や授業で使う方へ</h4><p>稼働時間 能力 故障 注文 価格を自分の工場に合わせて変えられる<a href="/ja/games/kadou/#pro">Pro版</a>もあります（4,500円から）。ほかのゲームは <a href="/ja/#games">Mendomi Lab</a> にあります。</p><p style="margin-top:6px">自分の工場や授業に合わせたいときや 少し話してみたいときは <a href="/ja/consult/" target="_blank" rel="noopener">気軽に聞いてください（最初の1往復は無料）→</a></p></div>`;
   $("ledger").innerHTML=
     `<tr><td>売上<br><small>注文に出せた ${num(s.sold)}個 × ¥100</small></td><td>${yen(s.sales)}</td></tr>`+
     `<tr><td class="minus">材料費<br><small>つくった ${num(s.made)}個 × ¥40</small></td><td class="minus">−${yen(s.mat)}</td></tr>`+
