@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>/* ?notrack=1 once = this browser is not counted (owner's own visits). ?notrack=0 undoes it */window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SGX5EJT1CN');(function(){var off=false;try{if(/[?&]notrack=1/.test(location.search))localStorage.setItem('notrack','1');if(/[?&]notrack=0/.test(location.search))localStorage.removeItem('notrack');off=localStorage.getItem('notrack')==='1';}catch(e){}if(!off){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-SGX5EJT1CN';document.head.appendChild(s);}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Stalled Factory, Paused Factory | Availability vs. Utilization in the Toyota Production System | Mendomi Lab</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mendomi Lab">
+<meta property="og:title" content="Stalled Factory, Paused Factory | Availability vs. Utilization in the Toyota Production System | Mendomi Lab">
+<meta property="og:description" content="When a machine is not running, it is either down or idle. A free browser game on why Toyota separates availability (bekidō-ritsu) from utilization (kasedō-ritsu).">
+<meta property="og:image" content="https://mendomilab.com/assets/social/og.png">
+<meta property="og:url" content="https://mendomilab.com/play/availability-vs-utilization/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="When a machine is not running, it is either down or idle. A free browser game on why Toyota separates availability (bekidō-ritsu) from utilization (kasedō-ritsu).">
+<link rel="canonical" href="https://mendomilab.com/play/availability-vs-utilization/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=IBM+Plex+Mono:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+</head>
+<body>
+<style>
+/* Layout: 造りすぎ工場・回らないパスタ屋と同じ1本の縦の流れ。上から2種類の止まり→注文→設備→結果 */
+:root{
+  --bg:#E8ECE6; --surface:#F8F9F6; --fg:#1B221E; --muted:#58645D; --line:#C7CEC6;
+  --tape:#E6AE0B; --tape-ink:#1B221E; --good:#2C8253; --bad:#C2412D; --btn:#1B221E; --btn-fg:#F8F9F6; --stamp:#C8322A;
+  --run:#2C8253; --hold:#E6AE0B; --down:#C2412D; --empty:#DDE2DB;
+  --display:"Dela Gothic One","Hiragino Sans","Yu Gothic",sans-serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111613; --surface:#1A201C; --fg:#E6ECE7; --muted:#97A39C; --line:#2D3731;
+  --tape:#E6AE0B; --tape-ink:#151515; --good:#52B381; --bad:#E3634C; --btn:#E6AE0B; --btn-fg:#151515; --stamp:#E8604F;
+  --run:#52B381; --hold:#E6AE0B; --down:#E3634C; --empty:#252D28; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#1A201C; --fg:#E6ECE7; --muted:#97A39C; --line:#2D3731;
+  --tape:#E6AE0B; --tape-ink:#151515; --good:#52B381; --bad:#E3634C; --btn:#E6AE0B; --btn-fg:#151515; --stamp:#E8604F;
+  --run:#52B381; --hold:#E6AE0B; --down:#E3634C; --empty:#252D28; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:560px;margin:0 auto;padding-block:24px 48px;display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--display);font-weight:400;font-size:2rem;line-height:1.2;margin:0;text-wrap:balance}
+.stage{font-family:var(--num);font-size:.75rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.mission{margin:0}
+.mission b{background:linear-gradient(transparent 60%, color-mix(in srgb,var(--tape) 55%, transparent) 60%)}
+rt{font-size:.62em;color:var(--muted);font-family:var(--body);font-weight:400}
+
+.tabs{display:flex;gap:8px}
+.tabs button{flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);font-family:var(--body);font-size:.9rem;cursor:pointer;text-align:left;line-height:1.35}
+.tabs button small{display:block;font-family:var(--num);font-size:.68rem;letter-spacing:.1em;color:var(--muted)}
+.tabs button[aria-pressed="true"]{border-color:var(--fg);border-width:2px;padding:9px 11px;font-weight:700}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kind{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;border-top:6px solid var(--k)}
+.kind h3{margin:0;font-size:1rem}
+.kind p{margin:4px 0 0;font-size:.8rem;color:var(--muted)}
+.kind .name{margin-top:8px;font-size:.95rem;font-weight:700;color:var(--fg)}
+
+.clock{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line)}
+.clock .time{font-family:var(--num);font-size:1.25rem;font-weight:600;font-variant-numeric:tabular-nums}
+.pbar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0;background:var(--tape)}
+.clock .made{font-family:var(--num);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+
+.flow{display:flex;flex-direction:column;gap:10px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.box h3{margin:0;font-size:1.05rem;font-weight:700}
+.sub{font-size:.78rem;color:var(--muted)}
+.sub b{white-space:nowrap}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px}
+.order{font-family:var(--num);font-weight:600;font-size:1.5rem;text-align:right;line-height:1.1}
+.order small{display:block;font-family:var(--body);font-size:.68rem;font-weight:400;color:var(--muted)}
+.choices{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.choices button{padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);font-family:var(--body);font-size:.85rem;cursor:pointer}
+.choices button[aria-pressed="true"]{background:var(--tape);color:var(--tape-ink);border-color:var(--tape);font-weight:700}
+.choices button:disabled{opacity:.4;cursor:default}
+
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:40px;height:40px;font-size:1.3rem;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--fg);line-height:1;cursor:pointer;font-family:var(--body)}
+.stepper button:disabled{opacity:.35;cursor:default}
+.stepper output{min-width:64px;text-align:center;font-family:var(--num);font-weight:600;font-size:1.3rem;line-height:1.1}
+.stepper output small{display:block;font-family:var(--body);font-size:.68rem;font-weight:400;color:var(--muted)}
+button:focus-visible{outline:3px solid var(--tape);outline-offset:2px}
+
+.machines{display:flex;flex-direction:column;gap:8px}
+.mach{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:8px;align-items:center}
+.mach .lab{font-size:.78rem;color:var(--muted)}
+.mach .cnt{font-family:var(--num);font-size:.78rem;font-variant-numeric:tabular-nums;min-width:3.5em;text-align:right}
+.tl{display:flex;height:26px;border-radius:4px;overflow:hidden;background:var(--empty);border:1px solid var(--line)}
+.tl span{display:flex;align-items:center;justify-content:center;height:100%;font-size:.68rem;white-space:nowrap;overflow:hidden;font-weight:700}
+.tl .g{background:var(--run);color:#F8F9F6}.tl .y{background:var(--hold);color:#1B221E}.tl .r{background:var(--down);color:#F8F9F6}
+.ticks{display:flex;justify-content:space-between;font-family:var(--num);font-size:.68rem;color:var(--muted);margin-left:60px;margin-right:52px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.72rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+
+.meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.meter{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.meter .k{font-size:.78rem;color:var(--muted);line-height:1.3}
+.meter .v{font-family:var(--num);font-weight:600;font-size:1.4rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.meter .f{font-size:.68rem;color:var(--muted)}
+.meter.bad .v{color:var(--bad)}
+
+.ledger{width:100%;border-collapse:collapse;font-size:.9rem}
+.ledger td{padding:6px 0;border-bottom:1px solid var(--line)}
+.ledger td:last-child{text-align:right;font-family:var(--num);font-variant-numeric:tabular-nums}
+.ledger tr.total td{border-bottom:none;font-weight:700;font-size:1.05rem;padding-top:10px}
+.ledger .minus{color:var(--muted)}
+.ledger small{font-size:.72rem;line-height:1.4}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.primary{flex:1 1 200px;padding:14px 18px;border:none;border-radius:6px;background:var(--btn);color:var(--btn-fg);font-family:var(--body);font-weight:700;font-size:1rem;cursor:pointer}
+.primary:disabled{opacity:.4;cursor:default}
+.ghost{flex:0 1 auto;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);font-family:var(--body);font-size:.9rem;cursor:pointer}
+.ghost[aria-pressed="true"]{background:var(--tape);color:var(--tape-ink);border-color:var(--tape)}
+
+.result{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.grade{display:flex;align-items:center;gap:16px}
+.grade .letter{font-family:var(--display);font-size:3.4rem;line-height:1;width:72px;height:72px;flex:none;display:grid;place-items:center;border:3px solid currentColor;border-radius:50%}
+.grade .letter.S,.grade .letter.A{color:var(--good)}
+.grade .letter.C{color:var(--bad)}
+.grade p{margin:0}
+.grade .big{font-family:var(--num);font-size:1.5rem;font-weight:600}
+.grade .note{color:var(--muted);font-size:.8rem}
+.lesson{border-top:1px solid var(--line);padding-top:12px}
+.lesson h4{margin:0 0 4px;font-size:1rem}
+.lesson p{margin:0;font-size:.9rem;max-width:62ch}
+.lesson a{color:var(--fg);font-weight:700}
+
+details.info{font-size:.88rem;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+details.info summary{cursor:pointer;font-weight:700}
+details.info ul{padding-left:1.2em;margin:8px 0 2px;display:flex;flex-direction:column;gap:4px}
+
+.titleblock{display:grid;gap:1px;background:var(--fg);border:2px solid var(--fg);margin-top:8px;
+  grid-template-columns:repeat(3,minmax(0,1fr)) 96px;
+  grid-template-areas:"name name name seal" "no rev date seal" "des stg tt seal"}
+.titleblock .cell{padding:6px 8px;background:var(--surface);min-width:0}
+.titleblock .cell > span{display:block;font-size:.62rem;letter-spacing:.12em;color:var(--muted)}
+.titleblock .cell b{display:block;font-family:var(--num);font-weight:600;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titleblock .cell.name b{font-family:var(--display);font-weight:400;font-size:1.05rem}
+.tb-name{grid-area:name}.tb-no{grid-area:no}.tb-rev{grid-area:rev}.tb-date{grid-area:date}.tb-des{grid-area:des}.tb-stg{grid-area:stg}.tb-tt{grid-area:tt}
+.titleblock .seal{grid-area:seal;display:flex;flex-direction:column;padding:0}
+.titleblock .seal > span{padding:6px 8px;text-align:center;border-bottom:1px solid var(--fg)}
+.titleblock .seal .stampbox{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 0}
+.hanko{width:66px;height:66px;border:3px solid var(--stamp);border-radius:50%;color:var(--stamp);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-12deg);line-height:1;opacity:.9;position:relative}
+.hanko::after{content:"";position:absolute;inset:3px;border:1px solid var(--stamp);border-radius:50%}
+.hanko .k{font-family:var(--display);font-size:1.5rem}
+.hanko .v{font-family:var(--num);font-weight:600;font-size:.7rem;margin-top:3px}
+@media (max-width:420px){.titleblock{grid-template-columns:repeat(2,minmax(0,1fr)) 88px;
+  grid-template-areas:"name name seal" "no rev seal" "date des seal" "stg tt seal"}
+  .meters{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+
+.cwrap{overflow-x:auto;margin:6px 0 4px}
+table.cd{border-collapse:collapse;font-size:.8rem;width:100%}
+table.cd th,table.cd td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.cd th{color:var(--muted);font-weight:700}
+table.cd small{display:block;font-weight:400;color:var(--muted);font-size:.72rem;line-height:1.4}
+table.cd td.r{text-align:right;white-space:nowrap;font-family:var(--num)}
+table.cd tr.sum td{font-weight:700;border-bottom:none}
+.ch{margin:12px 0 0;font-size:.9rem}
+.cwait{margin:8px 0 2px;color:var(--muted);font-size:.85rem}
+</style>
+
+<style>
+.guide{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.guide .pg{font-family:var(--num);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.guide .q{font-size:1.15rem;line-height:1.7;margin:0}
+.guide .q b{background:linear-gradient(transparent 60%, color-mix(in srgb,var(--tape) 55%, transparent) 60%)}
+.guide .say{margin:0;font-size:1.05rem}
+.guide .say.bad{color:var(--bad);font-weight:700}
+.navs{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.navs .primary{flex:1 1 220px}
+.skip{background:none;border:none;color:var(--muted);font-family:var(--body);font-size:.82rem;text-decoration:underline;cursor:pointer;padding:4px 0;align-self:flex-start}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.hide{display:none!important}
+.jp{font-size:.72em;color:var(--muted);font-weight:400;white-space:nowrap}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="stage">Availability vs. utilization in the Toyota Production System</div>
+    <h1>Stalled Factory, Paused Factory</h1>
+  </header>
+  <p class="mission">When a machine is not running, it is either <b>down</b> (a stop you must fix) or <b>idle</b> (a stop that is perfectly fine).</p>
+
+  <div class="tabs hide" role="group" aria-label="Stage">
+    <button id="t1" aria-pressed="true"><small>STAGE 1</small>Red: down time</button>
+    <button id="t2" aria-pressed="false"><small>STAGE 2</small>Yellow: idle time</button>
+  </div>
+
+  <details class="info">
+    <summary>Rules (full assumptions)</summary>
+    <ul id="rules"></ul>
+  </details>
+
+  <!-- guided first run -->
+  <section class="guide" id="guide" aria-live="polite"></section>
+
+  <!-- free play -->
+  <div class="flow hide" id="free">
+    <div class="box" id="goal"></div>
+    <div class="box">
+      <div class="row">
+        <div><h3>Today's order</h3><div class="sub" id="orderSub"></div></div>
+        <div class="order" id="orderN"></div>
+      </div>
+      <div class="choices hide" id="demandChoices">
+        <button data-d="1400">Busy day 1,400</button>
+        <button data-d="1000">Normal day 1,000</button>
+        <button data-d="600">Slow day 600</button>
+      </div>
+    </div>
+    <div class="box">
+      <div class="row">
+        <div><h3>Machines</h3><div class="sub">Each makes <b>480 parts</b> in 8 hours · depreciation <b>$100 per machine per day</b></div></div>
+        <div class="stepper"><button id="dn" aria-label="Fewer machines">−</button><output id="nv"></output><button id="up" aria-label="More machines">＋</button></div>
+      </div>
+      <div class="choices" id="opt1"><button id="noRed" aria-pressed="false"></button></div>
+      <div class="choices hide" id="opt2"><button id="mode0" aria-pressed="true">Make only the order, then stop</button><button id="mode1" aria-pressed="false">Run all 8 hours</button></div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="start">Run the day</button>
+      <button class="ghost hide" id="fast" aria-pressed="false">Fast forward</button>
+    </div>
+    <div class="box">
+      <div class="machines" id="machines"></div>
+      <div class="ticks"><span>8:00</span><span>12:00</span><span>16:00</span></div>
+      <div class="legend" style="margin-top:8px"><span><i style="background:var(--run)"></i>running</span><span><i style="background:var(--hold)"></i>idle (order done)</span><span><i style="background:var(--down)"></i>down (breakdown)</span></div>
+    </div>
+    <section class="result hide" id="result"></section>
+    <div class="navs" id="stageNav"><button class="ghost" id="toS2">Next: Stage 2 (yellow: idle time) →</button></div>
+    <details class="info hide" id="money"><summary>Money breakdown</summary><table class="ledger" aria-label="Today's profit and loss"><tbody id="ledger"></tbody></table></details>
+    <details class="info hide" id="calcData"><summary>Formulas with today's numbers</summary><div id="calcBody"></div></details>
+    <div class="navs hide" id="sumNav"><button class="ghost" id="showSum">See the summary</button></div>
+    <section class="guide hide" id="summary"></section>
+    <button class="skip" id="toS1">← Back to Stage 1</button>
+    <button class="skip" id="replay">Start again with the guided run</button>
+  </div>
+
+  <details class="info">
+    <summary>Notes (contains hints)</summary>
+    <ul>
+      <li><b>One number hides the difference</b>: if you track machine time with a single number, a breakdown and a planned stop both look like "not running." Toyota separates them: <b>availability</b> asks whether the machine could run when it was needed, and <b>utilization</b> asks how much the machine was used against the order.</li>
+      <li><b>Availability</b> <span class="jp">可動率 · bekidō-ritsu</span>: the share of the time the machine was needed that it actually ran. It only looks at red. Red is abnormal, so the target is 100%.</li>
+      <li><b>Utilization</b> <span class="jp">稼働率 · kasedō-ritsu</span>: how much the machine was used against its capacity. The order decides it, so a low number can be fine. When the order exactly matches capacity, 100% is not overproduction. What matters is building to the order, not pushing utilization up.</li>
+      <li><b>What red costs</b>: with red, you need extra machines to win back the lost time. Red shows up as money spent on too many machines.</li>
+      <li><b>What yellow costs</b>: yellow is time spent not making what nobody ordered. Filling it creates parts you cannot sell (overproduction). When there is a lot of yellow, ask a separate question: do we own more machines than the orders need? Depreciation is paid even when a machine is idle.</li>
+      <li><b>Why the readings differ</b>: in Japanese both words can be read "kadō-ritsu." At Toyota, 可動率 is read "bekidō-ritsu" and 稼働率 "kasedō-ritsu," so people can tell them apart by ear.</li>
+      <li><b>Colors</b>: this is how the game shows it — green = running, yellow = stopped because the order is done, red = down because of a breakdown. Real signal tower colors are set by each plant and machine.</li>
+      <li><b>Check the denominator</b>: "utilization" and "availability" are defined differently from company to company, and OEE uses "availability" for something close to bekidō-ritsu. If breakdown time is taken out of the denominator, breakdowns stop lowering the number. This game uses the TPS definitions. <a href="../../games/availability-vs-utilization/#denominator">More on this</a></li>
+    </ul>
+  </details>
+
+  <details class="info">
+    <summary>Formulas</summary>
+    <ul>
+      <li><b>Availability</b> = running time (green) ÷ (running time (green) + down time (red))</li>
+      <li><b>Utilization</b> = running time (green) ÷ (machines × 8 hours)</li>
+      <li><b>Sales</b> = parts delivered against the order × $1.00 (extra parts cannot be sold)</li>
+      <li><b>Materials</b> = parts made × $0.40</li>
+      <li><b>Depreciation</b> = machines × $100 (the same whether a machine runs or not)</li>
+      <li><b>Shortage cost</b> = parts short × $2.00 (rush shipping and customer handling; a game assumption, not a Toyota figure)</li>
+      <li><b>Profit</b> = sales − materials − depreciation − shortage cost</li>
+      <li><b>Grade</b> S: same profit as the best number of machines for this order / A: 90% of it or more / B: any profit / C: a loss</li>
+    </ul>
+  </details>
+
+  <footer class="titleblock" aria-label="Title block">
+    <div class="cell name tb-name"><span>TITLE</span><b>Stalled Factory, Paused Factory</b></div>
+    <div class="cell tb-no"><span>DWG NO.</span><b>TSK-K01E</b></div>
+    <div class="cell tb-rev"><span>REV</span><b>Rev.1.00</b></div>
+    <div class="cell tb-date"><span>DATE</span><b>2026.11.26</b></div>
+    <div class="cell tb-des"><span>DESIGN</span><b>A&amp;T Works</b></div>
+    <div class="cell tb-stg"><span>SERIES</span><b>Extra</b></div>
+    <div class="cell tb-tt"><span>MACHINE</span><b>480 / day</b></div>
+    <div class="cell seal"><span>CHECKED</span><div class="stampbox"><div class="hanko" aria-label="Checked 1.00"><span class="k">検</span><span class="v">1.00</span></div></div></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+/*SIM-START*/
+// All times in minutes. 0 = 8:00, 480 = 16:00. Money is in cents (price 100 = $1.00).
+const P={day:480,cap:480,price:100,mat:40,dep:10000,short:200,d1:1350,maxN:6};
+// Stage 1: every machine breaks down at the same times (72 minutes in total)
+const DOWN=[[110,36],[300,36]];
+function plan(stage,n,demand,noRed,full){
+  const red=stage===1&&!noRed, base=Math.floor(demand/n), extra=demand%n, rows=[];
+  for(let m=0;m<n;m++){
+    const tgt=full?P.cap:base+(m<extra?1:0); let p=0; const st=[];
+    for(let t=0;t<P.day;t++){
+      if(p<tgt){ if(red&&DOWN.some(([a,l])=>t>=a&&t<a+l)) st.push("r"); else {st.push("g"); p++;} }
+      else st.push("y");
+    }
+    rows.push(st);
+  }
+  return rows;
+}
+function tally(rows,demand,upTo){
+  const T=upTo==null?P.day:upTo; let g=0,r=0,y=0;
+  for(const st of rows) for(let t=0;t<T;t++){ if(st[t]==="g")g++; else if(st[t]==="r")r++; else y++; }
+  const made=g, sold=Math.min(made,demand), short=demand-sold, n=rows.length;
+  const sales=sold*P.price, mat=made*P.mat, dep=n*P.dep, sh=short*P.short;
+  return {g,r,y,made,sold,short,n,sales,mat,dep,sh,profit:sales-mat-dep-sh};
+}
+function best(stage,demand,noRed,full){
+  let b=-1e12,bn=1;
+  for(let n=1;n<=P.maxN;n++){const p=tally(plan(stage,n,demand,noRed,full),demand).profit; if(p>b){b=p;bn=n;}}
+  return {profit:b,n:bn};
+}
+/*SIM-END*/
+
+const $=id=>document.getElementById(id);
+const yen=v=>(v<0?"−$":"$")+Math.round(Math.abs(v)/100).toLocaleString("en-US");
+const num=v=>Math.round(v).toLocaleString("en-US");
+const pc=v=>Math.round(v*100)+"%";
+const hm=m=>{m=Math.round(m); return m>=60?`${Math.floor(m/60)} h${m%60?" "+(m%60)+" min":""}`:`${m} min`;};
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const redPer=rs=>Math.max(...rs.map(st=>st.filter(x=>x==="r").length));
+const RB=`Availability <span class="jp">可動率 · bekidō-ritsu</span>`, RK=`Utilization <span class="jp">稼働率 · kasedō-ritsu</span>`;
+const RBs=`Availability`, RKs=`Utilization`;
+
+let stage=1;
+const G={1:1,2:1};            // guided pages (1-3, 0 = free play)
+const N={1:3,2:3};
+let D2=600, noRed=false, full=false;
+let rows=null, T=0, timer=null, running=false, fast=false, gFull=null;
+const demand=()=>stage===1?P.d1:D2;
+
+const RULES={
+1:["Each machine makes 1 part per minute: <b>480 parts in 8 hours</b> (8:00–16:00). No overtime. The order is split evenly across the machines.",
+   "While it is making parts, every machine breaks down at <b>9:50 and 13:00</b> for 36 minutes each (up to <b>72 minutes</b> per machine). It cannot make anything while it is down. To make comparison easy, the breakdowns happen at the same times on every machine. A machine that has already finished its share and is stopped does not break down.",
+   "A machine that has finished its share of the order stops.",
+   "Price $1.00 per part · materials $0.40 per part · depreciation $100 per machine per day (paid even when it is stopped) · $2.00 for each part short of the order (rush shipping and customer handling; a game assumption)."],
+2:["No breakdowns (<b>availability 100%</b>). Each machine makes 480 parts in 8 hours. No overtime.",
+   "The order changes from day to day (busy day 1,400 · normal day 1,000 · slow day 600).",
+   "Parts made beyond the order cannot be sold; you only pay for their materials.",
+   "The money rules are the same as in Stage 1."]};
+
+function barW(){ const w=document.querySelector(".wrap"); return Math.max(160,(w?w.clientWidth:560)-120-36); }
+function barsHTML(rs,t){
+  return rs.map((st,i)=>{
+    const seg=[]; let p=0;
+    for(let k=0;k<t;k++){ if(st[k]==="g")p++; if(seg.length&&seg[seg.length-1][0]===st[k]) seg[seg.length-1][1]++; else seg.push([st[k],1]); }
+    const lab=(k,l)=>{ const px=l/P.day*barW(); const c={g:["running","run"],y:["idle"],r:["down"]}[k]; for(const t of c){ if(px>=t.length*7.5+10) return t; } return ""; };
+    return `<div class="mach"><span class="lab">M${i+1}</span><div class="tl">${seg.map(([k,l])=>`<span class="${k}" style="width:${l/P.day*100}%">${lab(k,l)}</span>`).join("")}</div><span class="cnt">${p}</span></div>`;
+  }).join("");
+}
+const ticks=`<div class="ticks"><span>8:00</span><span>12:00</span><span>16:00</span></div>`;
+function kinds(){
+  return `<div class="two"><div class="kind" style="--k:var(--down)"><h3>Red: down</h3><p>The machine was needed but stopped because of a breakdown.</p><p class="name">Measured by ${RB}</p><p>Target: 100%</p></div>
+  <div class="kind" style="--k:var(--hold)"><h3>Yellow: idle</h3><p>The machine finished the order, so it was stopped on purpose.</p><p class="name">Measured by ${RK}</p><p>Set by the order. Low can be fine</p></div></div>
+  <p class="sub" style="margin:0">Both are "time the machine is not running." Toyota gives them different names — and even reads them differently.</p>`;
+}
+function animate(rs,onFrame,onEnd){
+  clearInterval(timer); T=0; running=true; lock();
+  timer=setInterval(()=>{ T=Math.min(P.day,T+(fast?24:4)); onFrame(); if(T>=P.day){clearInterval(timer); timer=null; running=false; lock(); onEnd();} }, reduce?20:40);
+}
+function lock(){ $("t1").disabled=running; $("t2").disabled=running; }
+
+/* ---------- guided run ---------- */
+function guide(){
+  const g=$("guide"), p=G[stage];
+  $("free").classList.add("hide"); g.classList.remove("hide");
+  if(stage===1){
+    if(p===1){
+      g.innerHTML=`<div class="pg">STAGE 1 · 1 / 3</div>
+        <p class="q">You are the plant manager.<br>Today's order is <b>1,350 parts</b>.<br>One machine makes <b>480 parts</b> a day.<br>How many machines?</p>
+        <div class="row"><span class="sub">Machines</span><div class="stepper"><button id="gdn" aria-label="Fewer">−</button><output>${N[1]}</output><button id="gup" aria-label="More">＋</button></div></div>
+        <div class="navs"><button class="primary" id="gnext">Run the day with this many</button></div>
+        <button class="skip" id="gskip">Skip the guide and play freely</button>`;
+      $("gdn").onclick=()=>{N[1]=Math.max(1,N[1]-1);guide();}; $("gup").onclick=()=>{N[1]=Math.min(P.maxN,N[1]+1);guide();};
+      $("gnext").onclick=()=>{G[1]=2;guide();}; $("gskip").onclick=()=>{G[1]=0;freeMode();};
+    } else if(p===2){
+      const rs=plan(1,N[1],P.d1,false,false);
+      const draw=()=>{const s=tally(rs,P.d1,T), fin=T>=P.day;
+        g.innerHTML=`<div class="pg">STAGE 1 · 2 / 3 · one day with ${N[1]} machine${N[1]>1?"s":""}</div>
+          <div class="machines">${barsHTML(rs,T)}</div>${ticks}
+          ${fin?`<p class="say ${s.short?"bad":""}">${s.short?`${num(s.short)} parts short of the order`:"The order was delivered in full"}</p>
+          <p class="sub" style="margin:-8px 0 0">Profit ${yen(s.profit)}</p>
+          <p class="say">There are <b style="color:var(--down)">red sections</b> in the bars. What are they?</p>
+          <div class="navs"><button class="ghost" id="gback">← Change the number</button><button class="primary" id="gnext">What is red?</button></div>`:""}`;
+        if(fin){$("gback").onclick=()=>{G[1]=1;guide();}; $("gnext").onclick=()=>{G[1]=3;guide();};}
+      };
+      animate(rs,draw,draw); draw();
+    } else {
+      const rs=plan(1,N[1],P.d1,false,false), s=tally(rs,P.d1), B=s.g/(s.g+s.r), K=s.g/(s.n*P.day);
+      const wr=best(1,P.d1,false,false), nr=best(1,P.d1,true,false);
+      g.innerHTML=`<div class="pg">STAGE 1 · 3 / 3</div>
+        <p class="say">A machine that is not running is in one of two kinds of time.</p>${kinds()}
+        <div class="mini"><div class="meter"><div class="k">Today's ${RBs}</div><div class="v">${pc(B)}</div></div><div class="meter"><div class="k">Today's ${RKs}</div><div class="v">${pc(K)}</div></div><div class="meter"><div class="k">Red per machine</div><div class="v" style="font-size:1.1rem">${hm(redPer(rs))}</div><div class="f">${hm(s.r)} across ${s.n} machines</div></div></div>
+        <p class="say">Because this plant has red, the best number of machines is <b>${wr.n}</b>. Without red, <b>${nr.n}</b> would be enough. Red turns into money spent on extra machines.</p>
+        <div class="navs"><button class="primary" id="gnext">Play freely</button><button class="ghost" id="gto2">Go to Stage 2 →</button></div>`;
+      $("gnext").onclick=()=>{G[1]=0;freeMode();};
+      $("gto2").onclick=()=>{G[1]=0;goStage(2);};
+    }
+  } else {
+    if(p===1){
+      g.innerHTML=`<div class="pg">STAGE 2 · 1 / 3</div>
+        <p class="q">A plant with no breakdowns (availability 100%). <b>3 machines</b>.<br>Today is a slow day: the order is <b>600 parts</b>.<br>Head office says: "Utilization is too low. Run the machines more."<br>What do you do?</p>
+        <div class="navs"><button class="primary" id="gA">Make only the order, then stop</button><button class="primary" id="gB">Run all 8 hours</button></div>
+        <button class="skip" id="gskip">Skip the guide and play freely</button>
+        <button class="skip" id="gs1">← Back to Stage 1</button>`;
+      $("gs1").onclick=()=>goStage(1);
+      $("gA").onclick=()=>{gFull=false;G[2]=2;guide();}; $("gB").onclick=()=>{gFull=true;G[2]=2;guide();};
+      $("gskip").onclick=()=>{G[2]=0;freeMode();};
+    } else if(p===2){
+      const rs=plan(2,3,600,false,gFull);
+      const draw=()=>{const s=tally(rs,600,T), fin=T>=P.day, K=T?s.g/(3*T):0;
+        g.innerHTML=`<div class="pg">STAGE 2 · 2 / 3 · ${gFull?"run all 8 hours":"make only the order"}</div>
+          <div class="machines">${barsHTML(rs,T)}</div>${ticks}
+          ${fin?`<div class="mini"><div class="meter"><div class="k">${RKs}</div><div class="v">${pc(K)}</div></div><div class="meter"><div class="k">Unsold parts</div><div class="v">${num(s.made-s.sold)}</div></div><div class="meter ${s.profit<0?"bad":""}"><div class="k">Profit</div><div class="v" style="font-size:1.1rem">${yen(s.profit)}</div></div></div>
+          <p class="say">${gFull?"Utilization hit 100%. But you made 840 parts nobody ordered, and the day ended in a loss.":"Utilization is only 42%. But you made a profit. What are the <b style=\"color:#9A6E00\">yellow sections</b>?"}</p>
+          <div class="navs"><button class="ghost" id="gother">${gFull?"Try making only the order":"Try running all 8 hours"}</button><button class="primary" id="gnext">What is yellow?</button></div>`:""}`;
+        if(fin){$("gother").onclick=()=>{gFull=!gFull;guide();}; $("gnext").onclick=()=>{G[2]=3;guide();};}
+      };
+      animate(rs,draw,draw); draw();
+    } else {
+      const a=tally(plan(2,3,600,false,false),600), b=tally(plan(2,3,600,false,true),600);
+      g.innerHTML=`<div class="pg">STAGE 2 · 3 / 3</div>
+        <p class="say">Yellow is time the machine is stopped because the order is done. It is not a problem.</p>${kinds()}
+        <div class="cwrap"><table class="cd"><thead><tr><th></th><th>Only the order</th><th>All 8 hours</th></tr></thead><tbody>
+          <tr><td>${RBs}</td><td class="r">100%</td><td class="r">100%</td></tr>
+          <tr><td>${RKs}</td><td class="r">${pc(a.g/(3*P.day))}</td><td class="r">${pc(b.g/(3*P.day))}</td></tr>
+          <tr><td>Profit</td><td class="r">${yen(a.profit)}</td><td class="r">${yen(b.profit)}</td></tr></tbody></table></div>
+        <p class="say">The order decides utilization. Filling yellow on a slow day is overproduction. Only when the order exactly matches capacity is 100% utilization not overproduction.</p><p class="say">But 600 parts could also be made with 2 machines (profit ${yen(tally(plan(2,2,600,false,false),600).profit)}). Yellow is not a problem in itself — whether you own too many machines is a separate question.</p>
+        <div class="navs"><button class="primary" id="gnext">Play freely</button></div>`;
+      $("gnext").onclick=()=>{G[2]=0;freeMode();};
+    }
+  }
+}
+
+/* ---------- free play ---------- */
+let FOUND1=false; const FOUND2=new Set(); let SUMSHOWN=false;
+function goalUI(){
+  const ok=t=>`<span style="color:var(--good);font-weight:700">✓ ${t}</span>`, no=t=>`<span class="sub">□ ${t}</span>`;
+  if(stage===1){
+    $("goal").innerHTML=`<h3>Goal</h3><p style="margin:4px 0 0">Find the most profitable number of machines for this plant (with breakdowns).</p><p style="margin:6px 0 0">${FOUND1?ok("Found the most profitable number"):no("Not yet")}</p>`;
+    $("toS2").className=FOUND1?"primary":"ghost";
+  } else {
+    const L=[[1400,"Busy day"],[1000,"Normal day"],[600,"Slow day"]];
+    $("goal").innerHTML=`<h3>Goal</h3><p style="margin:4px 0 0">For each of the three orders, find the most profitable number of machines and way of running them.</p><p style="margin:6px 0 0;display:flex;gap:14px;flex-wrap:wrap">${L.map(([d,t])=>FOUND2.has(d)?ok(t):no(t)).join("")}</p>`;
+    $("showSum").className=FOUND2.size===3?"primary":"ghost";
+  }
+}
+function showSummary(done){
+  const el=$("summary"); el.classList.remove("hide");
+  el.innerHTML=`<div class="pg">SUMMARY</div>
+    ${done?`<p class="say" style="color:var(--good);font-weight:700">You found the most profitable setup for all three orders.</p>`:""}
+    <p class="say">A machine that is not running is in one of two kinds of time.</p>${kinds()}
+    <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px">
+      <li><b>Down</b> (red): fix it. Red makes you own extra machines to win back the time. ${RB} aims for 100%.</li>
+      <li><b>Idle</b> (yellow): that is fine. Make the order, then stop. ${RK} is set by the order and can be low.</li>
+      <li>Running machines just to fill yellow is overproduction. When there is a lot of yellow, ask whether you own more machines than you need.</li>
+    </ul>`;
+  el.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+}
+function freeMode(){
+  $("guide").classList.add("hide"); $("free").classList.remove("hide");
+  $("demandChoices").classList.toggle("hide",stage!==2); $("opt1").classList.toggle("hide",stage!==1); $("opt2").classList.toggle("hide",stage!==2);
+  $("stageNav").classList.toggle("hide",stage!==1); $("toS1").classList.toggle("hide",stage!==2);
+  $("sumNav").classList.toggle("hide",stage!==2); if(stage!==2) $("summary").classList.add("hide");
+  goalUI();
+  syncFree(); idleFree();
+}
+function goStage(n){ stage=n; show(); document.querySelector(".wrap").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}); }
+function syncFree(){
+  $("orderN").innerHTML=`${num(demand())}<small>parts</small>`;
+  $("orderSub").textContent=stage===1?"Same every day":"Changes from day to day";
+  document.querySelectorAll("#demandChoices button").forEach(b=>{b.setAttribute("aria-pressed",String(+b.dataset.d===D2)); b.disabled=running;});
+  $("noRed").setAttribute("aria-pressed",String(noRed)); $("noRed").textContent=noRed?"Bring red back (72 min of breakdowns)":"Remove red (availability 100%)";
+  $("mode0").setAttribute("aria-pressed",String(!full)); $("mode1").setAttribute("aria-pressed",String(full));
+  [$("noRed"),$("mode0"),$("mode1"),$("toS2"),$("toS1")].forEach(b=>b.disabled=running);
+  $("nv").innerHTML=`${N[stage]}<small>$100/day each</small>`;
+  $("dn").disabled=running||N[stage]<=1; $("up").disabled=running||N[stage]>=P.maxN;
+  $("start").disabled=running; $("start").textContent=running?"Running…":"Run the day";
+  $("fast").classList.toggle("hide",!running);
+}
+function idleFree(){
+  if(running) return;
+  rows=plan(stage,N[stage],demand(),noRed,full); T=0;
+  $("machines").innerHTML=barsHTML(rows,0);
+  ["result","money","calcData"].forEach(id=>$(id).classList.add("hide"));
+}
+function startFree(){
+  rows=plan(stage,N[stage],demand(),noRed,full); fast=false; $("fast").setAttribute("aria-pressed","false");
+  ["result","money","calcData"].forEach(id=>$(id).classList.add("hide"));
+  animate(rows,()=>{$("machines").innerHTML=barsHTML(rows,T); syncFree();},finishFree); syncFree();
+}
+function finishFree(){
+  syncFree();
+  const d=demand(), s=tally(rows,d), n=s.n, B=s.g+s.r?s.g/(s.g+s.r):1, K=s.g/(n*P.day), bst=stage===2?[best(2,d,false,false),best(2,d,false,true)].reduce((a,b)=>b.profit>a.profit?b:a):best(stage,d,noRed,full);
+  const g=s.profit>=bst.profit?"S":s.profit>=bst.profit*0.9?"A":s.profit>=0?"B":"C";
+  let msg;
+  if(stage===1){
+    if(s.short) msg=`${num(s.short)} parts short of the order. That is the output lost to red (${hm(redPer(rows))} per machine, ${hm(s.r)} across ${s.n} machines).`;
+    else if(!noRed) msg=`The order was delivered. But with red (${hm(redPer(rows))} per machine), availability is ${pc(B)}. Use "Remove red" to see how many machines you would need without it.`;
+    else msg=`Without red, ${best(1,d,true,false).n} machines are enough. With red, you need ${best(1,d,false,false).n}. The difference is what red costs every day.`;
+  } else {
+    if(full) msg=`Utilization is ${pc(K)}. But ${num(s.made-s.sold)} parts were left unsold, and their materials (${yen((s.made-s.sold)*P.mat)}) were simply lost.`;
+    else if(s.short) msg=`${num(s.short)} parts short of the order. The machines do not have enough capacity for it.`;
+    else if(K<0.995) msg=`Utilization is ${pc(K)}, but availability is still ${pc(B)}. Yellow is time stopped because the order is done — not a problem. Whether you own too many machines is a separate question. Try fewer.`;
+    else msg=`The order matches capacity, so there is almost no yellow. On days like this, 100% utilization is not overproduction. What matters is building to the order, not pushing utilization up.`;
+  }
+  const r=$("result"); r.classList.remove("hide");
+  r.innerHTML=`<div class="grade"><div class="letter ${g}">${g}</div><div><p>Today's profit</p><p class="big">${yen(s.profit)}</p><p class="note">${g==="S"?"<b style=\"color:var(--good)\">This is the most profitable setup for this order</b>":`Profit at the best setup: ${yen(bst.profit)}`}</p></div></div>
+    <div class="mini"><div class="meter ${B<1?"bad":""}"><div class="k">${RBs}</div><div class="v">${pc(B)}</div></div><div class="meter"><div class="k">${RKs}</div><div class="v">${pc(K)}</div></div><div class="meter ${s.short?"bad":""}"><div class="k">Made / ordered</div><div class="v" style="font-size:1rem">${num(s.made)} / ${num(d)}</div></div></div>
+    <div class="lesson"><p>${msg}</p></div>
+    <div class="lesson trainers"><h4>Using it in a class or workshop?</h4><p>More games are at <a href="/#games">Mendomi Lab</a>.</p><p style="margin-top:6px">Want it adapted to your own plant or course, or just want to talk it through? <a href="/consult/" target="_blank" rel="noopener">Get in touch (the first reply is free) →</a></p></div>`;
+  $("ledger").innerHTML=
+    `<tr><td>Sales<br><small>${num(s.sold)} parts delivered × $1.00</small></td><td>${yen(s.sales)}</td></tr>`+
+    `<tr><td class="minus">Materials<br><small>${num(s.made)} parts made × $0.40</small></td><td class="minus">−${yen(s.mat)}</td></tr>`+
+    `<tr><td class="minus">Depreciation<br><small>${n} machine${n>1?"s":""} × $100 (paid even when stopped)</small></td><td class="minus">−${yen(s.dep)}</td></tr>`+
+    `<tr><td class="minus">Shortage cost<br><small>${num(s.short)} parts short × $2.00</small></td><td class="minus">−${yen(s.sh)}</td></tr>`+
+    `<tr class="total"><td>Today's profit</td><td>${yen(s.profit)}</td></tr>`;
+  $("calcBody").innerHTML=`<div class="cwrap"><table class="cd"><tbody>
+    <tr><td>Time</td><td>green ${hm(s.g)} + yellow ${hm(s.y)} + red ${hm(s.r)} = ${n} machine${n>1?"s":""} × 8 h<small>Machine time added up across all machines</small></td></tr>
+    <tr><td>Availability<small>bekidō-ritsu</small></td><td>green ${hm(s.g)} ÷ (green ${hm(s.g)} + red ${hm(s.r)}) = <b>${pc(B)}</b></td></tr>
+    <tr><td>Utilization<small>kasedō-ritsu</small></td><td>green ${hm(s.g)} ÷ (${n} × 8 h) = <b>${pc(K)}</b></td></tr>
+    <tr><td>Profit</td><td>${yen(s.sales)} − ${yen(s.mat)} − ${yen(s.dep)} − ${yen(s.sh)} = <b>${yen(s.profit)}</b></td></tr>
+    <tr><td>Grade</td><td>profit ${yen(s.profit)} / profit at the best setup ${yen(bst.profit)} = <b>${g}</b><small>S: the same / A: 90% or more / B: any profit / C: a loss</small></td></tr></tbody></table></div>`;
+  if(g==="S"){ if(stage===1&&!noRed) FOUND1=true; if(stage===2) FOUND2.add(d); }
+  goalUI();
+  if(stage===2&&FOUND2.size===3&&!SUMSHOWN){ SUMSHOWN=true; showSummary(true); }
+  $("money").classList.remove("hide"); $("calcData").classList.remove("hide");
+  r.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
+}
+
+/* ---------- common ---------- */
+function show(){
+  $("t1").setAttribute("aria-pressed",String(stage===1)); $("t2").setAttribute("aria-pressed",String(stage===2));
+  $("rules").innerHTML=RULES[stage].map(x=>`<li>${x}</li>`).join("");
+  clearInterval(timer); timer=null; running=false; lock();
+  if(G[stage]) guide(); else freeMode();
+}
+$("t1").onclick=()=>{stage=1; show();};
+$("t2").onclick=()=>{stage=2; show();};
+$("dn").onclick=()=>{N[stage]=Math.max(1,N[stage]-1); syncFree(); idleFree();};
+$("up").onclick=()=>{N[stage]=Math.min(P.maxN,N[stage]+1); syncFree(); idleFree();};
+$("noRed").onclick=()=>{noRed=!noRed; syncFree(); idleFree();};
+$("mode0").onclick=()=>{full=false; syncFree(); idleFree();};
+$("mode1").onclick=()=>{full=true; syncFree(); idleFree();};
+document.querySelectorAll("#demandChoices button").forEach(b=>b.onclick=()=>{D2=+b.dataset.d; syncFree(); idleFree();});
+$("start").onclick=startFree;
+$("fast").onclick=()=>{fast=!fast; $("fast").setAttribute("aria-pressed",String(fast));};
+$("toS2").onclick=()=>goStage(2);
+$("showSum").onclick=()=>showSummary(FOUND2.size===3);
+$("toS1").onclick=()=>goStage(1);
+$("replay").onclick=()=>{G[stage]=1; show();};
+show();
+})();
+</script>
+
+</body>
+</html>
